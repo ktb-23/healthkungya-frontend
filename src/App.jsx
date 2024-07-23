@@ -1,7 +1,17 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Auth from './containers/LoginForm';
 import './App.css';
 
 function App() {
-  return <></>;
+  return (
+    <Router>
+      <Routes>
+        {/* 시작 페이지 정의 */}
+        <Route path="/" element={<Auth />} />
+      </Routes>
+  </Router>
+  );
 }
 
 export default App;
