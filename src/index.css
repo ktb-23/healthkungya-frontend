@@ -9,6 +9,9 @@
   --primary-color: #AFEB92;
   --secondary-color: #86BAEB;
   --tertiary-color: #EB8686;
+  --border-primary-color: #949494;
+  --error-color: #FF0000;
+  
 
   /* 타이포그래피 */
   --font-family-base: "GroomSans",sans-serif;
@@ -21,7 +24,7 @@
   --line-height-body: 1.75;
   --letter-spacing-heading: 0.5px;
   --letter-spacing-body: 0.25px;
-  
+
   /* 스페이싱 */
   --spacing-small: 8px;
   --spacing-medium: 16px;
