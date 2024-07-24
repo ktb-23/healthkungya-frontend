@@ -1,101 +1,75 @@
-import React, { useState,useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import styles from './styles/SignupForm.module.scss';
 import Input from '../components/Input';
-import { handleBlur, handleSubmit } from '../config/validation';
 import Button from '../components/Button';
 import { ActionType, initialState, RegisterReducer } from '../reducers/Register';
 import useSignup from '../api/useSignup';
 import { useNavigate } from 'react-router-dom';
-import useDebounce from '../hooks/useDebounce';
-import checkDuplicate from '../api/useCheckDuplicate';
+import useFormHandlers from '../hooks/useFormHandler';
+import useCheckDuplicates from '../hooks/useCheckDuplicate';
 
 function SignupForm() {
     // 복잡한 상태관리 최적화
-    const [state,dispatch]=useReducer(RegisterReducer,initialState)
+    const [state, dispatch] = useReducer(RegisterReducer, initialState);
+    const navigate = useNavigate();
+    
+    const { handleInputChange, validateField, errors } = useFormHandlers(state, dispatch);
+    const { checkErrors } = useCheckDuplicates(state);
 
-    // 에러시 객체에 담음
-    const [errors, setErrors] = useState({});
+    // 유효성 검상 성공시 회원가입 요청
+    const submitForm = async (e) => {
+        e.preventDefault();
 
-    const [hasErrors, setHasErrors] = useState(false);
-
-    const navigate=useNavigate()
-
-    //아이디 디바운스
-    const debouncedId = useDebounce(state.id, 500);
-  
-    useEffect(() => {
-        if (debouncedId) {
-            checkDuplicate('id', debouncedId).then(response => {
-                if (response.message === '아이디가 이미 존재합니다.') {
-                    alert("아이디가 이미 존재합니다.")
-                    dispatch({type: ActionType.SET_ID, payload: ""})
-                } 
-            });
+        if (Object.values(errors).some(error => error !== '') || 
+            Object.values(checkErrors).some(error => error !== '사용 가능합니다.')) {
+            alert("회원가입에 실패 했습니다.");
+            return;
         }
-    }, [debouncedId]);
-      // 닉네임 디바운스
-      const debouncedNickname = useDebounce(state.nickname, 500);
-      useEffect(() => {
-        if (debouncedNickname) {
-            checkDuplicate('nickname', debouncedNickname).then(response => {
-                if (response.message === '닉네임이 이미 존재합니다.') {
-                    alert("닉네임이 이미 존재합니다.")
-                    dispatch({type: ActionType.SET_NICKNAME, payload: ""})
-                }
-            });
-        }
-    }, [debouncedNickname]);
 
+        const body = {
+            id: state.id,
+            password: state.password,
+            nickname: state.nickname,
+            weight: parseFloat(state.weight)
+        };
 
-    useEffect(() => {
-        setHasErrors(Object.values(errors).some(error => error !== ''));
-    }, [errors]);
-
-    // 유효성 검상 성공시 백엔드 요청
-    const submitForm = async() => {
-        const body={
-            id:state.id,
-            password:state.password,
-            nickname:state.nickname,
-            weight:parseFloat(state.weight)
+        try {
+            const response = await useSignup(body);
+            if (response.success) {
+                alert(response.message);
+                navigate('/login');
+            } else {
+                alert(response.message);
+            }
+        } catch (error) {
+            console.error("회원가입 중 오류 발생:", error);
+            alert("회원가입 중 오류가 발생했습니다.");
         }
-        const response = await useSignup(body)
-        // Alert으로 성공 메시지 또는 오류 메시지 표시
-        if (response.success) {
-            alert(response.message); // 성공 메시지 표시
-            navigate('/login'); // 로그인 페이지로 이동
-        } else {
-            alert(response.message); // 오류 메시지 표시
-        }
-        
     };
 
     return (
         <main className={styles.main}>
             <div className={styles.signupmodal}>
-                <div onClick={()=>{navigate("/")}}>
-                    <Button variant={"back"}/>
+                <div onClick={() => navigate("/")}>
+                    <Button variant={"back"} />
                 </div>
                 <div className={styles.logo}></div>
-                {/* 에러 발생시 간격 줄임 */}
-                <section className={styles.inputs} >
-                    {/* 유효성 검사 */}
-                    <form className={styles.inputs} 
-                    onSubmit={(e) => handleSubmit(e, state.id, state.password, state.verifyPassword, state.nickname, state.weight, hasErrors, submitForm)}>
+                <section className={styles.inputs}>
+                    <form className={styles.inputs} onSubmit={submitForm}>
                         <Input
                             type="text"
                             value={state.id}
-                            onChange={(e) => dispatch({type: ActionType.SET_ID, payload: e.target.value})}
-                            onBlur={() => handleBlur('id', state.id, setErrors)}
+                            onChange={(e) => handleInputChange(ActionType.SET_ID, e.target.value)}
+                            onBlur={() => validateField('id', state.id)}
                             placeholder="아이디는 4~20자의 알파벳과 숫자만 허용"
                             variant={"registerinput"}
-                            error={errors.id}
+                            error={errors.id || checkErrors.id}
                         />
                         <Input
                             type="password"
                             value={state.password}
-                            onChange={(e) => dispatch({type: ActionType.SET_PASSWORD, payload: e.target.value})}
-                            onBlur={() => handleBlur('password', state.password, setErrors)}
+                            onChange={(e) => handleInputChange(ActionType.SET_PASSWORD, e.target.value)}
+                            onBlur={() => validateField('password', state.password)}
                             placeholder="비밀번호(8자 이상, 문자/숫자/기호 사용 가능)"
                             variant={"registerinput"}
                             error={errors.password}
@@ -103,8 +77,8 @@ function SignupForm() {
                         <Input
                             type="password"
                             value={state.verifyPassword}
-                            onChange={(e) => dispatch({type: ActionType.SET_VERIFYPASSWORD, payload: e.target.value})}
-                            onBlur={() => handleBlur('verifyPassword', state.verifyPassword, setErrors, state.password)}
+                            onChange={(e) => handleInputChange(ActionType.SET_VERIFYPASSWORD, e.target.value)}
+                            onBlur={() => validateField('verifyPassword', state.verifyPassword)}
                             placeholder="비밀번호 확인"
                             variant={"registerinput"}
                             error={errors.verifyPassword}
@@ -112,17 +86,17 @@ function SignupForm() {
                         <Input
                             type="text"
                             value={state.nickname}
-                            onChange={(e) => dispatch({type: ActionType.SET_NICKNAME, payload: e.target.value})}
-                            onBlur={() => handleBlur('nickname', state.nickname, setErrors)}
+                            onChange={(e) => handleInputChange(ActionType.SET_NICKNAME, e.target.value)}
+                            onBlur={() => validateField('nickname', state.nickname)}
                             placeholder="닉네임(1~8자)"
                             variant={"registerinput"}
-                            error={errors.nickname}
+                            error={errors.nickname || checkErrors.nickname}
                         />
                         <Input
                             type="number"
                             value={state.weight}
-                            onChange={(e) => dispatch({type: ActionType.SET_WEIGHT, payload: e.target.value})}
-                            onBlur={() => handleBlur('weight', state.weight, setErrors)}
+                            onChange={(e) => handleInputChange(ActionType.SET_WEIGHT, e.target.value)}
+                            onBlur={() => validateField('weight', state.weight)}
                             placeholder="몸무게"
                             variant={"registerinput"}
                             step="0.1"
@@ -132,12 +106,10 @@ function SignupForm() {
                             <Button variant={"signup"}>회원가입</Button>
                         </div>
                     </form>
-                    <div onClick={()=>navigate("/login")}>
+                    <div onClick={() => navigate("/login")}>
                         <Button>로그인</Button>
                     </div>
-                    
                 </section>
-                
             </div>
         </main>
     );
