@@ -12,8 +12,8 @@ const validateId = (value) => {
 const validatePassword = (value) => {
     if (!value) {
         return '비밀번호를 입력해주세요.';
-    } else if (!/^.{8,}$/.test(value)) {
-        return '비밀번호는 8자 이상이어야 합니다.';
+    } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
+        return '비밀번호(8자 이상, 문자/숫자/기호 사용 가능)';
     }
     return '';
 };
@@ -88,6 +88,7 @@ const handleSubmit = (e, id, password, verifyPassword, nickname, weight, setErro
             weight: weightError,
         });
     } else {
+
         callback();
     }
 };
