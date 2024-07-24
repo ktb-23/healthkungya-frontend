@@ -6,6 +6,8 @@ import Button from '../components/Button';
 import { ActionType, initialState, RegisterReducer } from '../reducers/Register';
 import useSignup from '../api/useSignup';
 import { useNavigate } from 'react-router-dom';
+import useDebounce from '../hooks/useDebounce';
+import checkDuplicate from '../api/useCheckDuplicate';
 
 function SignupForm() {
     // 복잡한 상태관리 최적화
@@ -14,9 +16,41 @@ function SignupForm() {
     // 에러시 객체에 담음
     const [errors, setErrors] = useState({});
 
+    const [successMessages, setSuccessMessages] = useState({});
     const [hasErrors, setHasErrors] = useState(false);
 
     const navigate=useNavigate()
+
+    //아이디 디바운스
+    const debouncedId = useDebounce(state.id, 500);
+  
+    useEffect(() => {
+        if (debouncedId) {
+            checkDuplicate('id', debouncedId).then(response => {
+                if (response.message === '아이디가 이미 존재합니다.') {
+                    setErrors(prevErrors => ({ ...prevErrors, id: response.message }));
+                    setSuccessMessages(prevMessages => ({ ...prevMessages, id: "" }));
+                } else if (response.message === '아이디 사용 가능합니다.') {
+                    setSuccessMessages(prevMessages => ({ ...prevMessages, id: response.message }));
+                }
+            });
+        }
+    }, [debouncedId]);
+      // 닉네임 디바운스
+      const debouncedNickname = useDebounce(state.nickname, 500);
+      useEffect(() => {
+        if (debouncedNickname) {
+            checkDuplicate('nickname', debouncedNickname).then(response => {
+                if (response.message === '닉네임이 이미 존재합니다.') {
+                    setErrors(prevErrors => ({ ...prevErrors, nickname: response.message }));
+                    setSuccessMessages(prevMessages => ({ ...prevMessages, nickname: '' }));
+                } else if (response.message === '닉네임 사용 가능합니다.') {
+                    setSuccessMessages(prevMessages => ({ ...prevMessages, nickname: response.message }));
+                }
+            });
+        }
+    }, [debouncedNickname]);
+
 
     useEffect(() => {
         setHasErrors(Object.values(errors).some(error => error !== ''));
@@ -49,7 +83,7 @@ function SignupForm() {
                 </div>
                 <div className={styles.logo}></div>
                 {/* 에러 발생시 간격 줄임 */}
-                <section className={styles.inputs} style={{ '--input-gap': hasErrors ? 'var(--spacing-small)' : 'var(--spacing-medium)' }}>
+                <section className={styles.inputs} >
                     {/* 유효성 검사 */}
                     <form className={styles.inputs} 
                     onSubmit={(e) => handleSubmit(e, state.id, state.password, state.verifyPassword, state.nickname, state.weight, setErrors, submitForm)}>
@@ -61,6 +95,7 @@ function SignupForm() {
                             placeholder="아이디는 4~20자의 알파벳과 숫자만 허용"
                             variant={"registerinput"}
                             error={errors.id}
+                            success={successMessages.id}
                         />
                         <Input
                             type="password"
@@ -88,6 +123,7 @@ function SignupForm() {
                             placeholder="닉네임(1~8자)"
                             variant={"registerinput"}
                             error={errors.nickname}
+                            success={successMessages.nickname}
                         />
                         <Input
                             type="number"
