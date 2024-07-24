@@ -1,77 +1,99 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useReducer } from 'react';
 import styles from './styles/SignupForm.module.scss';
 import Input from '../components/Input';
 import { handleBlur, handleSubmit } from '../config/validation';
 import Button from '../components/Button';
+import { ActionType, initialState, RegisterReducer } from '../reducers/Register';
+import useSignup from '../api/useSignup';
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-    const [verifyPassword, setVerifyPassword] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [weight, setWeight] = useState('');
+    // 복잡한 상태관리 최적화
+    const [state,dispatch]=useReducer(RegisterReducer,initialState)
 
+    // 에러시 객체에 담음
     const [errors, setErrors] = useState({});
 
     const [hasErrors, setHasErrors] = useState(false);
+
+    const navigate=useNavigate()
 
     useEffect(() => {
         setHasErrors(Object.values(errors).some(error => error !== ''));
     }, [errors]);
 
-
-    const submitForm = () => {
+    // 유효성 검상 성공시 백엔드 요청
+    const submitForm = async() => {
+        const body={
+            id:state.id,
+            password:state.password,
+            nickname:state.nickname,
+            weight:parseFloat(state.weight)
+        }
+        const response = await useSignup(body)
+        // Alert으로 성공 메시지 또는 오류 메시지 표시
+        if (response.success) {
+            alert(response.message); // 성공 메시지 표시
+            navigate('/login'); // 로그인 페이지로 이동
+        } else {
+            alert(response.message); // 오류 메시지 표시
+        }
         
     };
 
     return (
         <main className={styles.main}>
             <div className={styles.signupmodal}>
-                <Button variant={"back"}/>
+                <div onClick={()=>{navigate("/")}}>
+                    <Button variant={"back"}/>
+                </div>
                 <div className={styles.logo}></div>
+                {/* 에러 발생시 간격 줄임 */}
                 <section className={styles.inputs} style={{ '--input-gap': hasErrors ? 'var(--spacing-small)' : 'var(--spacing-medium)' }}>
-                    <form className={styles.inputs} onSubmit={(e) => handleSubmit(e, id, password, verifyPassword, nickname, weight, setErrors, submitForm)}>
+                    {/* 유효성 검사 */}
+                    <form className={styles.inputs} 
+                    onSubmit={(e) => handleSubmit(e, state.id, state.password, state.verifyPassword, state.nickname, state.weight, setErrors, submitForm)}>
                         <Input
                             type="text"
-                            value={id}
-                            onChange={(e) => setId(e.target.value)}
-                            onBlur={() => handleBlur('id', id, setErrors)}
+                            value={state.id}
+                            onChange={(e) => dispatch({type: ActionType.SET_ID, payload: e.target.value})}
+                            onBlur={() => handleBlur('id', state.id, setErrors)}
                             placeholder="아이디는 4~20자의 알파벳과 숫자만 허용"
                             variant={"registerinput"}
                             error={errors.id}
                         />
                         <Input
                             type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => handleBlur('password', password, setErrors)}
+                            value={state.password}
+                            onChange={(e) => dispatch({type: ActionType.SET_PASSWORD, payload: e.target.value})}
+                            onBlur={() => handleBlur('password', state.password, setErrors)}
                             placeholder="비밀번호(8자 이상, 문자/숫자/기호 사용 가능)"
                             variant={"registerinput"}
                             error={errors.password}
                         />
                         <Input
                             type="password"
-                            value={verifyPassword}
-                            onChange={(e) => setVerifyPassword(e.target.value)}
-                            onBlur={() => handleBlur('verifyPassword', verifyPassword, setErrors, password)}
+                            value={state.verifyPassword}
+                            onChange={(e) => dispatch({type: ActionType.SET_VERIFYPASSWORD, payload: e.target.value})}
+                            onBlur={() => handleBlur('verifyPassword', state.verifyPassword, setErrors, state.password)}
                             placeholder="비밀번호 확인"
                             variant={"registerinput"}
                             error={errors.verifyPassword}
                         />
                         <Input
                             type="text"
-                            value={nickname}
-                            onChange={(e) => setNickname(e.target.value)}
-                            onBlur={() => handleBlur('nickname', nickname, setErrors)}
+                            value={state.nickname}
+                            onChange={(e) => dispatch({type: ActionType.SET_NICKNAME, payload: e.target.value})}
+                            onBlur={() => handleBlur('nickname', state.nickname, setErrors)}
                             placeholder="닉네임(1~8자)"
                             variant={"registerinput"}
                             error={errors.nickname}
                         />
                         <Input
                             type="number"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                            onBlur={() => handleBlur('weight', weight, setErrors)}
+                            value={state.weight}
+                            onChange={(e) => dispatch({type: ActionType.SET_WEIGHT, payload: e.target.value})}
+                            onBlur={() => handleBlur('weight', state.weight, setErrors)}
                             placeholder="몸무게"
                             variant={"registerinput"}
                             step="0.1"
@@ -81,7 +103,7 @@ function SignupForm() {
                             <Button variant={"signup"}>회원가입</Button>
                         </div>
                     </form>
-                    <div>
+                    <div onClick={()=>navigate("/login")}>
                         <Button>로그인</Button>
                     </div>
                     

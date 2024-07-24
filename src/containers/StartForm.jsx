@@ -4,11 +4,13 @@ import Button from '../components/Button';
 import {useNavigate } from 'react-router-dom';
 function StartForm() {
     const navigate=useNavigate()
+
     // 로그인 페이지 이동
     const handleLoginPage=()=>{
         navigate("/login")
     }
 
+    // 회원가입 페이지 이동
     const handleSignupPage=()=>{
         navigate("/signup")
     }

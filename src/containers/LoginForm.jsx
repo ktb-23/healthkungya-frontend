@@ -5,7 +5,6 @@ function LoginForm() {
     <main className={styles.main}>
       <div className={styles.logo}></div>
       <section className={styles.inputs}>
-        <Input></Input>
       </section>
     </main>
   );
