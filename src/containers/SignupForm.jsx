@@ -16,7 +16,6 @@ function SignupForm() {
     // 에러시 객체에 담음
     const [errors, setErrors] = useState({});
 
-    const [successMessages, setSuccessMessages] = useState({});
     const [hasErrors, setHasErrors] = useState(false);
 
     const navigate=useNavigate()
@@ -28,11 +27,9 @@ function SignupForm() {
         if (debouncedId) {
             checkDuplicate('id', debouncedId).then(response => {
                 if (response.message === '아이디가 이미 존재합니다.') {
-                    setErrors(prevErrors => ({ ...prevErrors, id: response.message }));
-                    setSuccessMessages(prevMessages => ({ ...prevMessages, id: "" }));
-                } else if (response.message === '아이디 사용 가능합니다.') {
-                    setSuccessMessages(prevMessages => ({ ...prevMessages, id: response.message }));
-                }
+                    alert("아이디가 이미 존재합니다.")
+                    dispatch({type: ActionType.SET_ID, payload: ""})
+                } 
             });
         }
     }, [debouncedId]);
@@ -42,10 +39,8 @@ function SignupForm() {
         if (debouncedNickname) {
             checkDuplicate('nickname', debouncedNickname).then(response => {
                 if (response.message === '닉네임이 이미 존재합니다.') {
-                    setErrors(prevErrors => ({ ...prevErrors, nickname: response.message }));
-                    setSuccessMessages(prevMessages => ({ ...prevMessages, nickname: '' }));
-                } else if (response.message === '닉네임 사용 가능합니다.') {
-                    setSuccessMessages(prevMessages => ({ ...prevMessages, nickname: response.message }));
+                    alert("닉네임이 이미 존재합니다.")
+                    dispatch({type: ActionType.SET_NICKNAME, payload: ""})
                 }
             });
         }
@@ -86,7 +81,7 @@ function SignupForm() {
                 <section className={styles.inputs} >
                     {/* 유효성 검사 */}
                     <form className={styles.inputs} 
-                    onSubmit={(e) => handleSubmit(e, state.id, state.password, state.verifyPassword, state.nickname, state.weight, setErrors, submitForm)}>
+                    onSubmit={(e) => handleSubmit(e, state.id, state.password, state.verifyPassword, state.nickname, state.weight, hasErrors, submitForm)}>
                         <Input
                             type="text"
                             value={state.id}
@@ -95,7 +90,6 @@ function SignupForm() {
                             placeholder="아이디는 4~20자의 알파벳과 숫자만 허용"
                             variant={"registerinput"}
                             error={errors.id}
-                            success={successMessages.id}
                         />
                         <Input
                             type="password"
@@ -123,7 +117,6 @@ function SignupForm() {
                             placeholder="닉네임(1~8자)"
                             variant={"registerinput"}
                             error={errors.nickname}
-                            success={successMessages.nickname}
                         />
                         <Input
                             type="number"

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles/Input.module.scss'; // Ensure the path is correct
 import { FaCheck, FaTimes } from 'react-icons/fa';
 
-const Input = ({ type = 'text', value, onChange, onBlur, placeholder, variant, step, error, success }) => {
+const Input = ({ type = 'text', value, onChange, onBlur, placeholder, variant, step, error}) => {
     const inputClass = `${styles.input} ${styles[variant]}`;
     return (
         <div>
@@ -12,14 +12,9 @@ const Input = ({ type = 'text', value, onChange, onBlur, placeholder, variant, s
                 onChange={onChange}
                 onBlur={onBlur}
                 placeholder={placeholder}
-                className={`${inputClass} ${error ? styles.error : ''} ${success ? styles.success : ''}`}
+                className={`${inputClass} ${error ? styles.error : ''}`}
                 step={step}
             />
-            {error ? (
-                <FaTimes className={styles.errorIcon} />
-            ) : success ? (
-                <FaCheck className={styles.successIcon} />
-            ) : null}
             {error && <div className={styles.errorText}>{error}</div>}
         </div>
     );
