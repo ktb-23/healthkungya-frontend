@@ -2,10 +2,12 @@
 
 import React from 'react';
 import Calendar from '../components/Calendar';
+import Navbar from '../components/Navbar';
 
 const FixForm = () => {
   return (
     <>
+      <Navbar />
       <Calendar />
     </>
   );
