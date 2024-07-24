@@ -1,16 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StartRoutes from './routes/StartRoutes';
 import './App.css';
-
-
+import LoginForm from './containers/LoginForm';
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* 시작 페이지 정의 */}
-        <Route path="/" element={<StartRoutes />} />
-      </Routes>
+      <StartRoutes/>
   </Router>
   );
 }

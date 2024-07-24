@@ -4,8 +4,8 @@ function LoginForm() {
   return (
     <main className={styles.main}>
       <div className={styles.logo}></div>
-      <section className={styles.buttons}>
-        <Button variant={"loginsubmit"}>로그인</Button>
+      <section className={styles.inputs}>
+        <Input></Input>
       </section>
     </main>
   );

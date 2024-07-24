@@ -1,4 +1,4 @@
-import { BrowserRouter as Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import StartForm from "../containers/StartForm";
 import LoginForm from "../containers/LoginForm";
 import SignupForm from "../containers/SignupForm";
@@ -7,10 +7,9 @@ import SignupForm from "../containers/SignupForm";
 function StartRoutes() {
     return (
       <Routes>
-        <Route path="/" element={<StartForm />}>
-          <Route path="login" element={<LoginForm />} />
-          <Route path="signup" element={<SignupForm />} />
-        </Route>
+        <Route path="/" element={<StartForm />}/>
+        <Route path="login" element={<LoginForm />} />
+        <Route path="signup" element={<SignupForm />} />
       </Routes>
     );
   }
