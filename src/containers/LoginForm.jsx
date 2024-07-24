@@ -1,13 +1,14 @@
-// src/Login.js
 import React from 'react';
-
-function Auth() {
+import styles from "./styles/LoginForm.module.scss"
+function LoginForm() {
   return (
-    <div>
-      <h1>레지스터</h1>
-      {/* 로그인 폼은 여기에 추가 */}
-    </div>
+    <main className={styles.main}>
+      <div className={styles.logo}></div>
+      <section className={styles.buttons}>
+        <Button variant={"loginsubmit"}>로그인</Button>
+      </section>
+    </main>
   );
 }
 
-export default Auth;
+export default LoginForm;
