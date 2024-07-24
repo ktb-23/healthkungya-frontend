@@ -1,8 +1,8 @@
 //캘린더 컴포넌트
 import React, { useState } from 'react';
-import './Calendar.scss';
-import montharrowleft from '../picture/montharrleft.png'; // 이 줄에서는 올바르게 이미지 파일을 import해야 합니다.
-import montharrowright from '../picture/montharrright.png'; // 추가: 오른쪽 화살표 이미지
+import './styles/Calendar.scss';
+import montharrowleft from '../picture/montharrleft.png';
+import montharrowright from '../picture/montharrright.png';
 
 const Calendar = () => {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];

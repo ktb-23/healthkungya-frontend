@@ -1,37 +1,51 @@
 .calendar {
+  position: absolute; /* 캘린더 위치 조절 */
+  width: 543px; /* 캘린더 너비 */
+  height: 464.22px; /* 캘린더 높이 */
+  left: 161.5px; /* 페이지에서의 왼쪽 위치 */
+  top: 378.78px; /* 페이지에서의 위쪽 위치 */
+
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Arial;
 
   .month-controls {
+    display: grid;
+    grid-template-columns: repeat(7, 42px); /* 7열로 나누기 */
     width: 100%;
     margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-left: 100px;
 
     .yearmonth {
+      width: 100px;
       order: 1;
     }
 
-    .prevmonth {
-      order: 2;
+    .prevmonth,
+    .nextmonth {
       background: none;
-      left: 40%;
+      border: none;
+      grid-template-columns: repeat(7, 42px);
+      grid-template-rows: repeat(6, 42px);
+    }
+
+    .prevmonth {
+      margin-left: 50px;
+      order: 2;
     }
 
     .nextmonth {
       order: 3;
-      background: none;
+      margin-left: 40px;
     }
   }
 
   .days-of-week {
     display: grid;
-    grid-template-columns: repeat(7, 42px);
+    grid-template-columns: repeat(7, 42px); /* 7열로 나누기 */
     column-gap: 45px;
-    order: 1;
+    order: 2; /* 위로 올리기 위해 order 변경 */
   }
 
   .dates {
@@ -39,7 +53,7 @@
     grid-template-columns: repeat(7, 42px);
     grid-template-rows: repeat(6, 42px);
     gap: 45px;
-    order: 2;
+    order: 3; /* dates의 순서를 days-of-week 아래로 배치 */
 
     .date-button {
       width: 42px;
