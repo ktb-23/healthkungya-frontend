@@ -3,11 +3,13 @@
 import React from 'react';
 import Calendar from '../components/Calendar';
 import Navbar from '../components/Navbar';
+import Profile from '../components/Profile';
 
 const FixForm = () => {
   return (
     <>
       <Navbar />
+      <Profile />
       <Calendar />
     </>
   );
