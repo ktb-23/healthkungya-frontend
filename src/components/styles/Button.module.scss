@@ -1,12 +1,22 @@
 .button {
-    width: 225px;
+width: 225px;
 height: 36px;
 border-radius: 5px;
 cursor: pointer;
 border: none;
-
+background: none;
 }
-
+.back{
+    position: relative;
+    bottom: 30px;
+    right: 200px;
+    width: 12px;
+    height: 18px;
+    background-image: url("../../picture/backicon.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 .login {
     background-color: var(--primary-color);
 }
@@ -14,4 +24,5 @@ border: none;
 .signup {
     background-color: var(--primary-color);
 }
+    
 
