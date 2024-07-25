@@ -5,23 +5,39 @@ import Input from '../components/Input';
 import { ActionType, initialState, LoginReducer } from '../reducers/Login';
 import { useNavigate } from 'react-router-dom';
 import useFormValidation from '../hooks/useValidation';
+import useLogin from '../api/useLogin';
 function LoginForm() {
    // 복잡한 상태관리 최적화
   const [state, dispatch] = useReducer(LoginReducer,initialState);
   const [error, setError] = useState(true);
   const { validateField, validateForm } = useFormValidation(state);
   const navigate=useNavigate()
+
+  // null 값인지 확인 
   useEffect(() => {
     validateField('id', state.id);
     validateField('password', state.password);
   }, [state.id, state.password, validateField]);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     validateForm();
+    // null 값이 아니면 로그인 요청
     if (state.id.trim() !== '' && state.password.trim() !== '') {
       setError(false)
-      console.log("hello")
+      const body={
+        id:state.id,
+        password: state.password
+      }
+      const response=await useLogin(body)
+      // 성공시 메인페이지 이동
+      if(response.status==200){
+        navigate("/main")
+      }
+      // 실패시 오류 메시지 
+      else{
+        setError(true)
+      }
     }
     else{
       setError(true)
@@ -52,7 +68,9 @@ function LoginForm() {
               <Button variant={"login"}>로그인</Button>
             </div>
           </form>
-          <Button>회원가입</Button>
+          <div onClick={()=>navigate("/signup")}>
+            <Button>회원가입</Button>
+          </div>
         </section>
       </div>
       
