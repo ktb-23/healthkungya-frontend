@@ -15,7 +15,8 @@ const Input = ({ type = 'text', value, onChange, onBlur, placeholder, variant, s
                 className={`${inputClass} ${error ? styles.error : ''}`}
                 step={step}
             />
-            {error && <div className={styles.errorText}>{error}</div>}
+            {/* 삼항 연사자를 이용한 사용가능 중복여부 에러 여부 */}
+            {error=="사용 가능합니다."? <div className={styles.successText}>{error}</div> : <div className={styles.errorText}>{error}</div> }
         </div>
     );
 };
