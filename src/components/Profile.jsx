@@ -9,10 +9,8 @@ const Profile = ({ profileImage, profileName, statusMessage }) => {
       <div className="profilebox">
         <img src={profileImage} alt="Profile" className="profile-image" />
         <div className="profile-info">
-          {' '}
-          {/* 프로필 정보 감싸기 */}
-          <h2 className="profile-name">{profileName}</h2> {/* 프로필 이름 */}
-          <p className="profile-status">{statusMessage}</p> {/* 상태 메시지 */}
+          <h2 className="profile-name">name</h2> {/* 프로필 이름 */}
+          <p className="profile-status">상태메세지</p> {/* 상태 메시지 */}
         </div>
       </div>
     </>

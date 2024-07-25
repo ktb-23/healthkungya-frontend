@@ -8,3 +8,40 @@
   border: 2px solid #949494;
   border-radius: 5px;
 }
+.profile-image {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  left: 40px;
+  top: 35px;
+}
+.profile-name {
+  position: absolute;
+  width: 120px;
+  height: 17px;
+  left: 120px;
+  top: 9px;
+
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+
+  color: #000000;
+}
+.profile-status {
+  position: absolute;
+  width: 106px;
+  height: 17px;
+  left: 139px;
+  top: 35px;
+
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+
+  color: #000000;
+}
