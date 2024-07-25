@@ -20,6 +20,9 @@ function SignupForm() {
     const submitForm = async (e) => {
         e.preventDefault();
 
+        // errors 객체와 checkErrors 객체를 통해 입력값의 오류를 확인.
+        // errors 객체의 값 중 하나라도 빈 문자열이 아니면 오류가 있으면
+        // checkErrors 객체의 값 중 하나라도 '사용 가능합니다.'가 아니면 오류가 있으면
         if (Object.values(errors).some(error => error !== '') || 
             Object.values(checkErrors).some(error => error !== '사용 가능합니다.')) {
             alert("회원가입에 실패 했습니다.");
