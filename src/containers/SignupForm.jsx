@@ -54,7 +54,7 @@ function SignupForm() {
         <main className={styles.main}>
             <div className={styles.signupmodal}>
                 <div onClick={() => navigate("/")}>
-                    <Button variant={"back"} />
+                    <Button variant={"registerback"} />
                 </div>
                 <div className={styles.logo}></div>
                 <section className={styles.inputs}>

@@ -6,9 +6,20 @@ cursor: pointer;
 border: none;
 background: none;
 }
-.back{
+.registerback{
     position: relative;
     bottom: 30px;
+    right: 200px;
+    width: 12px;
+    height: 18px;
+    background-image: url("../../picture/backicon.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.loginback{
+    position: relative;
+    bottom: 90px;
     right: 200px;
     width: 12px;
     height: 18px;
