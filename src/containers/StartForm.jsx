@@ -16,15 +16,16 @@ function StartForm() {
     }
   return (
     <main className={styles.main}>
-      <div className={styles.logo}></div>
+      <header className={styles.logoContainer}>
+          <div className={styles.logo}></div>
+      </header>
       <section className={styles.buttons}>
-        <div onClick={handleLoginPage}>
-            <Button variant={"login"}>로그인하기</Button>
-        </div>
-        <div onClick={handleSignupPage}>
-            <Button variant={"signup"}>회원가입하기</Button>
-        </div>
-       
+          <article onClick={handleLoginPage}>
+              <Button variant={"login"}>로그인하기</Button>
+          </article>
+          <article onClick={handleSignupPage}>
+              <Button variant={"signup"}>회원가입하기</Button>
+          </article>
       </section>
     </main>
   );
