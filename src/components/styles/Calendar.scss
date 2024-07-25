@@ -8,7 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Arial;
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
 
   .month-controls {
     display: grid;
@@ -50,20 +51,43 @@
 
   .dates {
     display: grid;
+    margin-top: 12px;
     grid-template-columns: repeat(7, 42px);
     grid-template-rows: repeat(6, 42px);
     gap: 45px;
     order: 3; /* dates의 순서를 days-of-week 아래로 배치 */
 
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+
+    /* 각 날짜 셀을 중앙 정렬하기 위한 스타일링 */
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .date-text {
+      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
+      text-align: center;
+    }
+
     .date-button {
-      width: 42px;
-      height: 42px;
+      margin-bottom: 7px;
+      width: 30px; /* 고정된 가로 길이 */
+      height: 30px; /* 고정된 세로 길이 */
+      flex-shrink: 0; /* 크기 변경 방지 */
       border-radius: 5px;
       border: 1px solid black;
+      background: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: none;
+      box-sizing: border-box; /* 패딩 및 보더 포함한 크기 계산 */
     }
   }
 
@@ -75,8 +99,12 @@
     }
 
     .dates .date-button {
-      width: 42px;
-      height: 42px;
+      width: 30px; /* 고정된 가로 길이 */
+      height: 30px; /* 고정된 세로 길이 */
+    }
+
+    .dates .date-text {
+      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
     }
   }
 
@@ -88,8 +116,12 @@
     }
 
     .dates .date-button {
-      width: 30px;
-      height: 30px;
+      width: 16px; /* 고정된 가로 길이 */
+      height: 16px; /* 고정된 세로 길이 */
+    }
+
+    .dates .date-text {
+      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
     }
   }
 
@@ -101,8 +133,12 @@
     }
 
     .dates .date-button {
-      width: 18px;
-      height: 18px; /* 버튼의 크기도 줄임 */
+      width: 12px; /* 고정된 가로 길이 */
+      height: 12px; /* 고정된 세로 길이 */
+    }
+
+    .dates .date-text {
+      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
     }
 
     .month-controls {

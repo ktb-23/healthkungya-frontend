@@ -1,4 +1,4 @@
-//캘린더 컴포넌트
+// 캘린더 컴포넌트
 import React, { useState } from 'react';
 import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
@@ -65,8 +65,8 @@ const Calendar = () => {
 
         {[...Array(getLastDateOfMonth()).keys()].map((date) => (
           <div key={date + 1}>
-            {date + 1}
             <button className="date-button"></button>
+            {date + 1}
           </div>
         ))}
       </div>
