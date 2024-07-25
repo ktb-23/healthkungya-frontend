@@ -7,6 +7,7 @@ const useCheckDuplicates = (state) => {
     const debouncedId = useDebounce(state.id, 500);
     const debouncedNickname = useDebounce(state.nickname, 500);
 
+    // 아이디 디바운스를 통한 결과값으로 중복 확인
     useEffect(() => {
         if (debouncedId) {
             const checkId = async () => {
@@ -18,13 +19,14 @@ const useCheckDuplicates = (state) => {
                         setCheckErrors(prev => ({ ...prev, id: "사용 가능합니다." }));
                     }
                 } catch (error) {
-                    console.error("Error checking ID:", error);
+                    console.error("아이디 체크시 오류:", error);
                 }
             };
             checkId();
         }
     }, [debouncedId]);
 
+    // 닉네임 디바운스를 통한 결과값으로 중복 확인
     useEffect(() => {
         if (debouncedNickname) {
             const checkNickname = async () => {
@@ -36,7 +38,7 @@ const useCheckDuplicates = (state) => {
                         setCheckErrors(prev => ({ ...prev, nickname: "사용 가능합니다." }));
                     }
                 } catch (error) {
-                    console.error("Error checking nickname:", error);
+                    console.error("닉네임 체크시 오류", error);
                 }
             };
             checkNickname();
