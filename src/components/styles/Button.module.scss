@@ -16,6 +16,14 @@ background: none;
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
+    @media (max-width: 1200px) {
+        bottom: 30px;
+        right: 150px;
+     }
+     @media (max-width: 700px) {
+        bottom: 0px;
+        right: 120px;
+     }
 }
 .loginback{
     position: relative;
@@ -27,6 +35,15 @@ background: none;
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
+    @media (max-width: 1200px) {
+        bottom: 70px;
+        right: 150px;
+     }
+     @media (max-width: 700px) {
+        bottom: 0px;
+        right: 120px;
+     }
+     
 }
 .login {
     background-color: var(--primary-color);

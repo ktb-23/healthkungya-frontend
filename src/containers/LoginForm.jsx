@@ -30,14 +30,8 @@ function LoginForm() {
         password: state.password
       }
       const response=await useLogin(body)
-      // 성공시 메인페이지 이동
-      if(response.status==200){
-        navigate("/main")
-      }
-      // 실패시 오류 메시지 
-      else{
-        setError(true)
-      }
+      // 성공시 메인페이지 이동 실패시 오류 메시지 
+      response.status==200? navigate("/main"):setError(true)
     }
     else{
       setError(true)
