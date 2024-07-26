@@ -1,47 +1,83 @@
 .profilebox {
   box-sizing: border-box;
   position: absolute;
-  width: 500px;
+  width: 80%; /* 화면 너비에 비례 */
+  max-width: 500px; /* 최대 너비 제한 */
   height: 100px;
-  left: 210px;
-  top: 250px;
+  left: 10%; /* 화면 좌우 여백 */
+  top: 250px; /* 변경되지 않을 정적 Y 위치 */
   border: 2px solid #949494;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 10px; /* 내부 여백 */
+  gap: 10px; /* 요소 사이 간격 */
 }
+
 .profile-image {
-  position: absolute;
   width: 70px;
   height: 70px;
-  left: 40px;
-  top: 35px;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .profile-name {
   position: absolute;
   width: 120px;
   height: 17px;
-  left: 120px;
-  top: 9px;
-
-  font-family: 'goorm Sans OTF';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 17px;
-
-  color: #000000;
+  left: 100px;
+  top: 20px;
 }
 .profile-status {
   position: absolute;
   width: 106px;
   height: 17px;
-  left: 139px;
-  top: 35px;
-
+  left: 119px;
+  top: 45px;
+}
+.profile-name,
+.profile-status {
   font-family: 'goorm Sans OTF';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 17px;
-
   color: #000000;
+  margin: 0; /* 여백 리셋 */
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 768px) {
+  .profilebox {
+    width: 90%; /* 너비 조정 */
+    left: 5%; /* 좌우 여백 조정 */
+  }
+
+  .profile-name,
+  .profile-status {
+    font-size: 14px; /* 폰트 크기 조정 */
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profilebox {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: auto; /* 높이 자동 조정 */
+  }
+
+  .profile-image {
+    margin-bottom: 10px; /* 이미지와 텍스트 간격 */
+  }
+
+  .profile-name,
+  .profile-status {
+    font-size: 12px; /* 더 작은 폰트 크기 */
+    line-height: 14px;
+  }
 }

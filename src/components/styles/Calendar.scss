@@ -2,14 +2,22 @@
   position: absolute; /* 캘린더 위치 조절 */
   width: 543px; /* 캘린더 너비 */
   height: 464.22px; /* 캘린더 높이 */
-  left: 161.5px; /* 페이지에서의 왼쪽 위치 */
-  top: 378.78px; /* 페이지에서의 위쪽 위치 */
+  left: 8%; /* 페이지에서의 왼쪽 위치 */
+  top: 35%; /* 페이지에서의 위쪽 위치 */
 
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'goorm Sans OTF';
   font-style: normal;
+
+  .sample {
+    position: absolute;
+    width: 99.58px;
+    height: 42px;
+    left: 387.8px;
+    top: -10px;
+  }
 
   .month-controls {
     display: grid;
@@ -32,7 +40,7 @@
     }
 
     .prevmonth {
-      margin-left: 50px;
+      margin-left: 60px;
       order: 2;
     }
 
@@ -43,6 +51,7 @@
   }
 
   .days-of-week {
+    margin-top: 10px;
     display: grid;
     grid-template-columns: repeat(7, 42px); /* 7열로 나누기 */
     column-gap: 45px;
@@ -108,7 +117,11 @@
     }
   }
 
-  @media (max-width: 767px) and (min-width: 480px) {
+  @media (max-width: 767px) {
+    .month-controls {
+      margin-left: 10px; /* 여백 조정 */
+    }
+
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 30px);
@@ -116,16 +129,22 @@
     }
 
     .dates .date-button {
-      width: 16px; /* 고정된 가로 길이 */
-      height: 16px; /* 고정된 세로 길이 */
+      width: 28px; /* 크기를 줄임 */
+      height: 28px; /* 크기를 줄임 */
     }
 
     .dates .date-text {
-      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
+      font-size: 10px; /* 글자 크기 축소 */
+      margin-top: 2px; /* date-button의 상단으로부터의 거리 */
     }
   }
 
-  @media (max-width: 479px) {
+  @media (max-width: 480px) {
+    .month-controls {
+      flex-direction: column; /* 세로 정렬 */
+      align-items: center; /* 중앙 정렬 */
+    }
+
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 18px); /* 칼럼 크기를 줄임 */
@@ -138,7 +157,8 @@
     }
 
     .dates .date-text {
-      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
+      font-size: 8px; /* 글자 크기를 더 줄임 */
+      margin-top: 1px; /* date-button의 상단으로부터의 거리 */
     }
 
     .month-controls {
@@ -146,7 +166,7 @@
       margin-bottom: 5px;
 
       .yearmonth {
-        font-size: 12px;
+        font-size: 10px; /* 글자 크기를 더 줄임 */
       }
 
       .prevmonth,
@@ -163,5 +183,9 @@
         }
       }
     }
+  }
+}
+@media (max-width: 767px) {
+  .calendar {
   }
 }

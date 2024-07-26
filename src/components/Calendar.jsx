@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
+import Sample from '../picture/sample.svg';
 
 const Calendar = () => {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
@@ -42,6 +43,9 @@ const Calendar = () => {
 
   return (
     <div className="calendar">
+      <div className="sample">
+        <img src={Sample} />
+      </div>
       <div className="month-controls">
         <button className="prevmonth" onClick={handlePreviousMonth}>
           <img src={montharrowleft} alt="previous month" />

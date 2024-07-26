@@ -2,34 +2,89 @@
   position: absolute; /* absolute positioning */
   width: 119px; /* width of the image */
   height: 119px; /* height of the image */
-  left: 179.5px; /* X position */
-  top: 106px; /* Y position */
+  left: 8%; /* X position */
+  top: 10%; /* Y position */
 }
+
 .home {
   position: absolute;
   width: 24.89px;
   height: 22.81px;
-  left: 474.55px;
-  top: 149.6px;
+  left: calc(50% - 120px); /* 화면 중앙에서 왼쪽으로 이동 */
+  top: 70px; /* Y position */
 }
+
 .search {
   position: absolute;
   width: 26px;
   height: 24.8px;
-  left: 545.45px;
-  top: 148.6px;
+  left: calc(50% - 80px); /* 화면 중앙에서 왼쪽으로 이동 */
+  top: 70px; /* Y position */
 }
+
 .alert {
   position: absolute;
   width: 23px;
   height: 26px;
-  left: 617.45px;
-  top: 148px;
+  left: calc(50%); /* 화면 중앙에 위치 */
+  top: 70px; /* Y position */
+  transform: translateX(20px); /* 약간 오른쪽으로 이동 */
 }
+
 .profile {
   position: absolute;
   width: 28px;
   height: 28px;
-  left: 687.45px;
-  top: 147px;
+  left: calc(50% + 40px); /* 화면 중앙에서 오른쪽으로 이동 */
+  top: 70px; /* Y position */
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 100px; /* 모바일에서 너비 조정 */
+    height: 100px; /* 모바일에서 높이 조정 */
+    left: 3%;
+    top: 11.5%;
+  }
+  .home {
+    width: 20px; /* 모바일에서 너비 조정 */
+    height: 18px; /* 모바일에서 높이 조정 */
+  }
+  .search {
+    width: 22px; /* 모바일에서 너비 조정 */
+    height: 20px; /* 모바일에서 높이 조정 */
+  }
+  .alert {
+    width: 20px; /* 모바일에서 너비 조정 */
+    height: 22px; /* 모바일에서 높이 조정 */
+  }
+  .profile {
+    width: 24px; /* 모바일에서 너비 조정 */
+    height: 24px; /* 모바일에서 높이 조정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 80px; /* 더 작은 화면에서 너비 조정 */
+    height: 80px; /* 더 작은 화면에서 높이 조정 */
+    left: 0%;
+    top: 13%;
+  }
+  .home {
+    width: 16px; /* 더 작은 화면에서 너비 조정 */
+    height: 14px; /* 더 작은 화면에서 높이 조정 */
+  }
+  .search {
+    width: 20px; /* 더 작은 화면에서 너비 조정 */
+    height: 18px; /* 더 작은 화면에서 높이 조정 */
+  }
+  .alert {
+    width: 16px; /* 더 작은 화면에서 너비 조정 */
+    height: 18px; /* 더 작은 화면에서 높이 조정 */
+  }
+  .profile {
+    width: 20px; /* 더 작은 화면에서 너비 조정 */
+    height: 20px; /* 더 작은 화면에서 높이 조정 */
+  }
 }
