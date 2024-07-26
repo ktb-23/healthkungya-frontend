@@ -1,4 +1,4 @@
-// 캘린더 컴포넌트
+//NOTE:캘린더 컴포넌트
 import React, { useState } from 'react';
 import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';

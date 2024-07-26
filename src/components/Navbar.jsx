@@ -1,4 +1,4 @@
-// 상단 로고, 네비게이션바
+//NOTE: 상단 로고, 네비게이션바
 
 import React from 'react';
 import Logo from '../picture/logo.png';
