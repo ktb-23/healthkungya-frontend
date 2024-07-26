@@ -5,7 +5,7 @@
   max-width: 500px; /* 최대 너비 제한 */
   height: 100px;
   left: 10%; /* 화면 좌우 여백 */
-  top: 250px; /* 변경되지 않을 정적 Y 위치 */
+  top: 23%; /* 변경되지 않을 정적 Y 위치 */
   border: 2px solid #949494;
   border-radius: 5px;
   display: flex;
@@ -50,7 +50,7 @@
 }
 
 /* 미디어 쿼리 */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (min-width: 481px) {
   .profilebox {
     width: 90%; /* 너비 조정 */
     left: 5%; /* 좌우 여백 조정 */

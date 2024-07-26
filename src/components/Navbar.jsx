@@ -12,10 +12,12 @@ const Navbar = () => {
   return (
     <>
       <img className="logo" src={Logo} alt="Logo" />
-      <img className="home" src={Home} alt="Home" />
-      <img className="search" src={Search} alt="Search" />
-      <img className="alert" src={Alert} alt="Alert" />
-      <img className="profile" src={Profile} alt="Profile" />
+      <div className="navicon">
+        <img className="home" src={Home} alt="Home" />
+        <img className="search" src={Search} alt="Search" />
+        <img className="alert" src={Alert} alt="Alert" />
+        <img className="profile" src={Profile} alt="Profile" />
+      </div>
     </>
   );
 };
