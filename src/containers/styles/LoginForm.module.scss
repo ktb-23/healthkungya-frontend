@@ -11,6 +11,25 @@ body {
   height: 100vh;
   box-sizing: border-box;
 }
+.loginmodal {
+  width: 506px;
+  height: 740px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  box-sizing: border-box;
+  @media (max-width: 1200px) {
+    width: 400px;
+    height: 600px;
+  }
+  @media (max-width: 700px) {
+    width: 300px;
+    height: 400px;
+  }
+}
 .logo {
   width: 227.17px;
   height: 221px;
@@ -18,10 +37,18 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
+  @media (max-width: 1200px) {
+    width: 150px;
+    height: 150px;
+  }
+  @media (max-width: 700px) {
+    width: 120px;
+    height: 120px;
+  }
 }
 
-.buttons {
+.inputs {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-medium);
+  gap: var(--input-gap, var(--spacing-medium));
 }
