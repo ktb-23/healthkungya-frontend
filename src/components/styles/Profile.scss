@@ -50,9 +50,9 @@
 }
 
 /* 미디어 쿼리 */
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .profilebox {
-    width: 100%; /* 너비 조정 */
+    width: 400px; /* 너비 조정 */
     left: 4%; /* 좌우 여백 조정 */
   }
 
@@ -65,8 +65,8 @@
 
 @media (max-width: 480px) {
   .profilebox {
-    width: 100%; /* 너비 조정 */
-    left: 4%; /* 좌우 여백 조정 */
+    width: 400px; /* 너비 조정 */
+    left: 5%; /* 좌우 여백 조정 */
   }
 
   .profile-name,

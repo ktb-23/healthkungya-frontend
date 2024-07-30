@@ -1,14 +1,25 @@
-//NOTE:식사, 운동, 체중 등 표시 인덱스 컴포넌트
 import React from 'react';
+import styles from './styles/Index.module.scss';
 
 const Index = ({ output, indexicon }) => {
+  const getBoxClass = () => {
+    switch (output) {
+      case '식단':
+        return styles.food;
+      case '운동':
+        return styles.exercise;
+      case '체중':
+        return styles.weight;
+      default:
+        return '';
+    }
+  };
+
   return (
-    <>
-      <div className="index">
-        <img src={indexicon} alt="indexicon" />
-        <p className="indextxt">{output}</p>
-      </div>
-    </>
+    <div className={`${styles.index} ${getBoxClass()}`}>
+      <img src={indexicon} alt="indexicon" />
+      <div className={styles.indextxt}>{output}</div>
+    </div>
   );
 };
 

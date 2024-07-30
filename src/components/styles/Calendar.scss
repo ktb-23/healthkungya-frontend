@@ -99,7 +99,7 @@
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1100px) {
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 42px);
@@ -116,7 +116,7 @@
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1100px) {
     .month-controls {
       margin-left: 10px; /* 여백 조정 */
     }
@@ -137,77 +137,13 @@
       margin-top: 2px; /* date-button의 상단으로부터의 거리 */
     }
   }
-
-  @media (max-width: 480px) {
-    .sample {
-      display: flex;
-      width: 30px;
-      height: 35px;
-      top: 1%;
-      left: 80%;
-    }
-    .month-controls {
-      margin-left: 50%;
-      margin-top: 10px; /* 여백 조정 */
-    }
-
-    .days-of-week,
-    .dates {
-      grid-template-columns: repeat(7, 24px); /* 칼럼 크기를 줄임 */
-      gap: 5px;
-      margin-left: 20%; /* 간격을 늘려서 겹침 방지 */
-    }
-
-    .dates .date-button {
-      width: 20px; /* 고정된 가로 길이 */
-      height: 20px; /* 고정된 세로 길이 */
-    }
-
-    .dates .date-text {
-      font-size: 8px; /* 글자 크기를 더 줄임 */
-      margin-top: 1px; /* date-button의 상단으로부터의 거리 */
-    }
-
-    .month-controls {
-      width: 100%;
-      margin-bottom: 5px;
-
-      .yearmonth {
-        font-size: 12px; /* 글자 크기를 더 줄임 */
-      }
-
-      .prevmonth,
-      .nextmonth {
-        width: 12px;
-        height: 12px;
-        position: relative;
-        padding: 0;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain; /* 이미지 크기를 버튼 크기에 맞춤 */
-        }
-      }
-    }
-  }
 }
-@media (max-width: 767px) {
+@media (max-width: 1100px) {
   .calendar {
     position: absolute; /* 캘린더 위치 조절 */
     width: 400px; /* 캘린더 너비 */
     height: 324.22px; /* 캘린더 높이 */
-    left: 9%; /* 페이지에서의 왼쪽 위치 */
+    left: 4%; /* 페이지에서의 왼쪽 위치 */
     top: 40%; /* 페이지에서의 위쪽 위치 */
-  }
-}
-
-@media (max-width: 480px) {
-  .calendar {
-    position: absolute; /* 캘린더 위치 조절 */
-    width: 400px; /* 캘린더 너비 */
-    height: 324.22px; /* 캘린더 높이 */
-    left: -11%; /* 페이지에서의 왼쪽 위치 */
-    top: 42%; /* 페이지에서의 위쪽 위치 */
   }
 }

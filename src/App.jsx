@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
-import FixForm from './containers/FixForm';
+import MainForm from './containers/MainForm';
 
 function App() {
   return (
     <>
-      <FixForm />
+      <MainForm />
     </>
   );
 }

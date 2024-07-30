@@ -1,106 +1,38 @@
+.header {
+  position: relative; /* relative position을 사용하여 자식 요소의 absolute 위치 설정 가능 */
+}
+
 .logo {
-  position: absolute; /* absolute positioning */
-  width: 119px; /* width of the image */
-  height: 119px; /* height of the image */
-  left: 8%; /* X position */
-  top: 8%; /* Y position */
+  position: absolute;
+  height: 100px;
+  width: 100px; /* 'weight'를 'width'로 수정 */
+  left: 10%;
+  top: 8%;
 }
+
 .navicon {
+  position: absolute;
+  left: calc(8% + 400px); /* logo의 left 위치에 400px 추가 */
+  top: 14%;
 }
+
 .home {
-  position: absolute;
-  width: 24.89px;
-  height: 22.81px;
-  left: 33.3%; /* 화면 중앙에서 왼쪽으로 이동 */
-  top: 16%; /* Y position */
+  margin-right: 10px;
 }
-
 .search {
-  position: absolute;
-  width: 26px;
-  height: 24.8px;
-  left: 37.8%; /* 화면 중앙에서 왼쪽으로 이동 */
-  top: 16%; /* Y position */
+  margin-right: 10px;
 }
-
 .alert {
-  position: absolute;
-  width: 23px;
-  height: 26px;
-  left: 42%; /* 화면 중앙에 위치 */
-  top: 16%; /* Y position */
+  margin-right: 10px;
 }
-
-.profile {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  left: 47%; /* 화면 중앙에서 오른쪽으로 이동 */
-  top: 16%; /* Y position */
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1110px) {
   .logo {
-    width: 100px; /* 모바일에서 너비 조정 */
-    height: 100px; /* 모바일에서 높이 조정 */
     left: 3%;
-    top: 8.5%;
+    top: 8%;
   }
-  .home {
-    width: 24.89px;
-    height: 22.81px;
-    left: 50%;
-    top: 15%; /* 모바일에서 높이 조정 */
-  }
-  .search {
-    width: 22px; /* 모바일에서 너비 조정 */
-    height: 22px;
-    left: 58%;
-    top: 15%; /* 모바일에서 높이 조정 */
-  }
-  .alert {
-    width: 20px; /* 모바일에서 너비 조정 */
-    height: 22px;
-    left: 66%;
-    top: 15%; /* 모바일에서 높이 조정 */
-  }
-  .profile {
-    width: 24px; /* 모바일에서 너비 조정 */
-    height: 24px;
-    left: 73.6%;
-    top: 15%; /* 모바일에서 높이 조정 */
-  }
-}
 
-@media (max-width: 480px) {
-  .logo {
-    width: 80px; /* 더 작은 화면에서 너비 조정 */
-    height: 80px; /* 더 작은 화면에서 높이 조정 */
-    left: 7%;
-    top: 12%;
-  }
-  .home {
-    width: 20px; /* 더 작은 화면에서 너비 조정 */
-    height: 18px;
-    left: 50%;
-    top: 18%; /* 더 작은 화면에서 높이 조정 */
-  }
-  .search {
-    width: 20px; /* 더 작은 화면에서 너비 조정 */
-    height: 19px;
-    left: 60%;
-    top: 18%; /* 더 작은 화면에서 높이 조정 */
-  }
-  .alert {
-    width: 16px; /* 더 작은 화면에서 너비 조정 */
-    height: 18px;
-    left: 70.5%;
-    top: 18%; /* 더 작은 화면에서 높이 조정 */
-  }
-  .profile {
-    width: 20px; /* 더 작은 화면에서 너비 조정 */
-    height: 20px;
-    left: 80%;
-    top: 18%; /* 더 작은 화면에서 높이 조정 */
+  .navicon {
+    width: 200px;
+    left: calc(-10% + 300px); /* 미디어 쿼리에서도 적용 */
   }
 }
