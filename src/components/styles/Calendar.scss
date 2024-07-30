@@ -1,9 +1,9 @@
 .calendar {
-  position: absolute; /* 캘린더 위치 조절 */
-  width: 543px; /* 캘린더 너비 */
-  height: 464.22px; /* 캘린더 높이 */
-  left: 8%; /* 페이지에서의 왼쪽 위치 */
-  top: 40%; /* 페이지에서의 위쪽 위치 */
+  position: absolute;
+  width: 543px;
+  height: 464.22px;
+  left: 8%;
+  top: 40%;
 
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@
 
   .month-controls {
     display: grid;
-    grid-template-columns: repeat(7, 42px); /* 7열로 나누기 */
+    grid-template-columns: repeat(7, 42px);
     width: 100%;
     margin-bottom: 10px;
     margin-left: 100px;
@@ -52,9 +52,9 @@
   .days-of-week {
     margin-top: 10px;
     display: grid;
-    grid-template-columns: repeat(7, 42px); /* 7열로 나누기 */
+    grid-template-columns: repeat(7, 42px);
     column-gap: 45px;
-    order: 2; /* 위로 올리기 위해 order 변경 */
+    order: 2;
   }
 
   .dates {
@@ -63,14 +63,13 @@
     grid-template-columns: repeat(7, 42px);
     grid-template-rows: repeat(6, 42px);
     gap: 45px;
-    order: 3; /* dates의 순서를 days-of-week 아래로 배치 */
+    order: 3;
 
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;
     color: #000000;
 
-    /* 각 날짜 셀을 중앙 정렬하기 위한 스타일링 */
     div {
       display: flex;
       flex-direction: column;
@@ -80,22 +79,22 @@
     }
 
     .date-text {
-      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
+      margin-top: 4px;
       text-align: center;
     }
 
     .date-button {
       margin-bottom: 7px;
-      width: 30px; /* 고정된 가로 길이 */
-      height: 30px; /* 고정된 세로 길이 */
-      flex-shrink: 0; /* 크기 변경 방지 */
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
       border-radius: 5px;
       border: 1px solid black;
       background: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-sizing: border-box; /* 패딩 및 보더 포함한 크기 계산 */
+      box-sizing: border-box;
     }
   }
 
@@ -107,43 +106,44 @@
     }
 
     .dates .date-button {
-      width: 30px; /* 고정된 가로 길이 */
-      height: 30px; /* 고정된 세로 길이 */
+      width: 30px;
+      height: 30px;
     }
 
     .dates .date-text {
-      margin-top: 4px; /* date-button의 상단으로부터의 거리 */
+      margin-top: 4px;
     }
   }
 
   @media (max-width: 1100px) {
     .month-controls {
-      margin-left: 10px; /* 여백 조정 */
+      margin-left: 10px;
     }
 
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 42px);
-      gap: 10px; /* 간격 조정하여 겹침 방지 */
+      gap: 10px;
     }
 
     .dates .date-button {
-      width: 28px; /* 크기를 줄임 */
-      height: 28px; /* 크기를 줄임 */
+      width: 28px;
+      height: 28px;
     }
 
     .dates .date-text {
-      font-size: 10px; /* 글자 크기 축소 */
-      margin-top: 2px; /* date-button의 상단으로부터의 거리 */
+      font-size: 10px;
+      margin-top: 2px;
     }
   }
 }
+
 @media (max-width: 1100px) {
   .calendar {
-    position: absolute; /* 캘린더 위치 조절 */
-    width: 400px; /* 캘린더 너비 */
-    height: 324.22px; /* 캘린더 높이 */
-    left: 4%; /* 페이지에서의 왼쪽 위치 */
-    top: 40%; /* 페이지에서의 위쪽 위치 */
+    position: absolute;
+    width: 400px;
+    height: 324.22px;
+    left: 4%;
+    top: 40%;
   }
 }

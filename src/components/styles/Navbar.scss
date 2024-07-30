@@ -1,18 +1,18 @@
 .header {
-  position: relative; /* relative position을 사용하여 자식 요소의 absolute 위치 설정 가능 */
+  position: relative;
 }
 
 .logo {
   position: absolute;
   height: 100px;
-  width: 100px; /* 'weight'를 'width'로 수정 */
+  width: 100px;
   left: 10%;
   top: 8%;
 }
 
 .navicon {
   position: absolute;
-  left: calc(8% + 400px); /* logo의 left 위치에 400px 추가 */
+  left: calc(8% + 400px);
   top: 14%;
 }
 
@@ -33,6 +33,6 @@
 
   .navicon {
     width: 200px;
-    left: calc(-10% + 300px); /* 미디어 쿼리에서도 적용 */
+    left: calc(-10% + 300px);
   }
 }
