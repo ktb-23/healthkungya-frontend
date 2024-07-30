@@ -1,0 +1,53 @@
+.button {
+  width: 225px;
+  height: 36px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.registerback {
+  position: relative;
+  bottom: 30px;
+  right: 200px;
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 30px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.loginback {
+  position: relative;
+  bottom: 90px;
+  right: 200px;
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.login {
+  background-color: var(--primary-color);
+}
+
+.signup {
+  background-color: var(--primary-color);
+}

@@ -1,12 +1,13 @@
-import './App.css';
 import React from 'react';
-import MainForm from './containers/MainForm';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import StartRoutes from './routes/StartRoutes';
+import './App.css';
 
 function App() {
   return (
-    <>
-      <MainForm />
-    </>
+    <Router>
+      <StartRoutes />
+    </Router>
   );
 }
 
