@@ -6,6 +6,7 @@ import { ActionType, initialState, LoginReducer } from '../reducers/Login';
 import { useNavigate } from 'react-router-dom';
 import useFormValidation from '../hooks/useValidation';
 import useLogin from '../api/useLogin';
+
 function LoginForm() {
   // 복잡한 상태관리 최적화
   const [state, dispatch] = useReducer(LoginReducer, initialState);
@@ -30,12 +31,13 @@ function LoginForm() {
         password: state.password,
       };
       const response = await useLogin(body);
-      // 성공시 메인페이지 이동 실패시 오류 메시지
-      response.status == 200 ? navigate('/main') : setError(true);
+      // 성공시 MainForm으로 이동, 실패시 오류 메시지
+      response.status === 200 ? navigate('/mainform') : setError(true); // 수정된 부분
     } else {
       setError(true);
     }
   };
+
   return (
     <main className={styles.main}>
       <div className={styles.loginmodal}>
