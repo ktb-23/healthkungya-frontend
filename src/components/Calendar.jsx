@@ -44,7 +44,7 @@ const Calendar = () => {
   return (
     <div className="calendar">
       <div className="sample">
-        <img src={Sample} />
+        <img src={Sample} alt="sampleimg" />
       </div>
       <div className="month-controls">
         <button className="prevmonth" onClick={handlePreviousMonth}>

@@ -12,9 +12,8 @@
   font-style: normal;
 
   .sample {
+    display: flex;
     position: absolute;
-    width: 99.58px;
-    height: 42px;
     left: 71%;
     top: -10px;
   }
@@ -140,15 +139,23 @@
   }
 
   @media (max-width: 480px) {
+    .sample {
+      display: flex;
+      width: 30px;
+      height: 35px;
+      top: 1%;
+      left: 80%;
+    }
     .month-controls {
-      margin-left: 120px;
+      margin-left: 50%;
       margin-top: 10px; /* 여백 조정 */
     }
 
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 24px); /* 칼럼 크기를 줄임 */
-      gap: 5px; /* 간격을 늘려서 겹침 방지 */
+      gap: 5px;
+      margin-left: 20%; /* 간격을 늘려서 겹침 방지 */
     }
 
     .dates .date-button {
@@ -200,7 +207,7 @@
     position: absolute; /* 캘린더 위치 조절 */
     width: 400px; /* 캘린더 너비 */
     height: 324.22px; /* 캘린더 높이 */
-    left: -20%; /* 페이지에서의 왼쪽 위치 */
-    top: 40%; /* 페이지에서의 위쪽 위치 */
+    left: -11%; /* 페이지에서의 왼쪽 위치 */
+    top: 42%; /* 페이지에서의 위쪽 위치 */
   }
 }
