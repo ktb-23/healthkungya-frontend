@@ -77,6 +77,65 @@
 
      -> 저장할 때 자동으로 Airbnb 코딩 규칙으로 변환되어 저장된다.
 
+## 로컬 개발 환경 설정 가이드
+
+이 문서는 Mac에서 React, Node.js, MySQL을 사용하여 로컬 개발 환경을 설정하는 방법을 안내합니다.
+
+## 📋 목표 및 개요
+
+이 가이드는 다음을 설정하는 방법을 설명합니다:
+- Node.js 및 npm
+- MySQL
+- React 애플리케이션
+- Node.js 서버
+
+## 🛠️ 사전 요구 사항
+
+- **하드웨어**: Macbook pro 14 inch m2 pro
+- **소프트웨어**: 최신 macOS: sonoma 14.5
+- **기타**: 시스템 관리자 권한
+- ** 크롭 권장 **
+
+## 🚀 초기 설정
+
+### 1. Homebrew 설치
+
+Homebrew는 macOS의 패키지 관리자입니다. 터미널에서 다음 명령어를 실행하여 설치합니다:
+
+ Node.js 및 npm 설치
+```bash
+brew install node
+
+// 설치 확인
+node -v
+npm -v
+
+```
+ MySQL 설치
+
+ ```bash
+brew install mysql
+
+// 서비스 시작
+brew services start mysql
+
+// 버전 확인
+mysql --version
+```
+
+   **프로젝트 클론:**
+   ```bash
+   git clone https://github.com/ktb-23/healthkungya-frontend.git
+   git clone https://github.com/ktb-23/healthkungya-backend.git
+
+  cd healthkungya-frontend
+   cd healthkungya-backend
+
+   의존성 설치: npm install
+
+   프론트 엔드 개발 실행: npm run dev
+   백엔드 개발 실행: npm run dev
+   ```
 ### 참고링크
 
 (https://kyuhyuk.kr/article/javascript/2021/05/13/ESLint-Prettier-Airbnb-Javascript-Style-Setting)

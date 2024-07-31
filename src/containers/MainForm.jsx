@@ -1,1 +1,12 @@
-//식사, 운동, 체중, 그래프 한눈 확인 폼
+import React from 'react';
+import FixForm from './FixForm.jsx';
+import './styles/MainForm.scss';
+const MainForm = () => {
+  return (
+    <>
+      <FixForm />
+    </>
+  );
+};
+
+export default MainForm;

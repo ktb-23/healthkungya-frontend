@@ -1,0 +1,79 @@
+.profilebox {
+  box-sizing: border-box;
+  position: absolute;
+  width: 80%;
+  max-width: 500px;
+  height: 100px;
+  left: 10%;
+  top: 23%;
+  border: 2px solid #949494;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.profile-image {
+  width: 70px;
+  height: 70px;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-name {
+  position: absolute;
+  width: 120px;
+  height: 17px;
+  left: 100px;
+  top: 20px;
+}
+
+.profile-status {
+  position: absolute;
+  width: 106px;
+  height: 17px;
+  left: 119px;
+  top: 45px;
+}
+
+.profile-name,
+.profile-status {
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+  color: #000000;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .profilebox {
+    width: 400px;
+    left: 4%;
+  }
+
+  .profile-name,
+  .profile-status {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profilebox {
+    width: 400px;
+    left: 5%;
+  }
+
+  .profile-name,
+  .profile-status {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}

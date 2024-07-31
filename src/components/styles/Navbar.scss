@@ -1,0 +1,38 @@
+.header {
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  left: 10%;
+  top: 8%;
+}
+
+.navicon {
+  position: absolute;
+  left: calc(8% + 400px);
+  top: 14%;
+}
+
+.home {
+  margin-right: 10px;
+}
+.search {
+  margin-right: 10px;
+}
+.alert {
+  margin-right: 10px;
+}
+@media (max-width: 1110px) {
+  .logo {
+    left: 3%;
+    top: 8%;
+  }
+
+  .navicon {
+    width: 200px;
+    left: calc(-10% + 300px);
+  }
+}
