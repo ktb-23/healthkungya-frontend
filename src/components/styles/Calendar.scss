@@ -55,6 +55,17 @@
     grid-template-columns: repeat(7, 42px);
     column-gap: 45px;
     order: 2;
+    justify-content: center;
+    gap: 0;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 42px;
+      height: 42px;
+      font-size: 14px; /* 요일 텍스트 크기를 조정 */
+    }
   }
 
   .dates {
@@ -98,7 +109,7 @@
     }
   }
 
-  @media (min-width: 1100px) {
+  @media (min-width: 1200px) {
     .days-of-week,
     .dates {
       grid-template-columns: repeat(7, 42px);
@@ -115,7 +126,7 @@
     }
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .month-controls {
       margin-left: 10px;
     }
@@ -138,7 +149,7 @@
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .calendar {
     position: absolute;
     width: 400px;

@@ -25,7 +25,7 @@
 .alert {
   margin-right: 10px;
 }
-@media (max-width: 1110px) {
+@media (max-width: 1200px) {
   .logo {
     left: 3%;
     top: 8%;
@@ -33,6 +33,6 @@
 
   .navicon {
     width: 200px;
-    left: calc(-10% + 300px);
+    left: 280px;
   }
 }
