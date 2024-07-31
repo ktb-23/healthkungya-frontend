@@ -1,0 +1,26 @@
+.index-container {
+  position: absolute;
+  width: 515.18px;
+  height: 590px;
+  left: 50%;
+  top: 22%;
+}
+
+@media (max-width: 1110px) {
+  .index-container {
+    position: absolute;
+    width: 515.18px;
+    height: 590px;
+    left: 8%;
+    top: 750px;
+  }
+}
+@media (max-width: 480px) {
+  .index-container {
+    position: absolute;
+    width: 515.18px;
+    height: 590px;
+    left: 10%;
+    top: 80%;
+  }
+}

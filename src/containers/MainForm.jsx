@@ -9,6 +9,11 @@ const MainForm = () => {
   return (
     <>
       <FixForm />
+      <div className="index-container">
+        <Index indexicon={Foodindex} output="식단" />
+        <Index indexicon={Exindex} output="운동" />
+        <Index indexicon={Weightindex} output="체중" />
+      </div>
     </>
   );
 };
