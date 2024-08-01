@@ -107,6 +107,9 @@
       align-items: center;
       box-sizing: border-box;
     }
+    .date-button.has-kcal {
+      background-color: #ffcc00; // 원하는 배경색으로 변경
+    }
   }
 
   @media (min-width: 1200px) {

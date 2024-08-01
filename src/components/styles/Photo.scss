@@ -1,0 +1,50 @@
+.morning {
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 153px;
+  height: 164px;
+  left: 52%;
+  top: 30%;
+  @media (max-width: 1200px) {
+    width: 122px;
+    left: 31px;
+    top: 730px;
+  }
+}
+
+.lunch {
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 153px;
+  height: 164px;
+  left: 67%;
+  top: 30%;
+  @media (max-width: 1200px) {
+    width: 122px;
+    left: 161px;
+    top: 730px;
+  }
+}
+
+.dinner {
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 153px;
+  height: 164px;
+  left: 82%;
+  top: 30%;
+  @media (max-width: 1200px) {
+    width: 122px;
+    left: 290px;
+    top: 730px;
+  }
+}

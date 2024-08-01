@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles/Output.module.scss'; // CSS 모듈을 임포트합니다.
 
-const Output = ({ text, children }) => {
+const Output = ({ text, kcal, children }) => {
   // text에 따라서 동적으로 클래스 네임을 획득
   const getOutputClass = () => {
     switch (text) {
@@ -23,7 +23,11 @@ const Output = ({ text, children }) => {
   };
 
   return (
-    <div className={`${styles.outputbox} ${getOutputClass()}`}>{children}</div>
+    <div className={`${styles.outputbox} ${getOutputClass()}`}>
+      {children} {/* 기존 children을 그대로 두고 */}
+      {kcal && <div className={styles.kcalDisplay}>{kcal}kcal</div>}{' '}
+      {/* Kcal 표시 부분 */}
+    </div>
   );
 };
 
