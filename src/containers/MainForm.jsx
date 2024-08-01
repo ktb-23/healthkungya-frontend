@@ -106,6 +106,7 @@ const MainForm = () => {
         <Output text="운동소모">소모칼로리: </Output>
         <Output text="체중">체중: {selectedDayData.weight}</Output>
       </div>
+      <button className="graph-button">그래프 확인하기</button>
     </>
   );
 };

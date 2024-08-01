@@ -6,6 +6,26 @@
   top: 22%;
 }
 
+.graph-button {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 160px;
+  height: 46px;
+  left: 84%;
+  top: 85%;
+  background-color: white;
+
+  border: 1px solid #000000;
+  border-radius: 5px;
+  @media (max-width: 1200px) {
+    width: 140px;
+    height: 36px;
+    left: 280px;
+    top: 1130px;
+  }
+}
+
 @media (max-width: 1200px) {
   .index-container {
     position: absolute;
