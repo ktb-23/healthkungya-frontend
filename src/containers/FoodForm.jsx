@@ -1,5 +1,5 @@
 //NOTE:음식 수정폼
-// Food.jsx
+// TODO: kcal 데이터 받아서 넘겨주기, 인공지능 넣기, 디자인 넣기
 import React from 'react';
 
 export const kcal = {
