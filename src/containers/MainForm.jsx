@@ -33,17 +33,27 @@ const MainForm = () => {
       },
       exercise: '50분 달리기',
       weight: '70kg',
+      photos: {
+        morning: '/path/to/morning/photo.jpg',
+        lunch: '/path/to/lunch/photo.jpg',
+        dinner: '/path/to/dinner/photo.jpg',
+      },
     },
     // 필요한 많은 날짜 데이터 추가
   });
 
-  // 주어진 날짜의 식단 데이터 확인하여 배경색 적용 결정하는 함수
+  // 주어진 날짜의 식단 데이터를 확인하여 배경색 적용 결정하는 함수
   const checkKcal = (date) => {
     const mealKcal = dailyData[date]?.diet;
     return mealKcal && mealKcal.breakfast && mealKcal.lunch && mealKcal.dinner;
   };
 
-  // 주어진 날짜로 선택할 수 있는 함수
+  // 주어진 날짜에 운동 여부를 확인하여 배경색 적용 결정하는 함수
+  const checkExercise = (date) => {
+    return !!dailyData[date]?.exercise;
+  };
+
+  // 현재 날짜를 선택하는 함수
   const selectDate = (date) => {
     setSelectedDate(date);
   };
@@ -53,12 +63,14 @@ const MainForm = () => {
     diet: {},
     exercise: '',
     weight: '',
+    photos: {},
   };
 
   return (
     <>
       <FixForm
         checkKcal={checkKcal}
+        checkExercise={checkExercise}
         selectDate={selectDate}
         currentYearMonth={{
           year: parseInt(selectedDate.slice(0, 4)),
@@ -76,23 +88,23 @@ const MainForm = () => {
         <Button variant={'weightchange'}>수정하기</Button>
       </div>
       <div className="photo-container">
-        <Photo meal="morning" />
-        <Photo meal="lunch" />
-        <Photo meal="dinner" />
+        <Photo meal="morning" imageSrc={selectedDayData.photos.morning} />
+        <Photo meal="lunch" imageSrc={selectedDayData.photos.lunch} />
+        <Photo meal="dinner" imageSrc={selectedDayData.photos.dinner} />
       </div>
       <div className="mainoutput-container">
-        <Output text="식단-아침" kcal={selectedDayData.diet.breakfast}>
-          아침
+        <Output text="식단-아침">
+          아침: {selectedDayData.diet.breakfast} kcal
         </Output>
-        <Output text="식단-점심" kcal={selectedDayData.diet.lunch}>
-          점심
+        <Output text="식단-점심">
+          점심: {selectedDayData.diet.lunch} kcal
         </Output>
-        <Output text="식단-저녁" kcal={selectedDayData.diet.dinner}>
-          저녁
+        <Output text="식단-저녁">
+          저녁: {selectedDayData.diet.dinner} kcal
         </Output>
-        <Output text="운동">{selectedDayData.exercise}</Output>
-        <Output text="운동소모">소모칼로리</Output>
-        <Output text="체중">{selectedDayData.weight}</Output>
+        <Output text="운동">종목: {selectedDayData.exercise}</Output>
+        <Output text="운동소모">소모칼로리: </Output>
+        <Output text="체중">체중: {selectedDayData.weight}</Output>
       </div>
     </>
   );

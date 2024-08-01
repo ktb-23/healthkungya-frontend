@@ -4,7 +4,12 @@ import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
 
-const Calendar = ({ checkKcal, selectDate, currentYearMonth }) => {
+const Calendar = ({
+  checkKcal,
+  checkExercise,
+  selectDate,
+  currentYearMonth,
+}) => {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
   const [currentYear, setCurrentYear] = useState(currentYearMonth.year);
@@ -78,16 +83,16 @@ const Calendar = ({ checkKcal, selectDate, currentYearMonth }) => {
 
         {[...Array(getLastDateOfMonth()).keys()].map((date) => {
           const dateString = getDateString(currentYear, currentMonth, date + 1);
-          const buttonClass = checkKcal(dateString)
-            ? 'date-button has-kcal'
-            : 'date-button';
+          const isKcal = checkKcal(dateString);
+          const isExercise = checkExercise(dateString);
+          const buttonClass = `date-button ${isKcal ? 'has-kcal' : ''} ${isExercise ? 'has-exercise' : ''}`;
 
           return (
             <div key={date + 1} className="date-container">
               <button
                 className={buttonClass}
                 onClick={() => selectDate(dateString)}
-              />
+              ></button>
               <div className="date-label">{date + 1}</div>
             </div>
           );

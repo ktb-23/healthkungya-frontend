@@ -1,12 +1,16 @@
-//NOTE:사진 업로드 표시 컴포넌트
+// Photo.jsx
 import React from 'react';
 import './styles/Photo.scss';
 
-const Photo = ({ meal }) => {
+const Photo = ({ meal, imageSrc }) => {
   return (
-    <>
-      <div className={meal}></div>
-    </>
+    <div className={meal}>
+      {imageSrc ? (
+        <img src={imageSrc} alt={`${meal} preview`} />
+      ) : (
+        'No image available'
+      )}
+    </div>
   );
 };
 

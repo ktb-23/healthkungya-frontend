@@ -107,8 +107,17 @@
       align-items: center;
       box-sizing: border-box;
     }
+
     .date-button.has-kcal {
-      background-color: #ffcc00; // 원하는 배경색으로 변경
+      background: linear-gradient(to right, transparent 50%, #afeb92 50%);
+    }
+
+    .date-button.has-exercise {
+      background: linear-gradient(to right, #86baeb 50%, transparent 50%);
+    }
+
+    .date-button.has-kcal.has-exercise {
+      background: linear-gradient(to right, #86baeb 50%, #afeb92 50%);
     }
   }
 
