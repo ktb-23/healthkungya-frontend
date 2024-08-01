@@ -49,7 +49,7 @@ const Calendar = ({
     return `${year}-${('0' + month).slice(-2)}-${('0' + day).slice(-2)}`;
   };
 
-  //NOTE: 현재 월은 currentYearMonth가 변경될 때 설정되어야 한다.
+  // 현재 월은 currentYearMonth가 변경될 때 설정되어야 한다.
   useEffect(() => {
     setCurrentYear(currentYearMonth.year);
     setCurrentMonth(currentYearMonth.month);
