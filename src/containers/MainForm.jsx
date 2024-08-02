@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm.jsx';
 import Index from '../components/Index.jsx';
 import Foodindex from '../picture/foodindex.svg';
@@ -10,7 +11,7 @@ import Output from '../components/Output.jsx';
 import Photo from '../components/Photo.jsx';
 import { kcal as foodKcal } from './FoodForm.jsx';
 
-// NOTE: 오늘 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
+// Function to get today's date in YYYY-MM-DD format.
 const getTodayDateString = () => {
   const today = new Date();
   const year = today.getFullYear();
@@ -22,8 +23,6 @@ const getTodayDateString = () => {
 const MainForm = () => {
   const todayDateString = getTodayDateString();
   const [selectedDate, setSelectedDate] = useState(todayDateString);
-
-  // NOTE:날짜별로 정보를 저장합니다.
   const [dailyData, setDailyData] = useState({
     [todayDateString]: {
       diet: {
@@ -39,31 +38,33 @@ const MainForm = () => {
         dinner: '/path/to/dinner/photo.jpg',
       },
     },
-    // NOTE: 필요한 많은 날짜 데이터 추가
   });
 
-  // NOTE:주어진 날짜의 식단 데이터를 확인하여 배경색 적용 결정하는 함수
   const checkKcal = (date) => {
     const mealKcal = dailyData[date]?.diet;
     return mealKcal && mealKcal.breakfast && mealKcal.lunch && mealKcal.dinner;
   };
 
-  // NOTE:주어진 날짜에 운동 여부를 확인하여 배경색 적용 결정하는 함수
   const checkExercise = (date) => {
     return !!dailyData[date]?.exercise;
   };
 
-  // NOTE:현재 날짜를 선택하는 함수
   const selectDate = (date) => {
     setSelectedDate(date);
   };
 
-  // NOTE:현재 선택된 날짜에 대한 데이터를 가져옴
   const selectedDayData = dailyData[selectedDate] || {
     diet: {},
     exercise: '',
     weight: '',
     photos: {},
+  };
+
+  const navigate = useNavigate(); // Create a navigate function
+
+  const handleFoodChangeClick = () => {
+    console.log('Navigating to /foodupdate'); // Debug log
+    navigate('/foodupdate');
   };
 
   return (
@@ -83,7 +84,10 @@ const MainForm = () => {
         <Index indexicon={Weightindex} output="체중" />
       </div>
       <div className="change">
-        <Button variant={'foodchange'}>수정하기</Button>
+        {/* Attach the click handler */}
+        <Button variant={'foodchange'} onClick={handleFoodChangeClick}>
+          수정하기
+        </Button>
         <Button variant={'exchange'}>수정하기</Button>
         <Button variant={'weightchange'}>수정하기</Button>
       </div>
@@ -106,7 +110,9 @@ const MainForm = () => {
         <Output text="운동소모">소모칼로리: </Output>
         <Output text="체중">체중: {selectedDayData.weight}</Output>
       </div>
-      <button className="graph-button">그래프 확인하기</button>
+      <button className="graph-button" onClick={() => navigate('/graphpage')}>
+        그래프 확인하기
+      </button>
     </>
   );
 };

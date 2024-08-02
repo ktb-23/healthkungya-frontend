@@ -4,6 +4,7 @@ import LoginForm from '../containers/LoginForm';
 import SignupForm from '../containers/SignupForm';
 import MainForm from '../containers/MainForm';
 import FoodForm from '../containers/FoodForm';
+import GraphForm from '../containers/GraphForm';
 
 // 시작 페이지 라우트
 function StartRoutes() {
@@ -14,6 +15,7 @@ function StartRoutes() {
       <Route path="signup" element={<SignupForm />} />
       <Route path="mainpage" element={<MainForm />} />
       <Route path="foodupdate" element={<FoodForm />} />
+      <Route path="graphpage" element={<GraphForm />} />
     </Routes>
   );
 }
