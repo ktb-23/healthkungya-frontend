@@ -1,16 +1,24 @@
-//NOTE:매 페이지마다 픽스되는 페이지 (캘린더, 프로필, 네브바)
-
 import React from 'react';
 import Calendar from '../components/Calendar';
 import Navbar from '../components/Navbar';
 import Profile from '../components/Profile';
 
-const FixForm = () => {
+const FixForm = ({
+  checkKcal,
+  checkExercise,
+  selectDate,
+  currentYearMonth,
+}) => {
   return (
     <>
       <Navbar />
       <Profile />
-      <Calendar />
+      <Calendar
+        checkKcal={checkKcal}
+        checkExercise={checkExercise}
+        selectDate={selectDate}
+        currentYearMonth={currentYearMonth}
+      />
     </>
   );
 };

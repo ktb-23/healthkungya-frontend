@@ -1,15 +1,19 @@
-//NOTE:캘린더 컴포넌트
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
 
-const Calendar = () => {
+const Calendar = ({
+  checkKcal,
+  checkExercise,
+  selectDate,
+  currentYearMonth,
+}) => {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const [currentYear, setCurrentYear] = useState(2024);
-  const [currentMonth, setCurrentMonth] = useState(7); // 7월
+  const [currentYear, setCurrentYear] = useState(currentYearMonth.year);
+  const [currentMonth, setCurrentMonth] = useState(currentYearMonth.month);
 
   const getFirstDayOfMonth = () => {
     return new Date(currentYear, currentMonth - 1, 1).getDay();
@@ -41,6 +45,16 @@ const Calendar = () => {
     });
   };
 
+  const getDateString = (year, month, day) => {
+    return `${year}-${('0' + month).slice(-2)}-${('0' + day).slice(-2)}`;
+  };
+
+  //NOTE: 현재 월은 currentYearMonth가 변경될 때 설정되어야 한다.
+  useEffect(() => {
+    setCurrentYear(currentYearMonth.year);
+    setCurrentMonth(currentYearMonth.month);
+  }, [currentYearMonth]);
+
   return (
     <div className="calendar">
       <div className="sample">
@@ -67,12 +81,22 @@ const Calendar = () => {
           <div key={`empty-${index}`} />
         ))}
 
-        {[...Array(getLastDateOfMonth()).keys()].map((date) => (
-          <div key={date + 1}>
-            <button className="date-button"></button>
-            {date + 1}
-          </div>
-        ))}
+        {[...Array(getLastDateOfMonth()).keys()].map((date) => {
+          const dateString = getDateString(currentYear, currentMonth, date + 1);
+          const isKcal = checkKcal(dateString);
+          const isExercise = checkExercise(dateString);
+          const buttonClass = `date-button ${isKcal ? 'has-kcal' : ''} ${isExercise ? 'has-exercise' : ''}`;
+
+          return (
+            <div key={date + 1} className="date-container">
+              <button
+                className={buttonClass}
+                onClick={() => selectDate(dateString)}
+              ></button>
+              <div className="date-label">{date + 1}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -51,3 +51,49 @@
 .signup {
   background-color: var(--primary-color);
 }
+
+.foodchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 88%;
+  top: 177px;
+  background-color: var(--primary-color);
+  @media (max-width: 1200px) {
+    left: 320px;
+    top: 675px;
+    width: 70px;
+    height: 22px;
+    font-size: 10px;
+  }
+}
+.exchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 59.5%;
+  top: 477px;
+  background-color: #86baeb;
+  @media (max-width: 1200px) {
+    left: 80px;
+    top: 975px;
+    width: 70px;
+    height: 22px;
+    font-size: 11px;
+  }
+}
+.weightchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 77.8%;
+  top: 477px;
+  background-color: #eb8686;
+  @media (max-width: 1200px) {
+    left: 215px;
+    top: 975px;
+    width: 70px;
+    height: 22px;
+    font-size: 11px;
+  }
+}

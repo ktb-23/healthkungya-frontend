@@ -1,0 +1,121 @@
+// Output.module.scss
+.outputbox {
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+  border-radius: 5px;
+
+  &.breakfastoutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 153px;
+    height: 34px;
+    left: 52%;
+    top: 53%;
+
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 123px;
+      height: 34px;
+      left: 30px;
+      top: 900px;
+    }
+  }
+
+  &.lunchoutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 153px;
+    height: 34px;
+    left: 67%;
+    top: 53%;
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 123px;
+      height: 34px;
+      left: 160px;
+      top: 900px;
+    }
+  }
+
+  &.dinneroutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 153px;
+    height: 34px;
+    left: 82%;
+    top: 53%;
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 123px;
+      height: 34px;
+      left: 290px;
+      top: 900px;
+    }
+  }
+
+  &.exoutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 250px;
+    height: 34px;
+    left: 52%;
+    top: 70%;
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 193px;
+      height: 34px;
+      left: 30px;
+      top: 1020px;
+    }
+  }
+  &.exkcaloutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 250px;
+    height: 34px;
+    left: 52%;
+    top: 77%;
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 193px;
+      height: 34px;
+      left: 30px;
+      top: 1070px;
+    }
+  }
+
+  &.weightoutput {
+    position: absolute;
+    background-color: #ffffff;
+    width: 250px;
+    height: 34px;
+    left: 72%;
+    top: 70%;
+    @media (max-width: 1200px) {
+      position: absolute;
+      background-color: #ffffff;
+      width: 193px;
+      height: 34px;
+      left: 235px;
+      top: 1020px;
+    }
+  }
+
+  &.defaultoutput {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
