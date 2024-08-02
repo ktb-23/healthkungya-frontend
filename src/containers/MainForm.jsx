@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm.jsx';
 import Index from '../components/Index.jsx';
@@ -9,49 +9,12 @@ import './styles/MainForm.scss';
 import Button from '../components/Button.jsx';
 import Output from '../components/Output.jsx';
 import Photo from '../components/Photo.jsx';
-import { kcal as foodKcal } from './FoodForm.jsx';
-
-// Function to get today's date in YYYY-MM-DD format.
-const getTodayDateString = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-  return `${year}-${month}-${day}`;
-};
+import UseDailyData from '../components/UseDailyData.jsx'; // useDailyData 훅 가져오기
 
 const MainForm = () => {
-  const todayDateString = getTodayDateString();
-  const [selectedDate, setSelectedDate] = useState(todayDateString);
-  const [dailyData, setDailyData] = useState({
-    [todayDateString]: {
-      diet: {
-        breakfast: foodKcal.breakfast,
-        lunch: foodKcal.lunch,
-        dinner: foodKcal.dinner,
-      },
-      exercise: '50분 달리기',
-      weight: '70kg',
-      photos: {
-        morning: '/path/to/morning/photo.jpg',
-        lunch: '/path/to/lunch/photo.jpg',
-        dinner: '/path/to/dinner/photo.jpg',
-      },
-    },
-  });
-
-  const checkKcal = (date) => {
-    const mealKcal = dailyData[date]?.diet;
-    return mealKcal && mealKcal.breakfast && mealKcal.lunch && mealKcal.dinner;
-  };
-
-  const checkExercise = (date) => {
-    return !!dailyData[date]?.exercise;
-  };
-
-  const selectDate = (date) => {
-    setSelectedDate(date);
-  };
+  const navigate = useNavigate();
+  const { selectedDate, dailyData, checkKcal, checkExercise, setSelectedDate } =
+    UseDailyData();
 
   const selectedDayData = dailyData[selectedDate] || {
     diet: {},
@@ -59,8 +22,6 @@ const MainForm = () => {
     weight: '',
     photos: {},
   };
-
-  const navigate = useNavigate(); // Create a navigate function
 
   const handleFoodChangeClick = () => {
     console.log('Navigating to /foodupdate'); // Debug log
@@ -72,7 +33,7 @@ const MainForm = () => {
       <FixForm
         checkKcal={checkKcal}
         checkExercise={checkExercise}
-        selectDate={selectDate}
+        selectDate={setSelectedDate}
         currentYearMonth={{
           year: parseInt(selectedDate.slice(0, 4)),
           month: parseInt(selectedDate.slice(5, 7)),
@@ -84,7 +45,6 @@ const MainForm = () => {
         <Index indexicon={Weightindex} output="체중" />
       </div>
       <div className="change">
-        {/* Attach the click handler */}
         <Button variant={'foodchange'} onClick={handleFoodChangeClick}>
           수정하기
         </Button>
