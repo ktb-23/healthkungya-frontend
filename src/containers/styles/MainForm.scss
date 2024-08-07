@@ -23,12 +23,14 @@
   }
 
   .graph-button {
+    position: absolute; /* 절대 위치 사용 */
+    left: 25vw; /* 부모의 오른쪽 끝에 맞춥니다 */
+    top: 83vh; /* 부모 높이의 60% 지점에 맞춥니다 */
     width: 160px;
     height: 46px;
     background-color: white;
     border: 1px solid #000000;
     border-radius: 5px;
-    align-self: flex-end;
 
     &:hover {
       background-color: #d3d3d3;
@@ -49,6 +51,8 @@
 
   .main-right {
     width: 100%;
+    height: 40vh;
+    top: 70vh;
     padding-left: 0;
   }
 }
