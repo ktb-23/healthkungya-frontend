@@ -1,0 +1,91 @@
+// GraphForm.scss
+
+.graph-container {
+  position: absolute;
+  padding: 10px; // 차트 주변에 여백을 추가합니다
+  background-color: white; // 배경색 설정
+  border-radius: 8px; // 둥근 모서리
+  height: 50vh; // 화면 높이의 50% 차지
+  width: 40%;
+  right: 6%;
+  top: 30%;
+  display: flex; // flexbox를 사용하여 정렬합니다
+  flex-direction: column; // 수직으로 정렬
+  justify-content: center; // 수직 방향 가운데 정렬
+  align-items: center; // 수평 방향 가운데 정렬
+
+  @media (max-width: 1200px) {
+    width: 400px;
+    height: 250px;
+    left: 10px;
+    top: 900px;
+  }
+}
+
+.chart-title {
+  font-size: 24px; // 제목 글꼴 크기
+  font-weight: bold; // 제목 두께
+  margin-bottom: 10px; // 제목과 차트 간의 간격
+}
+
+.indexdiet {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 55%;
+  top: 24%;
+  @media (max-width: 1200px) {
+    left: 40px;
+    top: 850px;
+  }
+}
+.indexex {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 63%;
+  top: 24%;
+  @media (max-width: 1200px) {
+    left: 130px;
+    top: 850px;
+  }
+}
+.indexweight {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 71%;
+  top: 24%;
+  @media (max-width: 1200px) {
+    left: 220px;
+    top: 850px;
+  }
+}
+.mainback {
+  position: relative;
+  bottom: 90px;
+  right: 200px;
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}

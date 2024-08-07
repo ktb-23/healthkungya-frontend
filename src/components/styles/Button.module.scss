@@ -44,6 +44,26 @@
     right: 120px;
   }
 }
+.mainback {
+  position: relative;
+  width: 12px;
+  height: 18px;
+  left: 50%;
+  top: 292px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    left: 13px;
+    top: 854px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+
 .login {
   background-color: var(--primary-color);
 }
