@@ -1,84 +1,57 @@
 .index {
-  position: absolute;
+  display: flex; // Use flexbox
+  align-items: center; // Center items vertically
+  justify-content: center; // Center items horizontally
   padding: 10px;
   border-radius: 42px;
   width: 150px;
-  height: 30px;
-
-  display: flex; /* flexbox 사용 */
-  align-items: center; /* 수직 정렬 */
+  height: 50px;
+  box-sizing: border-box;
 
   img {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 10px; // adjust as needed for spacing
     width: 16.785px;
     height: 12.575px;
     flex-shrink: 0;
   }
 
   .indextxt {
-    font-size: 16px;
+    font-size: 15px;
     color: #333333;
   }
 
   &.food {
+    position: absolute;
+    top: 23vh;
     background-color: #afeb92;
-    left: 10%;
-    top: 0%;
   }
 
   &.exercise {
-    background-color: #86baeb; // 운동의 경우 초록색 배경
-    left: 10%;
-    top: 50%;
+    position: absolute;
+    top: 60vh;
+    background-color: #86baeb;
   }
 
   &.weight {
-    background-color: #eb8686; // 체중의 경우 파란색 배경
-    left: 70%;
-    top: 50%;
+    position: absolute;
+    top: 60vh;
+    left: 20vw;
+    background-color: #eb8686;
   }
 }
+
 @media (max-width: 1200px) {
   .index {
-    position: absolute;
-    padding: 10px;
-    border-radius: 42px;
-    width: 90px;
     height: 20px;
 
-    display: flex; /* flexbox 사용 */
-    align-items: center; /* 수직 정렬 */
-
     img {
-      margin-left: 10px;
       margin-right: 10px;
       width: 12.785px;
       height: 8.575px;
-      flex-shrink: 0;
     }
 
     .indextxt {
       font-size: 12px;
-      color: #333333;
-    }
-
-    &.food {
-      background-color: #afeb92;
-      left: 0;
-      top: 0%;
-    }
-
-    &.exercise {
-      background-color: #86baeb; // 운동의 경우 초록색 배경
-      left: 0;
-      top: 50%;
-    }
-
-    &.weight {
-      background-color: #eb8686; // 체중의 경우 파란색 배경
-      left: 40%;
-      top: 50%;
     }
   }
 }
