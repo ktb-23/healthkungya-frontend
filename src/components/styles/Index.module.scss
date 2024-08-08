@@ -42,7 +42,8 @@
 
 @media (max-width: 1200px) {
   .index {
-    height: 20px;
+    width: 110px;
+    height: 40px;
 
     img {
       margin-right: 10px;
@@ -52,6 +53,26 @@
 
     .indextxt {
       font-size: 12px;
+    }
+    &.food {
+      position: absolute;
+      top: 47vh;
+      left: 4vw;
+      background-color: #afeb92;
+    }
+
+    &.exercise {
+      position: absolute;
+      top: 90vh;
+      left: 4vw;
+      background-color: #86baeb;
+    }
+
+    &.weight {
+      position: absolute;
+      top: 90vh;
+      left: 62vw;
+      background-color: #eb8686;
     }
   }
 }

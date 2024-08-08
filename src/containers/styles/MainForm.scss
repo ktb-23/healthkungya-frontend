@@ -24,8 +24,8 @@
 
   .graph-button {
     position: absolute; /* 절대 위치 사용 */
-    left: 25vw; /* 부모의 오른쪽 끝에 맞춥니다 */
-    top: 83vh; /* 부모 높이의 60% 지점에 맞춥니다 */
+    top: 80vh;
+    left: 25vw;
     width: 160px;
     height: 46px;
     background-color: white;
@@ -37,9 +37,12 @@
     }
 
     @media (max-width: 1200px) {
+      position: absolute;
       width: 140px;
       height: 36px;
       margin-top: 20px;
+      top: 800px;
+      left: 67vw; /* 부모의 오른쪽 끝에 맞춥니다 */
     }
   }
 }
@@ -51,14 +54,8 @@
 
   .main-right {
     width: 100%;
-    height: 40vh;
-    top: 70vh;
+    height: 100%;
+    top: 48vh;
     padding-left: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .main-right {
-    // Nested styles if needed
   }
 }
