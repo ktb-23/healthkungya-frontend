@@ -32,7 +32,7 @@ function LoginForm() {
       };
       const response = await useLogin(body);
       // 성공시 MainForm으로 이동, 실패시 오류 메시지
-      response.status === 200 ? navigate('/mainform') : setError(true); // 수정된 부분
+      response.status === 200 ? navigate('/mainpage') : setError(true); // 수정된 부분
     } else {
       setError(true);
     }
