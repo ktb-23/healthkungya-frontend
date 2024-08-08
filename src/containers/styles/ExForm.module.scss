@@ -1,0 +1,49 @@
+.container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.ExFormWrapper {
+  position: absolute;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 1500px) {
+    width: 50%;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+    position: relative;
+    height: auto;
+    border: none;
+  }
+}
+
+.ExFormContainer {
+  width: 85%;
+  height: 80%;
+  border: 1px solid black;
+}
+
+.header {
+  margin-top: 12.5vh;
+  display: flex;
+  align-items: center;
+}
+.category {
+  width: 86px;
+  height: 28px;
+
+  background: var(--secondary-color);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
