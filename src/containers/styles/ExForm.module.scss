@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
   display: flex;
+  @media (max-width: 1300px) {
+    flex-direction: column;
+  }
 }
 
 .ExFormWrapper {
@@ -9,29 +12,39 @@
   right: 0;
   width: 60%;
   height: 100%;
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
 
   @media (max-width: 1500px) {
-    width: 50%;
+    width: 55%;
   }
-
-  @media (max-width: 576px) {
-    width: 100%;
-    position: relative;
-    height: auto;
-    border: none;
+  @media (max-width: 1300px) {
+    margin-top: 90vh;
+    left: 10vw;
+    width: 500px;
+  }
+  @media (max-width: 1200px) {
+    margin-top: 75vh;
+    left: 5vw;
+    width: 375px;
   }
 }
 
 .ExFormContainer {
   width: 75%;
-  height: 80%;
-  border: 1px solid black;
+  height: 85%;
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
+  @media (max-width: 1300px) {
+    width: inherit;
+    height: 80%;
+  }
+  @media (max-width: 1200px) {
+    width: inherit;
+    height: 70%;
+  }
 }
 
 .header {
@@ -68,15 +81,21 @@
     height: 20px;
     font-size: 13px;
   }
+  @media (max-width: 1300px) {
+    margin-left: 5px;
+  }
   @media (max-width: 1200px) {
-    margin-right: 150px;
+    margin-left: 20px;
   }
 }
 .ExWrapper {
   margin-top: 5vh;
   display: flex;
   width: 100%;
-  height: 80%;
+  height: inherit;
   border: 1px solid black;
-  justify-content: center;
+  justify-content: space-between;
+  @media (max-width: 1300px) {
+    width: inherit;
+  }
 }

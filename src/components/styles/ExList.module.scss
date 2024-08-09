@@ -1,20 +1,34 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  gap: 30px;
 }
 .ListWrapper {
   box-sizing: border-box;
-  width: 225px;
-  height: 162px;
+  width: 20vw;
+  height: 30vh;
 
   border: 1px solid #949494;
   border-radius: 5px;
+  @media (max-width: 1300px) {
+    width: 240px;
+  }
+  @media (max-width: 1200px) {
+    width: 180px;
+  }
 }
 .KcalWrapper {
   box-sizing: border-box;
-  width: 225px;
-  height: 36px;
+  width: 20vw;
+  height: 7vh;
 
   border: 1px solid #949494;
   border-radius: 5px;
+  @media (max-width: 1300px) {
+    width: 240px;
+    height: 5vh;
+  }
+  @media (max-width: 1200px) {
+    width: 180px;
+  }
 }
