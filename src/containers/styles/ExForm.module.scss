@@ -27,17 +27,21 @@
 }
 
 .ExFormContainer {
-  width: 85%;
+  width: 75%;
   height: 80%;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
   margin-top: 12.5vh;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .category {
+  margin-right: 500px;
   width: 86px;
   height: 28px;
 
@@ -46,4 +50,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 15px;
+  @media (max-width: 1750px) {
+    margin-right: 350px;
+    width: 78px;
+    height: 24px;
+  }
+  @media (max-width: 1500px) {
+    margin-right: 250px;
+    width: 75px;
+    height: 23px;
+    font-size: 15px;
+  }
+  @media (max-width: 1400px) {
+    margin-right: 200px;
+    width: 67px;
+    height: 20px;
+    font-size: 13px;
+  }
+  @media (max-width: 1200px) {
+    margin-right: 150px;
+  }
+}
+.ExWrapper {
+  margin-top: 5vh;
+  display: flex;
+  width: 100%;
+  height: 80%;
+  border: 1px solid black;
+  justify-content: center;
 }
