@@ -1,15 +1,49 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
 import './styles/FoodForm.scss';
 
 const FoodForm = () => {
-  const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
-    UseDailyData();
+  const navigate = useNavigate();
+  const {
+    selectedDate,
+    checkKcal,
+    checkExercise,
+    setSelectedDate,
+    updateDietInfo,
+  } = UseDailyData();
   const [image, setImage] = useState(null);
-  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [selectedMeal, setSelectedMeal] = useState('아침');
   const [foodList, setFoodList] = useState([]);
   const [selectedFood, setSelectedFood] = useState('');
+  const [mealCalories, setMealCalories] = useState(0);
+
+  const handleAddFood = () => {
+    if (selectedFood) {
+      setFoodList([...foodList, selectedFood]);
+      setSelectedFood('');
+    }
+  };
+
+  const handleSaveMeal = () => {
+    if (selectedMeal && mealCalories) {
+      updateDietInfo(selectedMeal, mealCalories);
+      // 저장 후 초기화
+      setMealCalories(0);
+      setFoodList([]);
+      setSelectedMeal(null);
+    }
+  };
+
+  const handleUpdate = () => {
+    handleSaveMeal(); // 현재 입력된 정보 저장
+  };
+
+  const handleSaveAndNavigate = () => {
+    handleSaveMeal(); // 현재 입력된 정보 저장
+    navigate('/mainpage'); // MainForm으로 이동
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -82,7 +116,7 @@ const FoodForm = () => {
           </div>
           <div className="list-content">
             <div className="list-title">
-              <span>음식목록</span>
+              <span>[음식이름]</span>
               <select
                 value={selectedFood}
                 onChange={handleFoodSelect}
@@ -103,7 +137,13 @@ const FoodForm = () => {
             </ul>
           </div>
         </div>
-        <div className="total-kal">섭취 칼로리: </div>
+        <div className="total-kal">섭취 칼로리:</div>
+        <button className="save" onClick={handleUpdate}>
+          수정 완료
+        </button>
+        <button className="edit" onClick={handleSaveAndNavigate}>
+          저장
+        </button>
       </section>
     </>
   );

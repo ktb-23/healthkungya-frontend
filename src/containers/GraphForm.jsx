@@ -1,7 +1,7 @@
 // GraphForm.js
 import React from 'react';
 import FixForm from './FixForm';
-import UseDailyData, { kcal } from '../components/UseDailyData';
+import UseDailyData from '../components/UseDailyData';
 
 const GraphForm = () => {
   const { selectedDate, checkKcal, checkExercise, setSelectedDate } =

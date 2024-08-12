@@ -4,9 +4,11 @@
   right: 0;
   width: 50%;
   height: 40vh;
-  background-color: #f5f5f5;
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: 'GroomSans';
 
   @media (min-width: 900px) {
     position: fixed;
@@ -15,7 +17,7 @@
     width: 50%;
     height: 40vh;
   }
-  .food-nav,
+
   .picture-box,
   .list-box,
   .total-kal {
@@ -30,30 +32,103 @@
     top: 20px;
     left: 20px;
     right: 20px;
+    width: calc(100% - 240px); // 가로 길이 줄임
     height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 5px; // border-radius 추가
+
+    .meal-button {
+      flex: 1;
+      margin: 0 5px;
+      height: 40px;
+      border: none;
+      border-radius: 5px; // button의 border-radius도 변경
+      background-color: #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover,
+      &.selected {
+        background-color: #afeb92;
+      }
+    }
   }
 
   .picture-box {
-    top: 100px; // food-nav 높이 + 간격
+    top: 100px;
     left: 20px;
     width: 254px;
     height: 208px;
   }
 
   .list-box {
-    top: 100px; // food-nav 높이 + 간격
-    left: 294px; // picture-box 왼쪽 + picture-box 너비 + 고정 간격 (20px)
+    top: 100px;
+    left: 294px;
     width: 225px;
     height: 162px;
+
+    .list-header {
+      position: relative;
+      left: 20px;
+
+      .clear-button {
+        position: relative;
+        top: -40px;
+        left: 140px;
+      }
+    }
+    .list-title {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
   }
 
   .total-kal {
-    top: 272px; // food-nav 높이 + list-box 높이 + 간격
-    left: 294px; // picture-box 왼쪽 + picture-box 너비 + 고정 간격 (20px)
+    top: 272px;
+    left: 294px;
     width: 225px;
     height: 36px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .save,
+  .edit {
+    position: absolute;
+    top: 20px;
+    padding: 8px 14px;
+    background-color: #afeb92;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #aad9ac;
+    }
+  }
+
+  .save {
+    right: 90px; // 수정 완료 버튼 왼쪽에 위치
+    top: 35px;
+  }
+
+  .edit {
+    right: 20px;
+    top: 35px;
   }
 }
+
 .picture-box {
   display: flex;
   justify-content: center;

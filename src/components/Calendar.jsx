@@ -3,7 +3,7 @@ import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
-import UseDailyData, { kcal } from '../components/UseDailyData.jsx'; // 훅 가져오기
+import UseDailyData from '../components/UseDailyData.jsx'; // 훅 가져오기
 
 const Calendar = ({ selectDate }) => {
   const { checkKcal, checkExercise } = UseDailyData();

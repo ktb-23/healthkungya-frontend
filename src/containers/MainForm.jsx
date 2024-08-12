@@ -58,13 +58,13 @@ const MainForm = () => {
       </div>
       <div className="mainoutput-container">
         <Output text="식단-아침">
-          아침: {selectedDayData.diet.breakfast} kcal
+          아침: {selectedDayData.diet.아침 || 0} kcal
         </Output>
         <Output text="식단-점심">
-          점심: {selectedDayData.diet.lunch} kcal
+          점심: {selectedDayData.diet.점심 || 0} kcal
         </Output>
         <Output text="식단-저녁">
-          저녁: {selectedDayData.diet.dinner} kcal
+          저녁: {selectedDayData.diet.저녁 || 0} kcal
         </Output>
         <Output text="운동">종목: {selectedDayData.exercise}</Output>
         <Output text="운동소모">소모칼로리: </Output>
