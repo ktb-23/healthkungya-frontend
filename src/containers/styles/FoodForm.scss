@@ -8,6 +8,13 @@
   padding: 20px;
   box-sizing: border-box;
 
+  @media (min-width: 900px) {
+    position: fixed;
+    top: 20vh;
+    right: 0;
+    width: 50%;
+    height: 40vh;
+  }
   .food-nav,
   .picture-box,
   .list-box,

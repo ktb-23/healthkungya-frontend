@@ -8,6 +8,8 @@ const FoodForm = () => {
     UseDailyData();
   const [image, setImage] = useState(null);
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const [foodList, setFoodList] = useState([]);
+  const [selectedFood, setSelectedFood] = useState('');
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -16,6 +18,14 @@ const FoodForm = () => {
       reader.onload = (e) => setImage(e.target.result);
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleClearList = () => {
+    setFoodList([]);
+  };
+
+  const handleFoodSelect = (event) => {
+    setSelectedFood(event.target.value);
   };
 
   return (
@@ -63,8 +73,37 @@ const FoodForm = () => {
             </label>
           )}
         </div>
-        <div className="list-box"></div>
-        <div className="total-kal"></div>
+        <div className="list-box">
+          <div className="list-header">
+            <h3>음식목록</h3>
+            <button onClick={handleClearList} className="clear-button">
+              비우기
+            </button>
+          </div>
+          <div className="list-content">
+            <div className="list-title">
+              <span>음식목록</span>
+              <select
+                value={selectedFood}
+                onChange={handleFoodSelect}
+                className="food-select"
+              >
+                <option value="">선택하세요</option>
+                {foodList.map((food, index) => (
+                  <option key={index} value={food}>
+                    {food}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <ul className="food-list">
+              {foodList.map((food, index) => (
+                <li key={index}>{food}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="total-kal">섭취 칼로리: </div>
       </section>
     </>
   );
