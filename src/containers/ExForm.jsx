@@ -5,6 +5,7 @@ import styles from './styles/ExForm.module.scss';
 import Button from '../components/Button.jsx';
 import Search from '../components/Search.jsx';
 import ExList from '../components/ExList.jsx';
+import useExerciseLog from '../hooks/useExerciseLog.jsx';
 //NOTE:운동입력 폼
 
 // NOTE: 오늘 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
@@ -18,6 +19,8 @@ const getTodayDateString = () => {
 const ExForm = () => {
   const todayDateString = getTodayDateString();
   const [selectedDate, setSelectedDate] = useState(todayDateString);
+  const { handleDurationChange, handleUploadClick, durations, exItem } =
+    useExerciseLog(selectedDate);
 
   // NOTE:날짜별로 정보를 저장합니다.
   const [dailyData, setDailyData] = useState({
@@ -54,13 +57,6 @@ const ExForm = () => {
     setSelectedDate(date);
   };
 
-  // NOTE:현재 선택된 날짜에 대한 데이터를 가져옴
-  const selectedDayData = dailyData[selectedDate] || {
-    diet: {},
-    exercise: '',
-    weight: '',
-    photos: {},
-  };
   return (
     <div className={styles.container}>
       <FixForm
@@ -77,11 +73,17 @@ const ExForm = () => {
           <header className={styles.header}>
             <Button variant={'backBtn'}></Button>
             <div className={styles.category}>운동</div>
-            <Button variant={'exupload'}>업로드</Button>
+            <div onClick={handleUploadClick}>
+              <Button variant={'exupload'}>업로드</Button>
+            </div>
           </header>
           <main className={styles.ExWrapper}>
             <Search />
-            <ExList />
+            <ExList
+              durations={durations}
+              onDurationChange={handleDurationChange}
+              exItem={exItem}
+            />
           </main>
         </div>
       </div>
