@@ -1,6 +1,8 @@
+import axios from 'axios';
 import Button from './Button';
 import styles from './styles/ExList.module.scss';
-const ExList = ({ exItem, durations, onDurationChange }) => {
+import useDeleteExlog from '../api/useDeleteExlog';
+const ExList = ({ exItem, durations, onDurationChange, log_id }) => {
   const weight = localStorage.getItem('weight');
   console.log(weight);
   //met를 몸무게로 시간당 칼로리 계산
@@ -17,12 +19,23 @@ const ExList = ({ exItem, durations, onDurationChange }) => {
     const calories = calculateCalories(item.met, duration);
     return total + calories;
   }, 0);
+  const handleDelete = async () => {
+    try {
+      const response = await useDeleteExlog(log_id, 4);
+      alert(response.message);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className={styles.wrapper}>
       <section className={styles.ListWrapper} aria-labelledby="exercise-list">
         <header className={styles.header}>
           <span>운동 목록</span>
-          <Button variant="clear">비우기</Button>
+          <div onClick={handleDelete}>
+            <Button variant="clear">비우기</Button>
+          </div>
         </header>
         <ul className={styles.exerciseList}>
           {exItem?.map((item) => {

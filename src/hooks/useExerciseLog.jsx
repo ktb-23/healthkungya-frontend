@@ -14,7 +14,7 @@ const useExerciseLog = (selectedDate) => {
 
   const fetchExlog = async () => {
     try {
-      const response = await useGetExlog(3);
+      const response = await useGetExlog(4);
       if (response.length > 0) {
         const logEntry = response[0];
         setLogId(logEntry.log_id);
@@ -77,7 +77,7 @@ const useExerciseLog = (selectedDate) => {
     }
   };
 
-  return { handleDurationChange, handleUploadClick, durations, exItem };
+  return { handleDurationChange, handleUploadClick, durations, exItem, logId };
 };
 
 export default useExerciseLog;

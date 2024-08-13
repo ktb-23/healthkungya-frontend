@@ -19,7 +19,7 @@ const getTodayDateString = () => {
 const ExForm = () => {
   const todayDateString = getTodayDateString();
   const [selectedDate, setSelectedDate] = useState(todayDateString);
-  const { handleDurationChange, handleUploadClick, durations, exItem } =
+  const { handleDurationChange, handleUploadClick, durations, exItem, logId } =
     useExerciseLog(selectedDate);
 
   // NOTE:날짜별로 정보를 저장합니다.
@@ -83,6 +83,7 @@ const ExForm = () => {
               durations={durations}
               onDurationChange={handleDurationChange}
               exItem={exItem}
+              log_id={logId}
             />
           </main>
         </div>
