@@ -10,10 +10,11 @@ const useLogin = async (body) => {
         },
       }
     );
-    const { nickname, accesstoken, refreshtoken } = response.data;
+    const { nickname, weight, accesstoken, refreshtoken } = response.data;
     localStorage.setItem('nickname', nickname);
     localStorage.setItem('accesstoken', accesstoken);
     localStorage.setItem('refreshtoken', refreshtoken);
+    localStorage.setItem('weight', weight);
     return response;
   } catch (error) {
     console.error(error);

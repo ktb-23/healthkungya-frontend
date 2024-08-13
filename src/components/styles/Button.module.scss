@@ -97,3 +97,56 @@
     font-size: 11px;
   }
 }
+.backBtn {
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/arrow.png');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.exupload {
+  width: 86px;
+  height: 28px;
+  background: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  @media (max-width: 1750px) {
+    width: 78px;
+    height: 24px;
+  }
+  @media (max-width: 1500px) {
+    width: 75px;
+    height: 23px;
+    font-size: 15px;
+  }
+  @media (max-width: 1400px) {
+    width: 67px;
+    height: 20px;
+    font-size: 13px;
+  }
+  @media (max-width: 1200px) {
+  }
+}
+.clear {
+  box-sizing: border-box;
+  margin-right: 10px;
+  width: 50px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+
+  border: 0.5px solid #888888;
+  border-radius: 5px;
+}
