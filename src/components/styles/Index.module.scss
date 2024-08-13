@@ -56,22 +56,22 @@
     }
     &.food {
       position: absolute;
-      top: 47vh;
-      left: 4vw;
+      top: 300px;
+      left: 35px;
       background-color: #afeb92;
     }
 
     &.exercise {
       position: absolute;
-      top: 90vh;
-      left: 4vw;
+      top: 600px;
+      left: 35px;
       background-color: #86baeb;
     }
 
     &.weight {
       position: absolute;
-      top: 90vh;
-      left: 62vw;
+      top: 600px;
+      left: 240px;
       background-color: #eb8686;
     }
   }
