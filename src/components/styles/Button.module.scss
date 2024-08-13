@@ -49,18 +49,18 @@
   width: 12px;
   height: 18px;
   left: 50%;
-  top: 292px;
+  top: 218px;
   background-image: url('../../picture/backicon.svg');
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
-  @media (max-width: 1200px) {
-    left: 13px;
-    top: 854px;
-  }
   @media (max-width: 700px) {
     bottom: 0px;
     right: 120px;
+  }
+  @media (max-width: 900px) {
+    top: 775px;
+    left: 30px;
   }
 }
 

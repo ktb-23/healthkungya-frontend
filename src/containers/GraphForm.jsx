@@ -32,6 +32,12 @@ const GraphForm = () => {
   const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
     UseDailyData();
 
+  const [activeIndex, setActiveIndex] = useState('식단');
+
+  const handleIndexClick = (index) => {
+    setActiveIndex(index);
+  };
+
   // 주차를 관리
   const [calories, setCalories] = useState([]);
   const navigate = useNavigate(); // navigate 훅 사용
@@ -112,12 +118,27 @@ const GraphForm = () => {
       />
       <div className="index-button">
         <Button variant="mainback" onClick={() => navigate('/mainpage')} />
-        <IndexButton className="indexdiet" indextype="식단" />
-        <IndexButton className="indexex" indextype="운동" />
-        <IndexButton className="indexweight" indextype="체중" />
+        <IndexButton
+          className="indexdiet"
+          indextype="식단"
+          isActive={activeIndex === '식단'}
+          onClick={() => handleIndexClick('식단')}
+        />
+        <IndexButton
+          className="indexex"
+          indextype="운동"
+          isActive={activeIndex === '운동'}
+          onClick={() => handleIndexClick('운동')}
+        />
+        <IndexButton
+          className="indexweight"
+          indextype="체중"
+          isActive={activeIndex === '체중'}
+          onClick={() => handleIndexClick('체중')}
+        />
       </div>
       <div className="graph-container">
-        <Line data={data} options={options} /> {/* options 추가 */}
+        <Line data={data} options={options} />
       </div>
     </>
   );
