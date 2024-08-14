@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm.jsx';
 import Index from '../components/Index.jsx';
@@ -9,7 +9,7 @@ import './styles/MainForm.scss';
 import Button from '../components/Button.jsx';
 import Output from '../components/Output.jsx';
 import Photo from '../components/Photo.jsx';
-import UseDailyData from '../components/UseDailyData.jsx'; // useDailyData 훅 가져오기
+import UseDailyData from '../components/UseDailyData.jsx';
 
 const MainForm = () => {
   const navigate = useNavigate();
@@ -23,8 +23,14 @@ const MainForm = () => {
     photos: {},
   };
 
+  useEffect(() => {
+    console.log('Selected date:', selectedDate);
+    console.log('Daily data:', dailyData);
+    console.log('Selected day data:', selectedDayData);
+  }, [selectedDate, dailyData, selectedDayData]);
+
   const handleFoodChangeClick = () => {
-    console.log('Navigating to /foodupdate'); // Debug log
+    console.log('Navigating to /foodupdate');
     navigate('/foodupdate');
   };
 
