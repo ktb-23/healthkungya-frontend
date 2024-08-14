@@ -2,38 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
+import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import './styles/FoodForm.scss';
-
-// 초기 상태
-const initialState = {
-  image: null,
-  selectedMeal: '아침',
-  foodList: [],
-  selectedFood: '',
-  mealCalories: 0,
-};
-
-// 리듀서 함수
-function reducer(state, action) {
-  switch (action.type) {
-    case 'SET_IMAGE':
-      return { ...state, image: action.payload };
-    case 'SET_SELECTED_MEAL':
-      return { ...state, selectedMeal: action.payload };
-    case 'SET_FOOD_LIST':
-      return { ...state, foodList: action.payload };
-    case 'SET_SELECTED_FOOD':
-      return { ...state, selectedFood: action.payload };
-    case 'SET_MEAL_CALORIES':
-      return { ...state, mealCalories: action.payload };
-    case 'CLEAR_FOOD_LIST':
-      return { ...state, foodList: [] };
-    case 'RESET_FORM':
-      return { ...initialState, selectedMeal: state.selectedMeal };
-    default:
-      return state;
-  }
-}
 
 const FoodForm = () => {
   const navigate = useNavigate();
@@ -45,7 +15,7 @@ const FoodForm = () => {
     updateDietInfo,
   } = UseDailyData();
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(FoodReducer, InitialState);
 
   useEffect(() => {
     // 샘플 데이터 설정
@@ -89,7 +59,6 @@ const FoodForm = () => {
   const handleClearList = () => {
     dispatch({ type: 'CLEAR_FOOD_LIST' });
   };
-
   const handleFoodSelect = (event) => {
     dispatch({ type: 'SET_SELECTED_FOOD', payload: event.target.value });
   };
