@@ -1,6 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styles from './styles/Setting.module.scss';
 const Setting = () => {
+  const navigate = useNavigate();
+  const handleProfileSetting = () => {
+    navigate('/setting/profile');
+  };
   return (
     <main className={styles.setting}>
       <header>
@@ -8,7 +13,9 @@ const Setting = () => {
         <span>설정</span>
       </header>
       <div className={styles.buttonWrapper}>
-        <Button variant={'setting'}>개인정보 수정</Button>
+        <div onClick={handleProfileSetting}>
+          <Button variant={'setting'}>개인정보 수정</Button>
+        </div>
         <Button variant={'setting'}>로그아웃</Button>
         <Button variant={'setting'}>회원탈퇴</Button>
       </div>
