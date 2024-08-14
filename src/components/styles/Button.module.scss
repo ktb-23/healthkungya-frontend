@@ -44,6 +44,26 @@
     right: 120px;
   }
 }
+.mainback {
+  position: relative;
+  width: 12px;
+  height: 18px;
+  left: 50%;
+  top: 218px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+  @media (max-width: 900px) {
+    top: 775px;
+    left: 30px;
+  }
+}
+
 .login {
   background-color: var(--primary-color);
 }
@@ -56,12 +76,12 @@
   position: relative;
   width: 86px;
   height: 28px;
-  left: 88%;
-  top: 177px;
+  left: 28.8vw;
+  top: 22vh;
   background-color: var(--primary-color);
   @media (max-width: 1200px) {
     left: 320px;
-    top: 675px;
+    top: 300px;
     width: 70px;
     height: 22px;
     font-size: 10px;
@@ -71,12 +91,12 @@
   position: relative;
   width: 86px;
   height: 28px;
-  left: 59.5%;
-  top: 477px;
+  left: 5vw;
+  top: 59.3vh;
   background-color: #86baeb;
   @media (max-width: 1200px) {
     left: 80px;
-    top: 975px;
+    top: 590px;
     width: 70px;
     height: 22px;
     font-size: 11px;
@@ -86,14 +106,67 @@
   position: relative;
   width: 86px;
   height: 28px;
-  left: 77.8%;
-  top: 477px;
+  left: 19vw;
+  top: 59.3vh;
   background-color: #eb8686;
   @media (max-width: 1200px) {
     left: 215px;
-    top: 975px;
+    top: 590px;
     width: 70px;
     height: 22px;
     font-size: 11px;
   }
+}
+.backBtn {
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/arrow.png');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.exupload {
+  width: 86px;
+  height: 28px;
+  background: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  @media (max-width: 1750px) {
+    width: 78px;
+    height: 24px;
+  }
+  @media (max-width: 1500px) {
+    width: 75px;
+    height: 23px;
+    font-size: 15px;
+  }
+  @media (max-width: 1400px) {
+    width: 67px;
+    height: 20px;
+    font-size: 13px;
+  }
+  @media (max-width: 1200px) {
+  }
+}
+.clear {
+  box-sizing: border-box;
+  margin-right: 10px;
+  width: 50px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+
+  border: 0.5px solid #888888;
+  border-radius: 5px;
 }

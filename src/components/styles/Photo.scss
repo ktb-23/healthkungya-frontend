@@ -25,31 +25,30 @@
 }
 
 .morning {
-  left: 52%;
   top: 30%;
 
   @media (max-width: 1200px) {
     left: 31px;
-    top: 730px;
+    top: 370px;
   }
 }
 
 .lunch {
-  left: 67%;
+  left: 13vw;
   top: 30%;
 
   @media (max-width: 1200px) {
     left: 161px;
-    top: 730px;
+    top: 370px;
   }
 }
 
 .dinner {
-  left: 82%;
+  left: 26vw;
   top: 30%;
 
   @media (max-width: 1200px) {
     left: 290px;
-    top: 730px;
+    top: 370px;
   }
 }

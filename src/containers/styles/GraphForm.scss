@@ -1,0 +1,123 @@
+.graph-container {
+  position: fixed;
+  padding: 0px;
+  background-color: white;
+  border-radius: 8px;
+  height: 300px;
+  width: 130vw;
+  top: 30%;
+  left: 55%;
+
+  @media (max-width: 1200px) {
+    position: absolute;
+    height: 200px;
+    width: 40vw;
+    left: 70vw;
+    top: 30vh;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    position: absolute;
+    height: 300px;
+    width: 350px;
+    left: 220px;
+    top: 810px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.index-button {
+  @media (max-width: 1200px) {
+  }
+}
+.chart-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.indexdiet {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 55%;
+  top: 24%;
+  @media (max-width: 900px) {
+    position: absolute;
+    height: 30px;
+    width: 90px;
+    left: 100px;
+    top: 770px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.indexex {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 63%;
+  top: 24%;
+  @media (max-width: 900px) {
+    position: absolute;
+    height: 30px;
+    width: 90px;
+    left: 200px;
+    top: 770px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.indexweight {
+  position: absolute;
+  width: 86px;
+  height: 28px;
+  border: none;
+  background: #afeb92;
+  border-radius: 42px;
+  left: 71%;
+  top: 24%;
+  @media (max-width: 900px) {
+    position: absolute;
+    height: 30px;
+    width: 90px;
+    left: 300px;
+    top: 770px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.indexdiet,
+.indexex,
+.indexweight {
+  background: #d3d3d3; // 기본 배경색을 회색으로 설정
+
+  &.active {
+    background: #afeb92; // 활성화된 버튼의 배경색을 초록색으로 설정
+  }
+}

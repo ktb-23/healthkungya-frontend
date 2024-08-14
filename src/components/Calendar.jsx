@@ -11,6 +11,7 @@ const Calendar = ({ selectDate }) => {
 
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [selectedDate, setSelectedDateState] = useState(new Date()); // 현재 선택된 날짜 유지
 
   const getFirstDayOfMonth = () => {
     return new Date(currentYear, currentMonth - 1, 1).getDay();
@@ -48,6 +49,7 @@ const Calendar = ({ selectDate }) => {
 
   useEffect(() => {
     // 현재 월이 변경되면 뭔가 작업이 필요하면 여기에 추가
+    selectDate(getDateString(currentYear, currentMonth, new Date().getDate())); // 현재 날짜로 선택
   }, [currentYear, currentMonth]);
 
   return (
@@ -86,7 +88,10 @@ const Calendar = ({ selectDate }) => {
             <div key={date + 1} className="date-container">
               <button
                 className={buttonClass}
-                onClick={() => selectDate(dateString)}
+                onClick={() => {
+                  setSelectedDateState(dateString);
+                  selectDate(dateString); // 부모 컴포넌트의 selectDate 함수 호출
+                }}
               ></button>
               <div className="date-label">{date + 1}</div>
             </div>
