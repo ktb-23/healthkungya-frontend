@@ -5,12 +5,14 @@ import './App.css';
 import PageRoutes from './routes/PageRoutes';
 import { Provider } from 'react-redux';
 import store from './provider/store';
+import SettingRoutes from './routes/SettingRoutes';
 function App() {
   return (
     <Router>
       <Provider store={store}>
         <StartRoutes />
         <PageRoutes />
+        <SettingRoutes />
       </Provider>
     </Router>
   );
