@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import FixForm from './FixForm';
-import { kcal as foodKcal } from './FoodForm.jsx';
 import styles from './styles/ExForm.module.scss';
 import Button from '../components/Button.jsx';
 import Search from '../components/Search.jsx';
 import ExList from '../components/ExList.jsx';
 import useExerciseLog from '../hooks/useExerciseLog.jsx';
 //NOTE:운동입력 폼
+
+const foodKcal = {
+  breakfast: 500, // 샘플 값
+  lunch: 700, // 샘플 값
+  dinner: 600, // 샘플 값
+};
 
 // NOTE: 오늘 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
 const getTodayDateString = () => {
