@@ -3,17 +3,15 @@ import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
+import UseDailyData from '../components/UseDailyData.jsx'; // 훅 가져오기
 
-const Calendar = ({
-  checkKcal,
-  checkExercise,
-  selectDate,
-  currentYearMonth,
-}) => {
+const Calendar = ({ selectDate }) => {
+  const { checkKcal, checkExercise } = UseDailyData();
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const [currentYear, setCurrentYear] = useState(currentYearMonth.year);
-  const [currentMonth, setCurrentMonth] = useState(currentYearMonth.month);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [selectedDate, setSelectedDateState] = useState(new Date()); // 현재 선택된 날짜 유지
 
   const getFirstDayOfMonth = () => {
     return new Date(currentYear, currentMonth - 1, 1).getDay();
@@ -49,11 +47,10 @@ const Calendar = ({
     return `${year}-${('0' + month).slice(-2)}-${('0' + day).slice(-2)}`;
   };
 
-  //NOTE: 현재 월은 currentYearMonth가 변경될 때 설정되어야 한다.
   useEffect(() => {
-    setCurrentYear(currentYearMonth.year);
-    setCurrentMonth(currentYearMonth.month);
-  }, [currentYearMonth]);
+    // 현재 월이 변경되면 뭔가 작업이 필요하면 여기에 추가
+    selectDate(getDateString(currentYear, currentMonth, new Date().getDate())); // 현재 날짜로 선택
+  }, [currentYear, currentMonth]);
 
   return (
     <div className="calendar">
@@ -91,7 +88,10 @@ const Calendar = ({
             <div key={date + 1} className="date-container">
               <button
                 className={buttonClass}
-                onClick={() => selectDate(dateString)}
+                onClick={() => {
+                  setSelectedDateState(dateString);
+                  selectDate(dateString); // 부모 컴포넌트의 selectDate 함수 호출
+                }}
               ></button>
               <div className="date-label">{date + 1}</div>
             </div>

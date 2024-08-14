@@ -1,15 +1,22 @@
-//NOTE:음식 수정폼
-// TODO: kcal 데이터 받아서 넘겨주기, 인공지능 넣기, 디자인 넣기
+// FoodForm.js
 import React from 'react';
+import FixForm from './FixForm';
+import UseDailyData, { kcal } from '../components/UseDailyData';
 
-export const kcal = {
-  breakfast: 400,
-  lunch: 600,
-  dinner: 700,
+const FoodForm = () => {
+  const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
+    UseDailyData();
+
+  return (
+    <>
+      <FixForm
+        checkKcal={checkKcal}
+        checkExercise={checkExercise}
+        selectDate={setSelectedDate}
+        selectedDate={selectedDate}
+      />
+    </>
+  );
 };
 
-const Food = () => {
-  return <div>{/* 기타 컴포넌트 내용 */}</div>;
-};
-
-export default Food;
+export default FoodForm;
