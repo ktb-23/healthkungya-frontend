@@ -10,10 +10,26 @@
   flex-direction: column;
   font-family: 'GroomSans';
 
-  @media (min-width: 900px) {
+  .clear-button {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid;
+  }
+
+  .food-select {
+    position: relative;
+    width: 150px; // 원하는 너비로 조정
+    height: 30px; // 원하는 높이로 조정
+    background-color: white;
+    border: 1px solid #949494;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 800px) {
     position: fixed;
-    top: 20vh;
-    right: 0;
+    top: 750px;
+    left: 30px;
     width: 50%;
     height: 40vh;
   }
@@ -30,7 +46,7 @@
 
   .food-nav {
     top: 20px;
-    left: 20px;
+    left: 0px;
     right: 20px;
     width: calc(100% - 240px); // 가로 길이 줄임
     height: 60px;
@@ -72,14 +88,27 @@
 
     .list-header {
       position: relative;
-      left: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px; // 헤더의 높이 설정
+      width: 100%;
+
+      .list-title {
+        font-size: 12px;
+      }
 
       .clear-button {
-        position: relative;
-        top: -40px;
-        left: 140px;
+        position: absolute;
+        right: 10px; // 오른쪽 여백 조정
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid;
+        padding: 5px 10px;
+        font-size: 12px;
       }
     }
+
     .list-title {
       position: relative;
       display: flex;
@@ -126,6 +155,110 @@
   .edit {
     right: 20px;
     top: 35px;
+  }
+  @media (max-width: 1000px) {
+    position: relative;
+    top: 15vh;
+    left: 200px;
+    width: 100%; // 전체 너비를 늘림
+    height: auto; // 높이를 자동으로 조절
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .picture-box,
+    .list-box,
+    .total-kal {
+      position: relative;
+      top: auto;
+      width: 100%; // 전체 너비로 설정
+      margin-bottom: 20px; // 각 요소 사이 간격
+    }
+
+    .picture-box {
+      height: 208px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .list-box {
+      height: 162px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .total-kal {
+      height: 36px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .food-nav {
+      position: relative;
+      width: 350px;
+      margin-bottom: 20px;
+    }
+
+    .save,
+    .edit {
+      position: static; // 절대 위치 제거
+      display: inline-block; // 인라인 블록으로 변경
+      margin-top: 10px;
+      margin-right: 10px; // 버튼 사이 간격
+    }
+  }
+
+  @media (max-width: 800px) {
+    position: relative;
+    top: 700px;
+    left: 20px;
+    width: 100%; // 전체 너비를 늘림
+    height: auto; // 높이를 자동으로 조절
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .picture-box,
+    .list-box,
+    .total-kal {
+      position: relative;
+      top: auto;
+      width: 100%; // 전체 너비로 설정
+      margin-bottom: 20px; // 각 요소 사이 간격
+    }
+
+    .picture-box {
+      height: 208px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .list-box {
+      height: 162px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .total-kal {
+      height: 36px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .food-nav {
+      position: relative;
+      width: 350px;
+      margin-bottom: 20px;
+    }
+
+    .save,
+    .edit {
+      position: relative;
+      top: auto;
+      right: auto;
+      left: 0px;
+      margin-top: 10px;
+    }
   }
 }
 

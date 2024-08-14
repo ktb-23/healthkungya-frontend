@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
@@ -19,12 +19,13 @@ const FoodForm = () => {
   const [selectedFood, setSelectedFood] = useState('');
   const [mealCalories, setMealCalories] = useState(0);
 
-  const handleAddFood = () => {
-    if (selectedFood) {
-      setFoodList([...foodList, selectedFood]);
-      setSelectedFood('');
-    }
-  };
+  useEffect(() => {
+    // 샘플 데이터 설정
+    setMealCalories(500); // 예: 500 kcal
+
+    // 샘플 데이터를 UseDailyData에 저장
+    updateDietInfo(selectedMeal, 500);
+  }, []);
 
   const handleSaveMeal = () => {
     if (selectedMeal && mealCalories) {
@@ -41,8 +42,9 @@ const FoodForm = () => {
   };
 
   const handleSaveAndNavigate = () => {
-    handleSaveMeal(); // 현재 입력된 정보 저장
-    navigate('/mainpage'); // MainForm으로 이동
+    updateDietInfo(selectedMeal, mealCalories);
+    console.log('Saved meal:', selectedMeal, 'Calories:', mealCalories);
+    navigate('/mainpage');
   };
 
   const handleImageUpload = (event) => {
@@ -137,7 +139,7 @@ const FoodForm = () => {
             </ul>
           </div>
         </div>
-        <div className="total-kal">섭취 칼로리:</div>
+        <div className="total-kal">섭취 칼로리: {mealCalories} kcal</div>
         <button className="save" onClick={handleUpdate}>
           수정 완료
         </button>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const getTodayDateString = () => {
   const today = new Date();
@@ -10,22 +10,31 @@ const getTodayDateString = () => {
 
 const UseDailyData = () => {
   const [selectedDate, setSelectedDate] = useState(getTodayDateString());
-  const [dailyData, setDailyData] = useState({
-    [selectedDate]: {
-      diet: {
-        아침: 0,
-        점심: 0,
-        저녁: 0,
-      },
-      exercise: '50분 달리기',
-      weight: '70kg',
-      photos: {
-        morning: '/path/to/morning/photo.jpg',
-        lunch: '/path/to/lunch/photo.jpg',
-        dinner: '/path/to/dinner/photo.jpg',
-      },
-    },
+  const [dailyData, setDailyData] = useState(() => {
+    const savedData = localStorage.getItem('dailyData');
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          [selectedDate]: {
+            diet: {
+              아침: 0,
+              점심: 0,
+              저녁: 0,
+            },
+            exercise: '50분 달리기',
+            weight: '70kg',
+            photos: {
+              morning: '/path/to/morning/photo.jpg',
+              lunch: '/path/to/lunch/photo.jpg',
+              dinner: '/path/to/dinner/photo.jpg',
+            },
+          },
+        };
   });
+
+  useEffect(() => {
+    localStorage.setItem('dailyData', JSON.stringify(dailyData));
+  }, [dailyData]);
 
   const checkKcal = (date) => {
     const mealKcal = dailyData[date]?.diet;
@@ -37,16 +46,28 @@ const UseDailyData = () => {
   };
 
   const updateDietInfo = (meal, calories) => {
-    setDailyData((prevData) => ({
-      ...prevData,
-      [selectedDate]: {
-        ...prevData[selectedDate],
-        diet: {
-          ...prevData[selectedDate]?.diet,
-          [meal]: calories,
+    setDailyData((prevData) => {
+      const currentDateData = prevData[selectedDate] || {
+        diet: { 아침: 0, 점심: 0, 저녁: 0 },
+        exercise: '',
+        weight: '',
+        photos: {},
+      };
+
+      const updatedData = {
+        ...prevData,
+        [selectedDate]: {
+          ...currentDateData,
+          diet: {
+            ...currentDateData.diet,
+            [meal]: calories,
+          },
         },
-      },
-    }));
+      };
+
+      console.log('Updated data:', updatedData);
+      return updatedData;
+    });
   };
 
   return {
