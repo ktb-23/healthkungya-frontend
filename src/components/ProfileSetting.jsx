@@ -2,17 +2,43 @@ import Button from './Button';
 import styles from './styles/ProfileSetting.module.scss';
 import messi from '../picture/messi.jpg';
 import Input from './Input';
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { ActionType, initialState, ProfileReducer } from '../reducers/Profile';
+import useGetProfile from '../api/useGetProfile';
+import useUpdateProfile from '../api/useUpdateProfile';
 const ProfileSetting = () => {
   const [state, dispatch] = useReducer(ProfileReducer, initialState);
-  const updateProfile = () => {
+  const [profileId, setProfileId] = useState();
+  const getProfile = async () => {
+    try {
+      const response = await useGetProfile();
+      setProfileId(response[0].profile_id);
+      dispatch({ type: ActionType.SET_NAME, payload: response[0].nickname });
+      dispatch({ type: ActionType.SET_ID, payload: response[0].id });
+      dispatch({
+        type: ActionType.SET_STATUS_MESSAGE,
+        payload: response[0].statusMessage,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
+  const updateProfile = async () => {
     const body = {
-      name: state.name,
-      status_message: state.status_message,
+      profile_id: profileId,
       id: state.id,
+      nickname: state.name,
+      statusMessage: state.status_message,
     };
-    console.log(body);
+    try {
+      const response = await useUpdateProfile(body);
+      alert(response.message.message);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <main className={styles.profile}>
