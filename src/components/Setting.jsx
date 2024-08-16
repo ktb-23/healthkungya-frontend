@@ -6,6 +6,13 @@ const Setting = () => {
   const handleProfileSetting = () => {
     navigate('/setting/profile');
   };
+  const handleLogout = () => {
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('accesstoken');
+    localStorage.removeItem('refreshtoken');
+    localStorage.removeItem('weight');
+    navigate('/');
+  };
   return (
     <main className={styles.setting}>
       <header>
@@ -16,8 +23,12 @@ const Setting = () => {
         <div onClick={handleProfileSetting}>
           <Button variant={'setting'}>개인정보 수정</Button>
         </div>
-        <Button variant={'setting'}>로그아웃</Button>
-        <Button variant={'setting'}>회원탈퇴</Button>
+        <div onClick={handleLogout}>
+          <Button variant={'setting'}>로그아웃</Button>
+        </div>
+        <div>
+          <Button variant={'setting'}>회원탈퇴</Button>
+        </div>
       </div>
     </main>
   );
