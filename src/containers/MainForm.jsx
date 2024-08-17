@@ -10,11 +10,14 @@ import Button from '../components/Button.jsx';
 import Output from '../components/Output.jsx';
 import Photo from '../components/Photo.jsx';
 import UseDailyData from '../components/UseDailyData.jsx';
+import useWeight from '../hooks/useWeight.jsx';
+import Input from '../components/Input.jsx';
 
 const MainForm = () => {
   const navigate = useNavigate();
   const { selectedDate, dailyData, checkKcal, checkExercise, setSelectedDate } =
     UseDailyData();
+  const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
 
   const selectedDayData = dailyData[selectedDate] || {
     diet: {},
@@ -33,7 +36,10 @@ const MainForm = () => {
     console.log('Navigating to /foodupdate');
     navigate('/foodupdate');
   };
-
+  const handleWeightChange = (e) => {
+    const newWeight = e.target.value;
+    setWeight(newWeight);
+  };
   return (
     <main className="main-container">
       <FixForm
@@ -56,7 +62,9 @@ const MainForm = () => {
             수정하기
           </Button>
           <Button variant={'exchange'}>수정하기</Button>
-          <Button variant={'weightchange'}>수정하기</Button>
+          <Button onClick={handleUploadClick} variant={'weightchange'}>
+            수정하기
+          </Button>
         </div>
         <div className="photo-container">
           <Photo meal="morning" imageSrc={selectedDayData.photos.morning} />
@@ -75,7 +83,13 @@ const MainForm = () => {
           </Output>
           <Output text="운동">종목: {selectedDayData.exercise}</Output>
           <Output text="운동소모">소모칼로리: </Output>
-          <Output text="체중">체중: {selectedDayData.weight}</Output>
+          <Input
+            variant="weight"
+            type="number"
+            value={weight}
+            placeholder={'체중:'}
+            onChange={handleWeightChange}
+          />
         </div>
         <button className="graph-button" onClick={() => navigate('/graphpage')}>
           그래프 확인하기

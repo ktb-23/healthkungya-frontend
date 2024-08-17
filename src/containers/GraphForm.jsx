@@ -17,6 +17,7 @@ import IndexButton from '../components/\bIndexButton';
 import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트해야 함
 import Button from '../components/Button'; // Button 컴포넌트 임포트
 import useFetchWeeklyExerciseGraph from '../api/useFetchWeeklyExerciseGraph';
+import useFetchWeeklyWeightGraph from '../api/useFetchWeeklyWeightGraph';
 
 // Chart.js에서 사용해야 하는 요소 등록
 ChartJS.register(
@@ -83,11 +84,28 @@ const GraphForm = () => {
       console.error(error);
     }
   };
+  const fetchWeightData = async () => {
+    try {
+      const response = await useFetchWeeklyWeightGraph('weekly', selectedDate);
+      const weekWeight = dates.map((date) => {
+        const entry = response.find((d) => d.date === date);
+        return entry ? entry.weight : 0;
+      });
+      setCalories(weekWeight);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
     if (activeIndex === '운동') {
       fetchExerciseData();
     }
-  }, [activeIndex, selectedDate]);
+  }, [activeIndex, selectedDate, dates]);
+  useEffect(() => {
+    if (activeIndex === '체중') {
+      fetchWeightData();
+    }
+  }, [activeIndex, selectedDate, dates]);
 
   const data = {
     labels: ['일', '월', '화', '수', '목', '금', '토'],

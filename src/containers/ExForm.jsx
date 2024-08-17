@@ -11,8 +11,14 @@ import UseDailyData from '../components/UseDailyData.jsx';
 const ExForm = () => {
   const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
     UseDailyData();
-  const { handleDurationChange, handleUploadClick, durations, exItem, logId } =
-    useExerciseLog(selectedDate);
+  const {
+    handleDurationChange,
+    handleUploadClick,
+    durations,
+    exItem,
+    logId,
+    dateId,
+  } = useExerciseLog(selectedDate);
 
   return (
     <div className={styles.container}>
@@ -41,6 +47,7 @@ const ExForm = () => {
               onDurationChange={handleDurationChange}
               exItem={exItem}
               log_id={logId}
+              date_id={dateId}
             />
           </main>
         </div>
