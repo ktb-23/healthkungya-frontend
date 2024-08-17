@@ -1,10 +1,10 @@
-import Setting from '../components/Setting';
+import ProfileSetting from '../components/ProfileSetting';
 import UseDailyData from '../components/UseDailyData';
 import FixForm from './FixForm';
-import styles from './styles/SettingForm.module.scss';
+import styles from './styles/ProfileSettingForm.module.scss';
 
 //NOTE:설정 폼
-const SettingForm = () => {
+const ProfileSettingForm = () => {
   const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
     UseDailyData();
   return (
@@ -18,14 +18,14 @@ const SettingForm = () => {
           month: parseInt(selectedDate.slice(5, 7)),
         }}
       />
-      <div className={styles.SettingWrapper}>
-        <div className={styles.SettingContainer}>
-          <section className={styles.settings}>
-            <Setting />
+      <div className={styles.ProfileWrapper}>
+        <div className={styles.ProfileContainer}>
+          <section className={styles.Profile}>
+            <ProfileSetting />
           </section>
         </div>
       </div>
     </div>
   );
 };
-export default SettingForm;
+export default ProfileSettingForm;

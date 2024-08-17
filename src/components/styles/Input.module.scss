@@ -75,3 +75,22 @@
   color: #000000;
   outline: none;
 }
+.name {
+  box-sizing: border-box;
+  width: 242px;
+  height: 46.29px;
+
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  outline: none;
+  text-indent: 5px;
+}
+.id {
+  box-sizing: border-box;
+  width: 242px;
+  height: 46.29px;
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  outline: none;
+  text-indent: 5px;
+}
