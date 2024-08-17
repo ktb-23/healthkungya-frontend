@@ -16,6 +16,7 @@ import './styles/GraphForm.scss';
 import IndexButton from '../components/\bIndexButton';
 import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트해야 함
 import Button from '../components/Button'; // Button 컴포넌트 임포트
+import useFetchWeeklyExerciseGraph from '../api/useFetchWeeklyExerciseGraph';
 
 // Chart.js에서 사용해야 하는 요소 등록
 ChartJS.register(
@@ -33,6 +34,7 @@ const GraphForm = () => {
     UseDailyData();
 
   const [activeIndex, setActiveIndex] = useState('식단');
+  const [dates, setDates] = useState([]);
 
   const handleIndexClick = (index) => {
     setActiveIndex(index);
@@ -57,7 +59,7 @@ const GraphForm = () => {
   // 선택된 날짜의 주차에 대한 칼로리 데이터 업데이트
   useEffect(() => {
     const weekDates = getCurrentWeekDates(selectedDate);
-
+    setDates(weekDates);
     // 주간 칼로리 데이터를 계산
     const weekCalories = weekDates.map((date) => {
       return checkKcal(date) ? 2000 : 0; // 실제 로직으로 데이터 업데이트
@@ -65,6 +67,27 @@ const GraphForm = () => {
 
     setCalories(weekCalories);
   }, [selectedDate]);
+
+  const fetchExerciseData = async () => {
+    try {
+      const response = await useFetchWeeklyExerciseGraph(
+        'weekly',
+        selectedDate
+      );
+      const weekCalories = dates.map((date) => {
+        const entry = response.find((d) => d.date === date);
+        return entry ? entry.totalCalories : 0;
+      });
+      setCalories(weekCalories);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (activeIndex === '운동') {
+      fetchExerciseData();
+    }
+  }, [activeIndex, selectedDate]);
 
   const data = {
     labels: ['일', '월', '화', '수', '목', '금', '토'],
