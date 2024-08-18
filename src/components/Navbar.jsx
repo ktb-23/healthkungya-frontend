@@ -7,16 +7,28 @@ import Search from '../picture/searchicon.png';
 import Alert from '../picture/alerticon.png';
 import Profile from '../picture/profileicon.png';
 import './styles/Navbar.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <>
       <img className="logo" src={Logo} alt="Logo" />
       <div className="navicon">
-        <img className="home" src={Home} alt="Home" />
+        <img
+          onClick={() => navigate('/mainpage')}
+          className="home"
+          src={Home}
+          alt="Home"
+        />
         <img className="search" src={Search} alt="Search" />
         <img className="alert" src={Alert} alt="Alert" />
-        <img className="profile" src={Profile} alt="Profile" />
+        <img
+          onClick={() => navigate('/setting')}
+          className="profile"
+          src={Profile}
+          alt="Profile"
+        />
       </div>
     </>
   );
