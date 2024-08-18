@@ -14,7 +14,11 @@ const exItemSlice = createSlice({
     removeExItem: (state, action) => {
       state.exItem = action.payload;
     },
+    resetExItems: (state) => {
+      // 상태를 초기 상태로 리셋
+      state.exItem = [];
+    },
   },
 });
-export const { addExItem, removeExItem } = exItemSlice.actions;
+export const { addExItem, removeExItem, resetExItems } = exItemSlice.actions;
 export default exItemSlice.reducer;

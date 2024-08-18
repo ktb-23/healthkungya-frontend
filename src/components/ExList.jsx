@@ -2,7 +2,7 @@ import axios from 'axios';
 import Button from './Button';
 import styles from './styles/ExList.module.scss';
 import useDeleteExlog from '../api/useDeleteExlog';
-const ExList = ({ exItem, durations, onDurationChange, log_id }) => {
+const ExList = ({ exItem, durations, onDurationChange, log_id, date_id }) => {
   const weight = localStorage.getItem('weight');
   console.log(weight);
   //met를 몸무게로 시간당 칼로리 계산
@@ -21,7 +21,7 @@ const ExList = ({ exItem, durations, onDurationChange, log_id }) => {
   }, 0);
   const handleDelete = async () => {
     try {
-      const response = await useDeleteExlog(log_id, 4);
+      const response = await useDeleteExlog(log_id, date_id);
       alert(response.message);
       window.location.reload();
     } catch (error) {
