@@ -1,49 +1,62 @@
-import React, { useReducer, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useReducer, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import './styles/FoodForm.scss';
 
 const FoodForm = () => {
+  const [state, dispatch] = useReducer(FoodReducer, InitialState);
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     selectedDate,
     checkKcal,
-    checkExercise,
     setSelectedDate,
     updateDietInfo,
+    getDietInfo,
+    checkExercise,
   } = UseDailyData();
 
-  const [state, dispatch] = useReducer(FoodReducer, InitialState);
-
   useEffect(() => {
-    // 샘플 데이터 설정
-    dispatch({ type: 'SET_MEAL_CALORIES', payload: 500 });
-    // 샘플 데이터를 UseDailyData에 저장
-    updateDietInfo(state.selectedMeal, 500);
-  }, []);
+    if (selectedDate && selectedDate !== currentDate) {
+      setCurrentDate(selectedDate);
+      const dietInfo = getDietInfo(selectedDate);
+      dispatch({
+        type: 'SET_ALL_MEALS',
+        payload: {
+          아침: dietInfo['아침'] || 0,
+          점심: dietInfo['점심'] || 0,
+          저녁: dietInfo['저녁'] || 0,
+        },
+      });
+    }
+  }, [selectedDate, currentDate, getDietInfo]);
 
   const handleSaveMeal = () => {
-    if (state.selectedMeal && state.mealCalories) {
-      updateDietInfo(state.selectedMeal, state.mealCalories);
-      dispatch({ type: 'RESET_FORM' });
-    }
-  };
-
-  const handleUpdate = () => {
-    handleSaveMeal();
+    updateDietInfo(
+      currentDate,
+      state.selectedMeal,
+      state.mealCalories[state.selectedMeal]
+    );
+    alert('수정이 완료되었습니다.');
   };
 
   const handleSaveAndNavigate = () => {
-    updateDietInfo(state.selectedMeal, state.mealCalories);
-    console.log(
-      'Saved meal:',
-      state.selectedMeal,
-      'Calories:',
-      state.mealCalories
-    );
-    navigate('/mainpage');
+    handleSaveMeal();
+    navigate('/mainpage', { state: { date: currentDate } });
+  };
+
+  const handleFoodSelect = (event) => {
+    const selectedCalories = parseInt(event.target.value, 10);
+    if (!isNaN(selectedCalories)) {
+      dispatch({
+        type: 'SET_MEAL_CALORIES',
+        payload: { meal: state.selectedMeal, value: selectedCalories },
+      });
+    }
   };
 
   const handleImageUpload = (event) => {
@@ -56,20 +69,13 @@ const FoodForm = () => {
     }
   };
 
-  const handleClearList = () => {
-    dispatch({ type: 'CLEAR_FOOD_LIST' });
-  };
-  const handleFoodSelect = (event) => {
-    dispatch({ type: 'SET_SELECTED_FOOD', payload: event.target.value });
-  };
-
   return (
     <>
       <FixForm
         checkKcal={checkKcal}
         checkExercise={checkExercise}
         selectDate={setSelectedDate}
-        selectedDate={selectedDate}
+        selectedDate={currentDate}
       />
       <section className="Food-right">
         <div className="food-nav">
@@ -108,35 +114,23 @@ const FoodForm = () => {
         <div className="list-box">
           <div className="list-header">
             <h3>음식목록</h3>
-            <button onClick={handleClearList} className="clear-button">
-              비우기
-            </button>
           </div>
           <div className="list-content">
-            <div className="list-title">
-              <span>[음식이름]</span>
-              <select
-                value={state.selectedFood}
-                onChange={handleFoodSelect}
-                className="food-select"
-              >
-                <option value="">선택하세요</option>
-                {state.foodList.map((food, index) => (
-                  <option key={index} value={food}>
-                    {food}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <ul className="food-list">
-              {state.foodList.map((food, index) => (
-                <li key={index}>{food}</li>
-              ))}
-            </ul>
+            <span>[음식이름]</span>
+            <select
+              value={state.selectedFood}
+              onChange={handleFoodSelect}
+              className="food-select"
+            >
+              <option value="">선택하세요</option>
+              <option value="500">500kcal</option>
+            </select>
           </div>
         </div>
-        <div className="total-kal">섭취 칼로리: {state.mealCalories} kcal</div>
-        <button className="save" onClick={handleUpdate}>
+        <div className="total-kal">
+          섭취 칼로리: {state.mealCalories[state.selectedMeal] || 0} kcal
+        </div>
+        <button className="save" onClick={handleSaveMeal}>
           수정 완료
         </button>
         <button className="edit" onClick={handleSaveAndNavigate}>
