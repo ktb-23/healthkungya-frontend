@@ -6,22 +6,28 @@ import useUpdateWeight from '../api/useUpdateWeight';
 const useWeight = (selectedDate) => {
   const [weightId, setWeightId] = useState('');
   const [weight, setWeight] = useState('');
-  console.log(weight);
 
   const fetchWeight = async () => {
     try {
       const response = await useGetWeight(selectedDate);
-      setWeightId(response[0].weight_id);
-      setWeight(response[0].weight);
+
+      if (response.length > 0 && response[0].weight) {
+        setWeightId(response[0].weight_id);
+        setWeight(response[0].weight);
+      } else {
+        // 데이터가 없는 경우 상태 초기화
+        setWeightId('');
+        setWeight('');
+      }
     } catch (error) {
-      console.log(error);
+      console.error('몸무게 데이터를 가져오는 중 오류 발생:', error);
+      // 오류 발생 시 상태 초기화
     }
   };
 
   useEffect(() => {
     fetchWeight();
   }, [selectedDate]);
-
   const handleUploadClick = async () => {
     const uploadData = {
       date: selectedDate,

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from '../config/apiConfig';
 
 const useGetProfile = async () => {
   const accesstoken = localStorage.getItem('accesstoken');
   try {
-    const response = await axios.get('http://localhost:8000/api/profile', {
+    const response = await api.get('/api/profile', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accesstoken}`,

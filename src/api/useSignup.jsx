@@ -1,17 +1,13 @@
-import axios from 'axios';
+import api from '../config/apiConfig';
 
 // 회원가입 API
 const useSignup = async (body) => {
   try {
-    const response = await axios.post(
-      'http://localhost:8000/api/auth/register',
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await api.post('/api/auth/register', body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     return {
       success: true,
       message: response.data.message || '회원가입이 완료되었습니다.',

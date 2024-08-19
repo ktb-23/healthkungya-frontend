@@ -1,15 +1,12 @@
-import axios from 'axios';
+import api from '../config/apiConfig';
 const checkDuplicate = async (field, value) => {
   try {
-    const response = await axios.get(
-      `http://localhost:8000/api/auth/check-duplicate`,
-      {
-        params: { field, value },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await api.get(`/api/auth/check-duplicate`, {
+      params: { field, value },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     console.log(response.data);
     return response.data; // 서버에서 중복 여부를 반환
   } catch (error) {
