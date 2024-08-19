@@ -3,16 +3,20 @@ import './styles/Calendar.scss';
 import montharrowleft from '../picture/montharrleft.png';
 import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
-import UseDailyData from '../components/UseDailyData.jsx'; // 훅 가져오기
+import UseDailyData from '../components/UseDailyData.jsx';
 
 const Calendar = ({ selectDate }) => {
-  const { checkKcal, checkExercise } = UseDailyData();
+  const { checkKcal, checkExercise, saveData } = UseDailyData();
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-  const [selectedDate, setSelectedDateState] = useState(new Date()); // 현재 선택된 날짜 유지
+  const [selectedDateString, setSelectedDateString] = useState('');
 
+  const handleDateClick = (dateString) => {
+    selectDate(dateString);
+    setSelectedDateString(dateString);
+  };
   const getFirstDayOfMonth = () => {
     return new Date(currentYear, currentMonth - 1, 1).getDay();
   };
@@ -22,25 +26,13 @@ const Calendar = ({ selectDate }) => {
   };
 
   const handlePreviousMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      if (prevMonth === 1) {
-        setCurrentYear((prevYear) => prevYear - 1);
-        return 12;
-      } else {
-        return prevMonth - 1;
-      }
-    });
+    setCurrentMonth((prevMonth) => (prevMonth === 1 ? 12 : prevMonth - 1));
+    if (currentMonth === 1) setCurrentYear((prevYear) => prevYear - 1);
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      if (prevMonth === 12) {
-        setCurrentYear((prevYear) => prevYear + 1);
-        return 1;
-      } else {
-        return prevMonth + 1;
-      }
-    });
+    setCurrentMonth((prevMonth) => (prevMonth === 12 ? 1 : prevMonth + 1));
+    if (currentMonth === 12) setCurrentYear((prevYear) => prevYear + 1);
   };
 
   const getDateString = (year, month, day) => {
@@ -48,9 +40,14 @@ const Calendar = ({ selectDate }) => {
   };
 
   useEffect(() => {
-    // 현재 월이 변경되면 뭔가 작업이 필요하면 여기에 추가
-    selectDate(getDateString(currentYear, currentMonth, new Date().getDate())); // 현재 날짜로 선택
-  }, [currentYear, currentMonth]);
+    const today = new Date();
+    const todayString = getDateString(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      today.getDate()
+    );
+    selectDate(todayString);
+  }, []);
 
   return (
     <div className="calendar">
@@ -82,18 +79,17 @@ const Calendar = ({ selectDate }) => {
           const dateString = getDateString(currentYear, currentMonth, date + 1);
           const isKcal = checkKcal(dateString);
           const isExercise = checkExercise(dateString);
-          const buttonClass = `date-button ${isKcal ? 'has-kcal' : ''} ${isExercise ? 'has-exercise' : ''}`;
+          const isSelected = dateString === selectedDateString;
 
           return (
             <div key={date + 1} className="date-container">
               <button
-                className={buttonClass}
-                onClick={() => {
-                  setSelectedDateState(dateString);
-                  selectDate(dateString); // 부모 컴포넌트의 selectDate 함수 호출
-                }}
+                className={`date-button ${isKcal ? 'has-kcal' : ''} ${isExercise ? 'has-exercise' : ''}`}
+                onClick={() => handleDateClick(dateString)}
               ></button>
-              <div className="date-label">{date + 1}</div>
+              <div className={`date-label ${isSelected ? 'selected' : ''}`}>
+                {date + 1}
+              </div>
             </div>
           );
         })}

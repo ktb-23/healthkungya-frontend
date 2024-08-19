@@ -1,11 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import ExForm from '../containers/ExForm';
+import FoodForm from '../containers/FoodForm';
+import GraphForm from '../containers/GraphForm';
 
-// 시작 페이지 라우트
 function PageRoutes() {
   return (
     <Routes>
-      <Route path="/exercise_log" element={<ExForm />} />
+      <Route path="exercise_log" element={<ExForm />} />
+      <Route path="foodupdate" element={<FoodForm />} />
+      <Route path="graphpage" element={<GraphForm />} />
     </Routes>
   );
 }

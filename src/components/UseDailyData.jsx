@@ -12,24 +12,7 @@ const UseDailyData = () => {
   const [selectedDate, setSelectedDate] = useState(getTodayDateString());
   const [dailyData, setDailyData] = useState(() => {
     const savedData = localStorage.getItem('dailyData');
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          [selectedDate]: {
-            diet: {
-              아침: 0,
-              점심: 0,
-              저녁: 0,
-            },
-            exercise: '50분 달리기',
-            weight: '70kg',
-            photos: {
-              morning: '/path/to/morning/photo.jpg',
-              lunch: '/path/to/lunch/photo.jpg',
-              dinner: '/path/to/dinner/photo.jpg',
-            },
-          },
-        };
+    return savedData ? JSON.parse(savedData) : {};
   });
 
   useEffect(() => {
@@ -37,46 +20,91 @@ const UseDailyData = () => {
   }, [dailyData]);
 
   const checkKcal = (date) => {
-    const mealKcal = dailyData[date]?.diet;
-    return mealKcal && mealKcal.아침 && mealKcal.점심 && mealKcal.저녁;
+    const dayData = dailyData[date];
+    if (dayData && dayData.diet) {
+      const { 아침, 점심, 저녁 } = dayData.diet;
+      return 아침 && 아침 > 0 && 점심 && 점심 > 0 && 저녁 && 저녁 > 0;
+    }
+    return false;
   };
 
   const checkExercise = (date) => {
     return !!dailyData[date]?.exercise;
   };
 
-  const updateDietInfo = (meal, calories) => {
-    setDailyData((prevData) => {
-      const currentDateData = prevData[selectedDate] || {
+  const getDietInfo = (date) => {
+    return dailyData[date]?.diet || { 아침: 0, 점심: 0, 저녁: 0 };
+  };
+
+  const updateDietInfo = (date, meal, calories) => {
+    setDailyData((prevData) => ({
+      ...prevData,
+      [date]: {
+        ...prevData[date],
+        diet: {
+          ...(prevData[date]?.diet || {}),
+          [meal]: calories,
+        },
+      },
+    }));
+  };
+
+  const updateExerciseInfo = (date, exercise) => {
+    setDailyData((prevData) => ({
+      ...prevData,
+      [date]: {
+        ...prevData[date],
+        exercise,
+      },
+    }));
+  };
+
+  const updateWeightInfo = (date, weight) => {
+    setDailyData((prevData) => ({
+      ...prevData,
+      [date]: {
+        ...prevData[date],
+        weight,
+      },
+    }));
+  };
+
+  const updatePhotoInfo = (date, mealTime, photoPath) => {
+    setDailyData((prevData) => ({
+      ...prevData,
+      [date]: {
+        ...prevData[date],
+        photos: {
+          ...prevData[date]?.photos,
+          [mealTime]: photoPath,
+        },
+      },
+    }));
+  };
+
+  const getDateData = (date) => {
+    return (
+      dailyData[date] || {
         diet: { 아침: 0, 점심: 0, 저녁: 0 },
         exercise: '',
         weight: '',
         photos: {},
-      };
-
-      const updatedData = {
-        ...prevData,
-        [selectedDate]: {
-          ...currentDateData,
-          diet: {
-            ...currentDateData.diet,
-            [meal]: calories,
-          },
-        },
-      };
-
-      console.log('Updated data:', updatedData);
-      return updatedData;
-    });
+      }
+    );
   };
 
   return {
     selectedDate,
+    setSelectedDate,
     dailyData,
+    getDietInfo,
     checkKcal,
     checkExercise,
-    setSelectedDate,
     updateDietInfo,
+    updateExerciseInfo,
+    updateWeightInfo,
+    updatePhotoInfo,
+    getDateData,
   };
 };
 
