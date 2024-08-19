@@ -44,15 +44,14 @@ const MainForm = () => {
   }, [selectedDayData]);
 
   const handleFoodChangeClick = () => {
-    navigate('/pages/foodupdate', { state: { date: selectedDate } });
+    navigate('/foodupdate', { state: { date: selectedDate } });
   };
   const handleExChangeClick = () => {
-    console.log('Navigating to /foodupdate');
+    console.log('Navigating to /exercise_log');
     navigate('/pages/exercise_log');
   };
   const handleWeightChangeClick = () => {
-    console.log('Navigating to /foodupdate');
-    navigate('/pages/foodupdate');
+    console.log('Navigating to /weight');
   };
   const getDietKcal = (meal) => {
     return selectedDayData.diet[meal] || 0;
@@ -114,10 +113,7 @@ const MainForm = () => {
             onChange={handleWeightChange}
           />
         </div>
-        <button
-          className="graph-button"
-          onClick={() => navigate('/pages/graphpage')}
-        >
+        <button className="graph-button" onClick={() => navigate('/graphpage')}>
           그래프 확인하기
         </button>
       </section>
