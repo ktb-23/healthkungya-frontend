@@ -19,12 +19,12 @@ function StartForm() {
         <div className={styles.logo}></div>
       </header>
       <section className={styles.buttons}>
-        <article onClick={handleLoginPage}>
-          <Button variant={'login'}>로그인하기</Button>
-        </article>
-        <article onClick={handleSignupPage}>
-          <Button variant={'signup'}>회원가입하기</Button>
-        </article>
+        <Button onClick={handleLoginPage} variant={'login'}>
+          로그인하기
+        </Button>
+        <Button onClick={handleSignupPage} variant={'signup'}>
+          회원가입하기
+        </Button>
       </section>
     </main>
   );

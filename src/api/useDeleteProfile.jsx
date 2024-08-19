@@ -1,17 +1,14 @@
-import axios from 'axios';
+import api from '../config/apiConfig';
 
 const useDeleteProfile = async () => {
   const accesstoken = localStorage.getItem('accesstoken');
   try {
-    const response = await axios.delete(
-      `http://localhost:8000/api/auth/delete`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accesstoken}`,
-        },
-      }
-    );
+    const response = await api.delete(`/api/auth/delete`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accesstoken}`,
+      },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {

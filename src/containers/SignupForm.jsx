@@ -130,9 +130,8 @@ function SignupForm() {
               <Button variant={'signup'}>회원가입</Button>
             </div>
           </form>
-          <div onClick={() => navigate('/login')}>
-            <Button>로그인</Button>
-          </div>
+
+          <Button onClick={() => navigate('/login')}>로그인</Button>
         </section>
       </div>
     </main>

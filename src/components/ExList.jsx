@@ -33,9 +33,9 @@ const ExList = ({ exItem, durations, onDurationChange, log_id, date_id }) => {
       <section className={styles.ListWrapper} aria-labelledby="exercise-list">
         <header className={styles.header}>
           <span>운동 목록</span>
-          <div onClick={handleDelete}>
-            <Button variant="clear">비우기</Button>
-          </div>
+          <Button onClick={handleDelete} variant="clear">
+            비우기
+          </Button>
         </header>
         <ul className={styles.exerciseList}>
           {exItem?.map((item) => {

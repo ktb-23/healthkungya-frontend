@@ -42,6 +42,11 @@ const useExerciseLog = (selectedDate) => {
       }
     } catch (error) {
       console.log(error);
+      // 오류 발생 시 상태를 초기화
+      dispatch(resetExItems());
+      setLogId('');
+      setDateId('');
+      setDurations({});
     }
   };
 

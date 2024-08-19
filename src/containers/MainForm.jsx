@@ -12,7 +12,7 @@ import Photo from '../components/Photo.jsx';
 import UseDailyData from '../components/UseDailyData.jsx';
 import useWeight from '../hooks/useWeight.jsx';
 import Input from '../components/Input.jsx';
-
+import useExerciseLog from '../hooks/useExerciseLog.jsx';
 const MainForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,6 +38,22 @@ const MainForm = () => {
     weight: '',
     photos: {},
   };
+  const { durations, exItem } = useExerciseLog(selectedDate);
+
+  //met를 몸무게로 시간당 칼로리 계산
+  const calculateCalories = (met, duration) => {
+    // 몸무게가 0보다 클 때만 계산
+    if (weight > 0) {
+      return ((met * weight * 3.5) / 200) * duration;
+    }
+    return 0;
+  };
+  // 전체 칼로리 계산
+  const totalCalories = exItem.reduce((total, item) => {
+    const duration = durations[item.exitem_id] || item.extime;
+    const calories = calculateCalories(item.met, duration);
+    return total + calories;
+  }, 0);
 
   useEffect(() => {
     console.log('Rendering breakfast calories:', selectedDayData.diet['아침']);
@@ -60,6 +76,7 @@ const MainForm = () => {
     const newWeight = e.target.value;
     setWeight(newWeight);
   };
+
   return (
     <main className="main-container">
       <FixForm
@@ -78,7 +95,12 @@ const MainForm = () => {
           <Button variant={'foodchange'} onClick={handleFoodChangeClick}>
             수정하기
           </Button>
-          <Button variant={'exchange'}>수정하기</Button>
+          <Button
+            variant={'exchange'}
+            onClick={() => navigate('/exercise_log')}
+          >
+            수정하기
+          </Button>
           <Button onClick={handleUploadClick} variant={'weightchange'}>
             수정하기
           </Button>
@@ -103,8 +125,21 @@ const MainForm = () => {
           <Output text="운동소모" kcal={selectedDayData.exerciseCalories || 0}>
             소모칼로리
           </Output>
-          <Output text="운동">종목: {selectedDayData.exercise}</Output>
-          <Output text="운동소모">소모칼로리: </Output>
+          <Output text="운동">
+            종목:
+            <div className="exWrapper">
+              <div>
+                {exItem.map((i) => (
+                  <span key={i.exitem_id}>
+                    {i.extime} 분 {i.ex}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Output>
+          <Output text="운동소모">
+            소모칼로리:{totalCalories.toFixed(2)} kcal{' '}
+          </Output>
           <Input
             variant="weight"
             type="number"

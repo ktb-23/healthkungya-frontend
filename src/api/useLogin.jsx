@@ -1,16 +1,14 @@
-import axios from 'axios';
+import api from '../config/apiConfig';
 const useLogin = async (body) => {
   try {
-    const response = await axios.post(
-      'http://localhost:8000/api/auth/login',
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const { nickname, weight, accesstoken, refreshtoken } = response.data;
+    const response = await api.post('/api/auth/login', body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const { user_id, nickname, weight, accesstoken, refreshtoken } =
+      response.data;
+    localStorage.setItem('user_id', user_id);
     localStorage.setItem('nickname', nickname);
     localStorage.setItem('accesstoken', accesstoken);
     localStorage.setItem('refreshtoken', refreshtoken);

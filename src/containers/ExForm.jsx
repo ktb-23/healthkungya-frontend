@@ -6,9 +6,11 @@ import Search from '../components/Search.jsx';
 import ExList from '../components/ExList.jsx';
 import useExerciseLog from '../hooks/useExerciseLog.jsx';
 import UseDailyData from '../components/UseDailyData.jsx';
+import { useNavigate } from 'react-router-dom';
 //NOTE:운동입력 폼
 
 const ExForm = () => {
+  const navigate = useNavigate();
   const { selectedDate, checkKcal, checkExercise, setSelectedDate } =
     UseDailyData();
   const {
@@ -34,11 +36,14 @@ const ExForm = () => {
       <div className={styles.ExFormWrapper}>
         <div className={styles.ExFormContainer}>
           <header className={styles.header}>
-            <Button variant={'backBtn'}></Button>
+            <Button
+              onClick={() => navigate('/mainpage')}
+              variant={'backBtn'}
+            ></Button>
             <div className={styles.category}>운동</div>
-            <div onClick={handleUploadClick}>
-              <Button variant={'exupload'}>업로드</Button>
-            </div>
+            <Button onClick={handleUploadClick} variant={'exupload'}>
+              업로드
+            </Button>
           </header>
           <main className={styles.ExWrapper}>
             <Search />

@@ -27,19 +27,22 @@ const Setting = () => {
   return (
     <main className={styles.setting}>
       <header>
-        <Button variant={'backBtn'}></Button>
+        <Button
+          onClick={() => navigate('/mainpage')}
+          variant={'backBtn'}
+        ></Button>
         <span>설정</span>
       </header>
       <div className={styles.buttonWrapper}>
-        <div onClick={handleProfileSetting}>
-          <Button variant={'setting'}>개인정보 수정</Button>
-        </div>
-        <div onClick={handleLogout}>
-          <Button variant={'setting'}>로그아웃</Button>
-        </div>
-        <div onClick={handleResign}>
-          <Button variant={'setting'}>회원탈퇴</Button>
-        </div>
+        <Button onClick={handleProfileSetting} variant={'setting'}>
+          개인정보 수정
+        </Button>
+        <Button onClick={handleLogout} variant={'setting'}>
+          로그아웃
+        </Button>
+        <Button onClick={handleResign} variant={'setting'}>
+          회원탈퇴
+        </Button>
       </div>
     </main>
   );

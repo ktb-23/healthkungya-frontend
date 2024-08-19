@@ -46,6 +46,17 @@
     }
   }
 }
+.exWrapper {
+  margin-left: 10%;
+  width: 60%;
+}
+.exWrapper div {
+  display: flex;
+  overflow-y: scroll;
+  height: 34px;
+  flex-direction: column;
+  gap: 10px;
+}
 
 @media (max-width: 1200px) {
   .main-container {

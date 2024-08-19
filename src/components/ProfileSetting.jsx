@@ -6,7 +6,10 @@ import { useEffect, useReducer, useState } from 'react';
 import { ActionType, initialState, ProfileReducer } from '../reducers/Profile';
 import useGetProfile from '../api/useGetProfile';
 import useUpdateProfile from '../api/useUpdateProfile';
+import logo from '../picture/logo.png';
+import { useNavigate } from 'react-router-dom';
 const ProfileSetting = () => {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(ProfileReducer, initialState);
   const [profileId, setProfileId] = useState();
   const getProfile = async () => {
@@ -18,6 +21,10 @@ const ProfileSetting = () => {
       dispatch({
         type: ActionType.SET_STATUS_MESSAGE,
         payload: response[0].statusMessage,
+      });
+      dispatch({
+        type: ActionType.SET_IMAGEURL,
+        payload: response[0].imageUrl,
       });
     } catch (error) {
       console.error(error);
@@ -43,13 +50,16 @@ const ProfileSetting = () => {
   return (
     <main className={styles.profile}>
       <header>
-        <Button variant={'backBtn'}></Button>
+        <Button
+          onClick={() => navigate('/setting')}
+          variant={'backBtn'}
+        ></Button>
         <span>설정</span>
       </header>
       <div className={styles.profileSettingWrapper}>
         <span>개인정보 수정</span>
         <div className={styles.profileImageWrapper}>
-          <img src={messi} alt="profileImg"></img>
+          <img src={state.imageUrl || logo} alt="profileImg"></img>
         </div>
         <Button variant={'profileupload'}>사진 업로드</Button>
         <Input
