@@ -1,7 +1,7 @@
 // hooks/useExerciseLog.js
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addExItem } from '../provider/slices/exitem';
+import { addExItem, resetExItems } from '../provider/slices/exitem';
 import useInsertExlog from '../api/useInsertExlog';
 import useGetExlog from '../api/useGetExlog';
 import useUpdateExlog from '../api/useUpdateExlog';
@@ -10,13 +10,15 @@ const useExerciseLog = (selectedDate) => {
   const dispatch = useDispatch();
   const exItem = useSelector((state) => state.exItem.exItem);
   const [logId, setLogId] = useState('');
+  const [dateId, setDateId] = useState('');
   const [durations, setDurations] = useState({});
 
   const fetchExlog = async () => {
     try {
-      const response = await useGetExlog(4);
+      const response = await useGetExlog(selectedDate);
       if (response.length > 0) {
         const logEntry = response[0];
+        setDateId(logEntry.date_id);
         setLogId(logEntry.log_id);
         const exitemIds = logEntry.exitem_id
           .split(',')
@@ -35,7 +37,7 @@ const useExerciseLog = (selectedDate) => {
           extime: extimes[index],
           met: mets[index],
         }));
-
+        dispatch(resetExItems()); // 상태 초기화
         exerciseItems.forEach((item) => dispatch(addExItem(item)));
       }
     } catch (error) {
@@ -45,7 +47,7 @@ const useExerciseLog = (selectedDate) => {
 
   useEffect(() => {
     fetchExlog();
-  }, []);
+  }, [selectedDate]);
 
   const handleDurationChange = (exitem_id, duration) => {
     setDurations({ ...durations, [exitem_id]: parseInt(duration) });
@@ -77,7 +79,14 @@ const useExerciseLog = (selectedDate) => {
     }
   };
 
-  return { handleDurationChange, handleUploadClick, durations, exItem, logId };
+  return {
+    handleDurationChange,
+    handleUploadClick,
+    durations,
+    exItem,
+    logId,
+    dateId,
+  };
 };
 
 export default useExerciseLog;

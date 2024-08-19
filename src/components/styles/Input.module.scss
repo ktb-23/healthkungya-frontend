@@ -75,3 +75,50 @@
   color: #000000;
   outline: none;
 }
+.name {
+  box-sizing: border-box;
+  width: 242px;
+  height: 46.29px;
+
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  outline: none;
+  text-indent: 5px;
+}
+.id {
+  box-sizing: border-box;
+  width: 242px;
+  height: 46.29px;
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  outline: none;
+  text-indent: 5px;
+}
+.weight {
+  display: flex;
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #ffffff;
+  width: 250px;
+  height: 34px;
+  left: 20vw;
+  top: 70vh;
+  @media (max-width: 1200px) {
+    position: absolute;
+    background-color: #ffffff;
+    width: 170px;
+    height: 34px;
+    left: 235px;
+    top: 670px;
+  }
+}

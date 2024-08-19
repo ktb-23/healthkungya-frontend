@@ -10,12 +10,21 @@ import Button from '../components/Button.jsx';
 import Output from '../components/Output.jsx';
 import Photo from '../components/Photo.jsx';
 import UseDailyData from '../components/UseDailyData.jsx';
+import useWeight from '../hooks/useWeight.jsx';
+import Input from '../components/Input.jsx';
 
 const MainForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { selectedDate, setSelectedDate, dailyData, checkKcal, checkExercise } =
     UseDailyData();
+  const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
+
+  useEffect(() => {
+    if (location.state?.date) {
+      setSelectedDate(location.state.date);
+    }
+  }, [location.state?.date, setSelectedDate]);
 
   useEffect(() => {
     if (location.state?.date) {
@@ -48,7 +57,10 @@ const MainForm = () => {
   const getDietKcal = (meal) => {
     return selectedDayData.diet[meal] || 0;
   };
-
+  const handleWeightChange = (e) => {
+    const newWeight = e.target.value;
+    setWeight(newWeight);
+  };
   return (
     <main className="main-container">
       <FixForm
@@ -67,10 +79,8 @@ const MainForm = () => {
           <Button variant={'foodchange'} onClick={handleFoodChangeClick}>
             수정하기
           </Button>
-          <Button variant={'exchange'} onClick={handleExChangeClick}>
-            수정하기
-          </Button>
-          <Button variant={'weightchange'} onClick={handleWeightChangeClick}>
+          <Button variant={'exchange'}>수정하기</Button>
+          <Button onClick={handleUploadClick} variant={'weightchange'}>
             수정하기
           </Button>
         </div>
@@ -94,7 +104,15 @@ const MainForm = () => {
           <Output text="운동소모" kcal={selectedDayData.exerciseCalories || 0}>
             소모칼로리
           </Output>
-          <Output text="체중">{selectedDayData.weight || 0} kg</Output>
+          <Output text="운동">종목: {selectedDayData.exercise}</Output>
+          <Output text="운동소모">소모칼로리: </Output>
+          <Input
+            variant="weight"
+            type="number"
+            value={weight}
+            placeholder={'체중:'}
+            onChange={handleWeightChange}
+          />
         </div>
         <button
           className="graph-button"
