@@ -53,6 +53,7 @@ const ExForm = () => {
               exItem={exItem}
               log_id={logId}
               date_id={dateId}
+              selectDate={selectedDate}
             />
           </main>
         </div>
