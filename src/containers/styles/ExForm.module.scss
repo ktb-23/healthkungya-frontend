@@ -24,14 +24,11 @@
   }
 
   @media (max-width: 1300px) {
-    width: 500px;
-  }
-  @media (max-width: 1200px) {
     position: relative;
     bottom: 720px;
     margin-top: 75vh;
 
-    width: 375px;
+    width: 400px;
   }
 }
 
@@ -43,10 +40,6 @@
   @media (max-width: 1300px) {
     width: inherit;
     height: 80%;
-  }
-  @media (max-width: 1200px) {
-    width: inherit;
-    height: 70%;
   }
 }
 
