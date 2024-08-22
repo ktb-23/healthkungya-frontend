@@ -68,7 +68,7 @@
 @media (max-width: 1300px) {
   .main-right {
     position: relative;
-    top: 20px;
+    top: -100px;
     left: 0;
     display: flex;
     justify-content: center;
@@ -106,5 +106,23 @@
     position: relative;
     display: flex;
     justify-content: center;
+  }
+  @media (max-height: 800px) {
+    .main-right {
+      position: relative;
+      top: 0px;
+    }
+  }
+  @media (max-height: 700px) {
+    .main-right {
+      position: relative;
+      top: 100px;
+    }
+  }
+  @media (max-height: 600px) {
+    .main-right {
+      position: relative;
+      top: 200px;
+    }
   }
 }
