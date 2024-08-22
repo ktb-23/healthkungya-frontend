@@ -8,7 +8,7 @@ const getTodayDateString = () => {
   return `${year}-${month}-${day}`;
 };
 
-const UseDailyData = () => {
+const UseDailyData = (userId) => {
   const [selectedDate, setSelectedDate] = useState(getTodayDateString());
   const [dailyData, setDailyData] = useState(() => {
     const savedData = localStorage.getItem('dailyData');
@@ -36,7 +36,7 @@ const UseDailyData = () => {
     return dailyData[date]?.diet || { 아침: 0, 점심: 0, 저녁: 0 };
   };
 
-  const updateDietInfo = (date, meal, calories) => {
+  const updateDietInfo = (date, meal, calories, imageUrl) => {
     setDailyData((prevData) => ({
       ...prevData,
       [date]: {
@@ -44,6 +44,10 @@ const UseDailyData = () => {
         diet: {
           ...(prevData[date]?.diet || {}),
           [meal]: calories,
+        },
+        photos: {
+          ...(prevData[date]?.photos || {}),
+          [meal]: imageUrl,
         },
       },
     }));

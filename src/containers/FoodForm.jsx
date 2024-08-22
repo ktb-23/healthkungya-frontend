@@ -4,15 +4,16 @@ import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import './styles/FoodForm.scss';
+import axios from 'axios'; // axios를 사용하여 API 요청을 보냅니다.
 
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [foodAnalysis, setFoodAnalysis] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const {
-    selectedDate,
     checkKcal,
     setSelectedDate,
     updateDietInfo,
@@ -21,9 +22,11 @@ const FoodForm = () => {
   } = UseDailyData();
 
   useEffect(() => {
-    if (selectedDate && selectedDate !== currentDate) {
-      setCurrentDate(selectedDate);
-      const dietInfo = getDietInfo(selectedDate);
+    if (location.state?.date) {
+      const dateFromMainForm = new Date(location.state.date);
+      setCurrentDate(dateFromMainForm);
+      setSelectedDate(dateFromMainForm);
+      const dietInfo = getDietInfo(location.state.date);
       dispatch({
         type: 'SET_ALL_MEALS',
         payload: {
@@ -33,7 +36,7 @@ const FoodForm = () => {
         },
       });
     }
-  }, [selectedDate, currentDate, getDietInfo]);
+  }, [location.state, setSelectedDate, getDietInfo]);
 
   const handleSaveMeal = () => {
     updateDietInfo(
@@ -59,12 +62,24 @@ const FoodForm = () => {
     }
   };
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) =>
-        dispatch({ type: 'SET_IMAGE', payload: e.target.result });
+      reader.onload = async (e) => {
+        const imageData = e.target.result;
+        dispatch({ type: 'SET_IMAGE', payload: imageData });
+
+        // 이미지 데이터를 서버로 전송
+        try {
+          const response = await axios.post('YOUR_AI_SERVICE_URL', {
+            image: imageData,
+          });
+          setFoodAnalysis(response.data);
+        } catch (error) {
+          console.error('Error analyzing food image:', error);
+        }
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -116,14 +131,22 @@ const FoodForm = () => {
             <h3>음식목록</h3>
           </div>
           <div className="list-content">
-            <span>[음식이름]</span>
+            <span>
+              {foodAnalysis
+                ? foodAnalysis.Final_label
+                : '업로드된 음식이 없습니다'}
+            </span>
             <select
               value={state.selectedFood}
               onChange={handleFoodSelect}
               className="food-select"
             >
               <option value="">선택하세요</option>
-              <option value="500">500kcal</option>
+              {foodAnalysis && (
+                <option value={foodAnalysis.calories}>
+                  {foodAnalysis.calories}kcal
+                </option>
+              )}
             </select>
           </div>
         </div>
