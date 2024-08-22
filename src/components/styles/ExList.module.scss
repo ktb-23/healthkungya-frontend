@@ -22,10 +22,8 @@
   border: 1px solid var(--border-primary-color);
   border-radius: 5px;
   @media (max-width: 1300px) {
-    width: 240px;
-  }
-  @media (max-width: 1200px) {
-    width: 180px;
+    width: 195px;
+    height: 200px;
   }
 }
 .KcalWrapper {
@@ -46,6 +44,9 @@
   @media (max-width: 1200px) {
     width: 180px;
   }
+  @media (max-width: 1200px) {
+    font-size: 11px;
+  }
 }
 .exerciseList {
   display: flex;
@@ -57,6 +58,10 @@
   list-style: none;
   display: flex;
   gap: 10px;
+  @media (max-width: 1200px) {
+    font-size: 11px;
+    font-weight: bold;
+  }
 }
 .exerciseItem select {
   outline: none;
@@ -73,7 +78,7 @@
 }
 .selectwrapper {
   display: flex;
-  width: 51px;
+  width: 55px;
 }
 .arrow {
   box-sizing: border-box;

@@ -48,19 +48,20 @@
   position: relative;
   width: 12px;
   height: 18px;
-  left: 50%;
-  top: 218px;
+  right: 40vw;
+  top: 165px;
   background-image: url('../../picture/backicon.svg');
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
-  @media (max-width: 700px) {
-    bottom: 0px;
-    right: 120px;
+  @media (max-width: 1500px) {
+    right: 45vw;
   }
-  @media (max-width: 900px) {
-    top: 775px;
-    left: 30px;
+
+  @media (max-width: 1300px) {
+    position: relative;
+    top: 0;
+    right: 30px;
   }
 }
 
@@ -79,9 +80,9 @@
   left: 28.8vw;
   top: 22vh;
   background-color: var(--primary-color);
-  @media (max-width: 1200px) {
-    left: 320px;
-    top: 300px;
+  @media (max-width: 1300px) {
+    left: 30px;
+    top: -150px;
     width: 70px;
     height: 22px;
     font-size: 10px;
@@ -94,12 +95,12 @@
   left: 5vw;
   top: 59.3vh;
   background-color: #86baeb;
-  @media (max-width: 1200px) {
-    left: 80px;
-    top: 590px;
+  @media (max-width: 1300px) {
+    left: -40px;
+    top: 160px;
     width: 70px;
     height: 22px;
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 .weightchange {
@@ -109,12 +110,12 @@
   left: 19vw;
   top: 59.3vh;
   background-color: #eb8686;
-  @media (max-width: 1200px) {
-    left: 215px;
-    top: 590px;
+  @media (max-width: 1300px) {
+    left: 100px;
+    top: 160px;
     width: 70px;
     height: 22px;
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 .backBtn {

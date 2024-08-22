@@ -122,10 +122,8 @@ const MainForm = () => {
           <Output text="식단-저녁" kcal={getDietKcal('저녁')}>
             저녁
           </Output>
-          <Output text="운동">{selectedDayData.exercise || '없음'}</Output>
-          <Output text="운동소모" kcal={selectedDayData.exerciseCalories || 0}>
-            소모칼로리
-          </Output>
+        </div>
+        <div className="mainexouput">
           <Output text="운동">
             종목:
             <div className="exWrapper">
@@ -149,9 +147,14 @@ const MainForm = () => {
             onChange={handleWeightChange}
           />
         </div>
-        <button className="graph-button" onClick={() => navigate('/graphpage')}>
-          그래프 확인하기
-        </button>
+        <div className="graphbuttonwrapper">
+          <button
+            className="graph-button"
+            onClick={() => navigate('/graphpage')}
+          >
+            그래프 확인하기
+          </button>
+        </div>
       </section>
     </main>
   );

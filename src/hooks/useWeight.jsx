@@ -5,7 +5,7 @@ import useUpdateWeight from '../api/useUpdateWeight';
 
 const useWeight = (selectedDate) => {
   const [weightId, setWeightId] = useState('');
-  const [weight, setWeight] = useState('');
+  const [weight, setWeight] = useState();
 
   const fetchWeight = async () => {
     try {

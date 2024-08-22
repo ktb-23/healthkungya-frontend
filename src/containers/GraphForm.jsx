@@ -150,7 +150,7 @@ const GraphForm = () => {
   };
 
   return (
-    <>
+    <div className="graph-wrapper">
       <FixForm
         checkKcal={checkKcal}
         checkExercise={checkExercise}
@@ -181,7 +181,7 @@ const GraphForm = () => {
       <div className="graph-container">
         <Line data={data} options={options} />
       </div>
-    </>
+    </div>
   );
 };
 

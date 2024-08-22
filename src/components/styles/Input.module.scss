@@ -113,12 +113,12 @@
   height: 34px;
   left: 20vw;
   top: 70vh;
-  @media (max-width: 1200px) {
-    position: absolute;
+  @media (max-width: 1300px) {
+    position: relative;
     background-color: #ffffff;
     width: 170px;
     height: 34px;
-    left: 235px;
-    top: 670px;
+    left: 100px;
+    top: -120px;
   }
 }

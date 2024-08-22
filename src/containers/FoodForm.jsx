@@ -85,7 +85,7 @@ const FoodForm = () => {
   };
 
   return (
-    <>
+    <div className="fixform-wrapper">
       <FixForm
         checkKcal={checkKcal}
         checkExercise={checkExercise}
@@ -97,7 +97,9 @@ const FoodForm = () => {
           {['아침', '점심', '저녁'].map((meal) => (
             <button
               key={meal}
-              className={`meal-button ${state.selectedMeal === meal ? 'selected' : ''}`}
+              className={`meal-button ${
+                state.selectedMeal === meal ? 'selected' : ''
+              }`}
               onClick={() =>
                 dispatch({ type: 'SET_SELECTED_MEAL', payload: meal })
               }
@@ -160,7 +162,7 @@ const FoodForm = () => {
           저장
         </button>
       </section>
-    </>
+    </div>
   );
 };
 

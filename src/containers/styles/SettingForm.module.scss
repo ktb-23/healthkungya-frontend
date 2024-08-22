@@ -2,8 +2,10 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: center;
   @media (max-width: 1300px) {
     flex-direction: column;
+    align-items: center;
   }
 }
 .SettingWrapper {
@@ -19,14 +21,22 @@
     width: 55%;
   }
   @media (max-width: 1300px) {
-    margin-top: 80vh;
-    left: 10vw;
-    width: 500px;
+    position: relative;
+    top: -300px;
+    width: 400px;
+    height: 800px;
   }
-  @media (max-width: 1200px) {
-    margin-top: 75vh;
-    left: 5vw;
-    width: 375px;
+  @media (max-height: 800px) {
+    top: -150px;
+  }
+  @media (max-height: 700px) {
+    top: -50px;
+  }
+  @media (max-height: 650px) {
+    top: 0px;
+  }
+  @media (max-height: 600px) {
+    top: 50px;
   }
 }
 .SettingContainer {
