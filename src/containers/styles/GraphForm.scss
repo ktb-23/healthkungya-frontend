@@ -1,32 +1,27 @@
+.graph-wrapper {
+  display: flex;
+  justify-content: center;
+  @media (max-width: 1300px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .graph-container {
-  position: fixed;
+  position: absolute;
   padding: 0px;
   background-color: white;
   border-radius: 8px;
   height: 300px;
-  width: 130vw;
+  width: 40vw;
   top: 30%;
   left: 55%;
 
-  @media (max-width: 1200px) {
-    position: absolute;
-    height: 200px;
-    width: 40vw;
-    left: 70vw;
-    top: 30vh;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  @media (max-width: 900px) {
-    position: absolute;
+  @media (max-width: 1300px) {
+    position: relative;
     height: 300px;
-    width: 350px;
-    left: 220px;
-    top: 810px;
-    transform: translateX(-50%);
+    width: 400px;
+    top: 30px;
+    left: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,7 +29,27 @@
   }
 }
 .index-button {
-  @media (max-width: 1200px) {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  @media (max-width: 1300px) {
+    margin-top: -70px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  @media (max-height: 800px) {
+    margin-top: 20px;
+  }
+  @media (max-height: 700px) {
+    margin-top: 80px;
+  }
+  @media (max-height: 600px) {
+    margin-top: 200px;
+  }
+  @media (max-height: 500px) {
+    margin-top: 400px;
   }
 }
 .chart-title {
@@ -52,13 +67,12 @@
   border-radius: 42px;
   left: 55%;
   top: 24%;
-  @media (max-width: 900px) {
-    position: absolute;
+  @media (max-width: 1300px) {
+    position: relative;
     height: 30px;
     width: 90px;
-    left: 100px;
-    top: 770px;
-    transform: translateX(-50%);
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,13 +89,12 @@
   border-radius: 42px;
   left: 63%;
   top: 24%;
-  @media (max-width: 900px) {
-    position: absolute;
+  @media (max-width: 1300px) {
+    position: relative;
     height: 30px;
     width: 90px;
-    left: 200px;
-    top: 770px;
-    transform: translateX(-50%);
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -98,13 +111,12 @@
   border-radius: 42px;
   left: 71%;
   top: 24%;
-  @media (max-width: 900px) {
-    position: absolute;
+  @media (max-width: 1300px) {
+    position: relative;
     height: 30px;
     width: 90px;
-    left: 300px;
-    top: 770px;
-    transform: translateX(-50%);
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;

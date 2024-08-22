@@ -30,7 +30,7 @@ const Profile = ({ profileImage, profileName, statusMessage }) => {
     getProfile();
   }, []);
   return (
-    <>
+    <div className="profileWrapper">
       <div className="profilebox">
         <img
           src={state.imageUrl || logo}
@@ -43,7 +43,7 @@ const Profile = ({ profileImage, profileName, statusMessage }) => {
           {/* 상태 메시지 */}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

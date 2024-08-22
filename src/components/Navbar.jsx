@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <>
+    <header className="navHeader">
       <img className="logo" src={Logo} alt="Logo" />
       <div className="navicon">
         <img
@@ -30,7 +30,7 @@ const Navbar = () => {
           alt="Profile"
         />
       </div>
-    </>
+    </header>
   );
 };
 

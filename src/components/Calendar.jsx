@@ -69,13 +69,15 @@ const Calendar = ({ selectDate }) => {
         <img src={Sample} alt="sampleimg" />
       </div>
       <div className="month-controls">
-        <button className="prevmonth" onClick={handlePreviousMonth}>
-          <img src={montharrowleft} alt="previous month" />
-        </button>
         <span className="yearmonth">{`${currentYear}년 ${currentMonth}월`}</span>
-        <button className="nextmonth" onClick={handleNextMonth}>
-          <img src={montharrowright} alt="next month" />
-        </button>
+        <div className="Monthbuttons">
+          <button className="prevmonth" onClick={handlePreviousMonth}>
+            <img src={montharrowleft} alt="previous month" />
+          </button>
+          <button className="nextmonth" onClick={handleNextMonth}>
+            <img src={montharrowright} alt="next month" />
+          </button>
+        </div>
       </div>
 
       <div className="days-of-week">
