@@ -22,13 +22,11 @@
   }
   @media (max-width: 1300px) {
     position: relative;
-    top: -300px;
+    top: -200px;
     width: 400px;
     height: 800px;
   }
-  @media (max-height: 800px) {
-    top: -150px;
-  }
+
   @media (max-height: 700px) {
     top: -50px;
   }
