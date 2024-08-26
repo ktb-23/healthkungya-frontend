@@ -92,12 +92,12 @@ const FoodForm = () => {
     }
   };
 
-  // FoodForm 컴포넌트 내에서의 사용 예시
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       try {
         const result = await uploadFoodImage(file);
+        console.log('진입2');
         setImageUrl(result.imageUrl); // 반환된 URL 사용
         // 응답 구조에 따라 추가 처리
         if (result.tags) {
