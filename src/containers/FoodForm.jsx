@@ -7,6 +7,13 @@ import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import axios from 'axios';
 import './styles/FoodForm.scss';
 
+const inferenceClient = axios.create({
+  baseURL: `http://localhost:5000/`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -97,16 +104,36 @@ const FoodForm = () => {
     if (file) {
       try {
         const result = await uploadFoodImage(file);
-        console.log('진입2');
-        setImageUrl(result.imageUrl); // 반환된 URL 사용
-        // 응답 구조에 따라 추가 처리
-        if (result.tags) {
-          setPredictions(result.tags); // 예: 태그 설정, 응답에 포함된 경우
+        setImageUrl(result.imageUrl);
+
+        // 이미지 URL을 Python 서버로 전송
+        const response = await inferenceClient.get(
+          `/api/predict?image_url=${result.imageUrl}`
+        );
+        console.log('Python 서버 응답:', response.data);
+
+        // 태그 정보 설정
+        if (response.data.tags) {
+          setPredictions(
+            response.data.tags.map((tag) => ({ tag, probability: 1 }))
+          );
         }
+
+        // 분석 결과 가져오기
+        const analysisResponse = await inferenceClient.post('/result');
+        console.log('분석 결과:', analysisResponse.data);
+
+        if (analysisResponse.data.tag && analysisResponse.data.kcal) {
+          setFoodAnalysis({
+            Final_label: analysisResponse.data.tag,
+            calories: parseFloat(analysisResponse.data.kcal),
+          });
+        }
+
         dispatch({ type: 'SET_IMAGE', payload: result.imageUrl });
       } catch (error) {
-        console.error('업로드 중 오류 발생:', error);
-        alert(`업로드 오류: ${error.message}`);
+        console.error('업로드 또는 분석 중 오류 발생:', error);
+        alert(`오류: ${error.message}`);
       }
     }
   };
@@ -117,7 +144,7 @@ const FoodForm = () => {
 
   const calculateTotalCalories = () => {
     if (foodAnalysis && foodAnalysis.calories) {
-      return foodAnalysis.calories * selectedQuantity;
+      return (foodAnalysis.calories * selectedQuantity).toFixed(2);
     }
     return 0;
   };
@@ -147,26 +174,22 @@ const FoodForm = () => {
           ))}
         </div>
         <div className="picture-box">
-          {state.image ? (
+          {imageUrl ? (
             <img
-              src={state.image}
+              src={imageUrl}
               alt="Uploaded food"
               className="uploaded-image"
             />
           ) : (
             <label htmlFor="image-upload" className="upload-button">
               사진 업로드
-              <input type="file" onChange={handleImageUpload} />
-              {imageUrl && <img src={imageUrl} alt="Uploaded food" />}
-              {predictions && (
-                <ul>
-                  {predictions.map((pred, index) => (
-                    <li key={index}>
-                      {pred.tag}: {(pred.probability * 100).toFixed(2)}%
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+              />
             </label>
           )}
         </div>
