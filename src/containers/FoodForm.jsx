@@ -1,15 +1,24 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
+import useFoodUpload from '../api/useFoodUpload';
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
+import axios from 'axios';
 import './styles/FoodForm.scss';
-import axios from 'axios'; // axios를 사용하여 API 요청을 보냅니다.
 
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [foodAnalysis, setFoodAnalysis] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const {
+    uploadFoodImage,
+    error: uploadError,
+    loading: uploadLoading,
+  } = useFoodUpload(); // 훅 사용
+  const [imageUrl, setImageUrl] = useState(null);
+  const [predictions, setPredictions] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,9 +33,13 @@ const FoodForm = () => {
   useEffect(() => {
     if (location.state?.date) {
       const dateFromMainForm = new Date(location.state.date);
-      setCurrentDate(dateFromMainForm);
-      setSelectedDate(dateFromMainForm);
+
+      if (currentDate.getTime() !== dateFromMainForm.getTime()) {
+        setCurrentDate(dateFromMainForm);
+        setSelectedDate(dateFromMainForm);
+      }
       const dietInfo = getDietInfo(location.state.date);
+
       dispatch({
         type: 'SET_ALL_MEALS',
         payload: {
@@ -36,15 +49,32 @@ const FoodForm = () => {
         },
       });
     }
-  }, [location.state, setSelectedDate, getDietInfo]);
+  }, [location.state, currentDate, setSelectedDate, getDietInfo]);
 
-  const handleSaveMeal = () => {
-    updateDietInfo(
-      currentDate,
-      state.selectedMeal,
-      state.mealCalories[state.selectedMeal]
-    );
-    alert('수정이 완료되었습니다.');
+  const handleSaveMeal = async () => {
+    const totalCalories = calculateTotalCalories();
+    const mealData = {
+      userId: '사용자ID', // 실제 사용자 ID로 대체해야 함
+      date: currentDate.toISOString().split('T')[0],
+      mealType: state.selectedMeal,
+      foodName: foodAnalysis ? foodAnalysis.Final_label : '',
+      calories: totalCalories,
+      imageUrl: imageUrl, // state.image 대신 imageUrl 사용
+    };
+
+    try {
+      await axios.post('/api/food/save', mealData);
+      alert('식사 정보가 저장되었습니다.');
+      // 저장 후 상태 초기화
+      setImageUrl(null);
+      setPredictions(null);
+      setFoodAnalysis(null);
+      setSelectedQuantity(1);
+      dispatch({ type: 'SET_IMAGE', payload: null });
+    } catch (error) {
+      console.error('Error saving meal information:', error);
+      alert('식사 정보 저장 중 오류가 발생했습니다.');
+    }
   };
 
   const handleSaveAndNavigate = () => {
@@ -62,26 +92,34 @@ const FoodForm = () => {
     }
   };
 
+  // FoodForm 컴포넌트 내에서의 사용 예시
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const imageData = e.target.result;
-        dispatch({ type: 'SET_IMAGE', payload: imageData });
-
-        // 이미지 데이터를 서버로 전송
-        try {
-          const response = await axios.post('YOUR_AI_SERVICE_URL', {
-            image: imageData,
-          });
-          setFoodAnalysis(response.data);
-        } catch (error) {
-          console.error('Error analyzing food image:', error);
+      try {
+        const result = await uploadFoodImage(file);
+        setImageUrl(result.imageUrl); // 반환된 URL 사용
+        // 응답 구조에 따라 추가 처리
+        if (result.tags) {
+          setPredictions(result.tags); // 예: 태그 설정, 응답에 포함된 경우
         }
-      };
-      reader.readAsDataURL(file);
+        dispatch({ type: 'SET_IMAGE', payload: result.imageUrl });
+      } catch (error) {
+        console.error('업로드 중 오류 발생:', error);
+        alert(`업로드 오류: ${error.message}`);
+      }
     }
+  };
+
+  const handleQuantityChange = (event) => {
+    setSelectedQuantity(Number(event.target.value));
+  };
+
+  const calculateTotalCalories = () => {
+    if (foodAnalysis && foodAnalysis.calories) {
+      return foodAnalysis.calories * selectedQuantity;
+    }
+    return 0;
   };
 
   return (
@@ -118,13 +156,17 @@ const FoodForm = () => {
           ) : (
             <label htmlFor="image-upload" className="upload-button">
               사진 업로드
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: 'none' }}
-              />
+              <input type="file" onChange={handleImageUpload} />
+              {imageUrl && <img src={imageUrl} alt="Uploaded food" />}
+              {predictions && (
+                <ul>
+                  {predictions.map((pred, index) => (
+                    <li key={index}>
+                      {pred.tag}: {(pred.probability * 100).toFixed(2)}%
+                    </li>
+                  ))}
+                </ul>
+              )}
             </label>
           )}
         </div>
@@ -133,27 +175,28 @@ const FoodForm = () => {
             <h3>음식목록</h3>
           </div>
           <div className="list-content">
-            <span>
-              {foodAnalysis
-                ? foodAnalysis.Final_label
-                : '업로드된 음식이 없습니다'}
-            </span>
-            <select
-              value={state.selectedFood}
-              onChange={handleFoodSelect}
-              className="food-select"
-            >
-              <option value="">선택하세요</option>
-              {foodAnalysis && (
-                <option value={foodAnalysis.calories}>
-                  {foodAnalysis.calories}kcal
-                </option>
-              )}
-            </select>
+            {foodAnalysis ? (
+              <>
+                <span>{foodAnalysis.Final_label}</span>
+                <select
+                  value={selectedQuantity}
+                  onChange={handleQuantityChange}
+                  className="food-select"
+                >
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <option key={num} value={num}>
+                      {num}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : (
+              <span>업로드된 음식이 없습니다</span>
+            )}
           </div>
         </div>
         <div className="total-kal">
-          섭취 칼로리: {state.mealCalories[state.selectedMeal] || 0} kcal
+          섭취 칼로리: {calculateTotalCalories()} kcal
         </div>
         <button className="save" onClick={handleSaveMeal}>
           수정 완료
