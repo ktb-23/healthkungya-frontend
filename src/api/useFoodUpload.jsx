@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const foodClient = axios.create({
   baseURL: `http://localhost:8000/api/food`,
