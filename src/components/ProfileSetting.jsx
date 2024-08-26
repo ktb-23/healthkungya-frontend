@@ -2,16 +2,19 @@ import Button from './Button';
 import styles from './styles/ProfileSetting.module.scss';
 import messi from '../picture/messi.jpg';
 import Input from './Input';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState, useRef } from 'react';
 import { ActionType, initialState, ProfileReducer } from '../reducers/Profile';
 import useGetProfile from '../api/useGetProfile';
 import useUpdateProfile from '../api/useUpdateProfile';
 import logo from '../picture/logo.png';
 import { useNavigate } from 'react-router-dom';
+import useUpdateProfileImage from '../api/useUploadProfileImage';
 const ProfileSetting = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(ProfileReducer, initialState);
   const [profileId, setProfileId] = useState();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
   const getProfile = async () => {
     try {
       const response = await useGetProfile();
@@ -47,6 +50,40 @@ const ProfileSetting = () => {
       console.error(error);
     }
   };
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    console.log('Selected file:', file); // Debugging line
+
+    const formData = new FormData();
+    formData.append('profileImage', file);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    try {
+      const response = await useUpdateProfileImage(formData);
+      console.log('API Response:', response); // Debugging line
+      if (response && response.message.imageUrl) {
+        dispatch({
+          type: ActionType.SET_IMAGEURL,
+          payload: response.message.imageUrl,
+        });
+        alert('이미지가 성공적으로 업데이트 되었습니다.');
+      }
+    } catch (error) {
+      console.error('이미지 업로드 실패', error);
+      alert('이미지 업로드 실패');
+    }
+  };
+
+  // Handle button click to trigger file input
+  const handleUploadButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   return (
     <main className={styles.profile}>
       <header>
@@ -61,7 +98,16 @@ const ProfileSetting = () => {
         <div className={styles.profileImageWrapper}>
           <img src={state.imageUrl || logo} alt="profileImg"></img>
         </div>
-        <Button variant={'profileupload'}>사진 업로드</Button>
+        <Button onClick={handleUploadButtonClick} variant={'profileupload'}>
+          사진 업로드
+        </Button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: 'none' }} // Hide the file input
+          onChange={handleImageChange}
+          accept="image/*" // Restrict file types to images only
+        />
         <Input
           value={state.name}
           onChange={(e) =>
