@@ -37,15 +37,13 @@
 
   @media (max-width: 1300px) {
     position: relative;
-    top: -100px;
+    top: -50px;
     left: 0;
     right: 0;
     width: 50%;
     height: 40vh;
   }
-  @media (max-height: 800px) {
-    top: -50px;
-  }
+
   @media (max-height: 700px) {
     top: 50px;
   }
