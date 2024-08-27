@@ -17,15 +17,16 @@ const inferenceClient = axios.create({
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [foodAnalysis, setFoodAnalysis] = useState(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [mealData, setMealData] = useState({
+    아침: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
+    점심: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
+    저녁: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
+  });
   const {
     uploadFoodImage,
     error: uploadError,
     loading: uploadLoading,
-  } = useFoodUpload(); // 훅 사용
-  const [imageUrl, setImageUrl] = useState(null);
-  const [predictions, setPredictions] = useState(null);
+  } = useFoodUpload();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,79 +59,45 @@ const FoodForm = () => {
     }
   }, [location.state, currentDate, setSelectedDate, getDietInfo]);
 
-  const handleSaveMeal = async () => {
-    const totalCalories = calculateTotalCalories();
-    const mealData = {
-      userId: '사용자ID', // 실제 사용자 ID로 대체해야 함
-      date: currentDate.toISOString().split('T')[0],
-      mealType: state.selectedMeal,
-      foodName: foodAnalysis ? foodAnalysis.Final_label : '',
-      calories: totalCalories,
-      imageUrl: imageUrl, // state.image 대신 imageUrl 사용
-    };
-
-    try {
-      await axios.post('/api/food/save', mealData);
-      alert('식사 정보가 저장되었습니다.');
-      // 저장 후 상태 초기화
-      setImageUrl(null);
-      setPredictions(null);
-      setFoodAnalysis(null);
-      setSelectedQuantity(1);
-      dispatch({ type: 'SET_IMAGE', payload: null });
-    } catch (error) {
-      console.error('Error saving meal information:', error);
-      alert('식사 정보 저장 중 오류가 발생했습니다.');
-    }
-  };
-
-  const handleSaveAndNavigate = () => {
-    handleSaveMeal();
-    navigate('/mainpage', { state: { date: currentDate } });
-  };
-
-  const handleFoodSelect = (event) => {
-    const selectedCalories = parseInt(event.target.value, 10);
-    if (!isNaN(selectedCalories)) {
-      dispatch({
-        type: 'SET_MEAL_CALORIES',
-        payload: { meal: state.selectedMeal, value: selectedCalories },
-      });
-    }
-  };
-
-  const handleImageUpload = async (event) => {
+  const handleImageUpload = async (event, meal) => {
     const file = event.target.files[0];
     if (file) {
       try {
-        const result = await uploadFoodImage(file);
-        setImageUrl(result.imageUrl);
+        // 파일을 선택하자마자 즉시 미리보기 표시
+        const localImageUrl = URL.createObjectURL(file);
+        setMealData((prevData) => ({
+          ...prevData,
+          [meal]: { ...prevData[meal], imageUrl: localImageUrl },
+        }));
 
-        // 이미지 URL을 Python 서버로 전송
+        const result = await uploadFoodImage(file);
+        const imageUrl = result.imageUrl;
+
         const response = await inferenceClient.get(
-          `/api/predict?image_url=${result.imageUrl}`
+          `/api/predict?image_url=${imageUrl}`
         );
         console.log('Python 서버 응답:', response.data);
 
-        // 태그 정보 설정
-        if (response.data.tags) {
-          setPredictions(
-            response.data.tags.map((tag) => ({ tag, probability: 1 }))
-          );
-        }
-
-        // 분석 결과 가져오기
         const analysisResponse = await inferenceClient.post('/result');
         console.log('분석 결과:', analysisResponse.data);
 
-        if (analysisResponse.data.tag && analysisResponse.data.kcal) {
-          setFoodAnalysis({
-            Final_label: analysisResponse.data.tag,
-            calories: parseFloat(analysisResponse.data.kcal),
-          });
-        }
+        const foodAnalysis =
+          analysisResponse.data.tag && analysisResponse.data.kcal
+            ? {
+                Final_label: analysisResponse.data.tag,
+                calories: parseFloat(analysisResponse.data.kcal),
+              }
+            : null;
 
-        dispatch({ type: 'SET_IMAGE', payload: result.imageUrl });
+        setMealData((prevData) => ({
+          ...prevData,
+          [meal]: {
+            ...prevData[meal],
+            imageUrl, // 서버에서 반환된 URL로 업데이트
+            foodAnalysis,
+            selectedQuantity: 1,
+          },
+        }));
       } catch (error) {
         console.error('업로드 또는 분석 중 오류 발생:', error);
         alert(`오류: ${error.message}`);
@@ -138,15 +105,56 @@ const FoodForm = () => {
     }
   };
 
-  const handleQuantityChange = (event) => {
-    setSelectedQuantity(Number(event.target.value));
+  const handleQuantityChange = (meal, quantity) => {
+    setMealData((prevData) => ({
+      ...prevData,
+      [meal]: { ...prevData[meal], selectedQuantity: Number(quantity) },
+    }));
   };
 
-  const calculateTotalCalories = () => {
+  const calculateTotalCalories = (meal) => {
+    const { foodAnalysis, selectedQuantity } = mealData[meal];
     if (foodAnalysis && foodAnalysis.calories) {
       return (foodAnalysis.calories * selectedQuantity).toFixed(2);
     }
     return 0;
+  };
+
+  const handleSaveMeal = async () => {
+    const dateString = currentDate.toISOString().split('T')[0];
+    const meals = ['아침', '점심', '저녁'];
+
+    for (const meal of meals) {
+      const { imageUrl, foodAnalysis, selectedQuantity } = mealData[meal];
+      if (imageUrl && foodAnalysis) {
+        const totalCalories = calculateTotalCalories(meal);
+        const mealData = {
+          userId: '사용자ID', // 실제 사용자 ID로 대체해야 함
+          date: dateString,
+          mealType: meal,
+          foodName: foodAnalysis.Final_label,
+          calories: totalCalories,
+          imageUrl: imageUrl,
+          quantity: selectedQuantity,
+        };
+
+        try {
+          await axios.post('/api/food/save', mealData);
+          updateDietInfo(dateString, meal, totalCalories, imageUrl);
+        } catch (error) {
+          console.error(`Error saving ${meal} information:`, error);
+          alert(`${meal} 정보 저장 중 오류가 발생했습니다.`);
+        }
+      }
+    }
+
+    alert('모든 식사 정보가 저장되었습니다.');
+    // 여기서 상태를 초기화하지 않음
+  };
+
+  const handleSaveAndNavigate = () => {
+    handleSaveMeal();
+    navigate('/mainpage', { state: { date: currentDate } });
   };
 
   return (
@@ -162,9 +170,7 @@ const FoodForm = () => {
           {['아침', '점심', '저녁'].map((meal) => (
             <button
               key={meal}
-              className={`meal-button ${
-                state.selectedMeal === meal ? 'selected' : ''
-              }`}
+              className={`meal-button ${state.selectedMeal === meal ? 'selected' : ''}`}
               onClick={() =>
                 dispatch({ type: 'SET_SELECTED_MEAL', payload: meal })
               }
@@ -174,36 +180,59 @@ const FoodForm = () => {
           ))}
         </div>
         <div className="picture-box">
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt="Uploaded food"
-              className="uploaded-image"
-            />
+          {mealData[state.selectedMeal].imageUrl ? (
+            <div className="uploaded-image-container">
+              <img
+                src={mealData[state.selectedMeal].imageUrl}
+                alt={`Uploaded ${state.selectedMeal} food`}
+                className="uploaded-image"
+              />
+              <label
+                htmlFor={`image-upload-${state.selectedMeal}`}
+                className="change-image-button"
+              >
+                사진 변경
+                <input
+                  id={`image-upload-${state.selectedMeal}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, state.selectedMeal)}
+                  style={{ display: 'none' }}
+                />
+              </label>
+            </div>
           ) : (
-            <label htmlFor="image-upload" className="upload-button">
-              사진 업로드
+            <label
+              htmlFor={`image-upload-${state.selectedMeal}`}
+              className="upload-button"
+            >
+              {state.selectedMeal} 사진 업로드
               <input
-                id="image-upload"
+                id={`image-upload-${state.selectedMeal}`}
                 type="file"
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={(e) => handleImageUpload(e, state.selectedMeal)}
                 style={{ display: 'none' }}
               />
             </label>
           )}
         </div>
+
         <div className="list-box">
           <div className="list-header">
             <h3>음식목록</h3>
           </div>
           <div className="list-content">
-            {foodAnalysis ? (
+            {mealData[state.selectedMeal].foodAnalysis ? (
               <>
-                <span>{foodAnalysis.Final_label}</span>
+                <span>
+                  {mealData[state.selectedMeal].foodAnalysis.Final_label}
+                </span>
                 <select
-                  value={selectedQuantity}
-                  onChange={handleQuantityChange}
+                  value={mealData[state.selectedMeal].selectedQuantity}
+                  onChange={(e) =>
+                    handleQuantityChange(state.selectedMeal, e.target.value)
+                  }
                   className="food-select"
                 >
                   {[1, 2, 3, 4, 5].map((num) => (
@@ -219,7 +248,7 @@ const FoodForm = () => {
           </div>
         </div>
         <div className="total-kal">
-          섭취 칼로리: {calculateTotalCalories()} kcal
+          섭취 칼로리: {calculateTotalCalories(state.selectedMeal)} kcal
         </div>
         <button className="save" onClick={handleSaveMeal}>
           수정 완료
