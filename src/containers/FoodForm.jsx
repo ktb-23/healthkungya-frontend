@@ -8,7 +8,7 @@ import axios from 'axios';
 import './styles/FoodForm.scss';
 
 const inferenceClient = axios.create({
-  baseURL: `http://localhost:5000/`,
+  baseURL: `http://localhost:5001/`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -63,7 +63,6 @@ const FoodForm = () => {
     const file = event.target.files[0];
     if (file) {
       try {
-        // 파일을 선택하자마자 즉시 미리보기 표시
         const localImageUrl = URL.createObjectURL(file);
         setMealData((prevData) => ({
           ...prevData,
@@ -74,30 +73,35 @@ const FoodForm = () => {
         const imageUrl = result.imageUrl;
 
         const response = await inferenceClient.get(
-          `/api/predict?image_url=${imageUrl}`
+          `/predict?image_url=${imageUrl}`
         );
         console.log('Python 서버 응답:', response.data);
 
-        const analysisResponse = await inferenceClient.post('/result');
-        console.log('분석 결과:', analysisResponse.data);
+        if (response.data.tags && response.data.tags.length > 0) {
+          const analysisResponse = await inferenceClient.post('/result');
+          console.log('분석 결과:', analysisResponse.data);
 
-        const foodAnalysis =
-          analysisResponse.data.tag && analysisResponse.data.kcal
-            ? {
-                Final_label: analysisResponse.data.tag,
-                calories: parseFloat(analysisResponse.data.kcal),
-              }
-            : null;
+          if (analysisResponse.data.tag && analysisResponse.data.kcal) {
+            const foodAnalysis = {
+              Final_label: analysisResponse.data.tag,
+              calories: parseFloat(analysisResponse.data.kcal),
+            };
 
-        setMealData((prevData) => ({
-          ...prevData,
-          [meal]: {
-            ...prevData[meal],
-            imageUrl, // 서버에서 반환된 URL로 업데이트
-            foodAnalysis,
-            selectedQuantity: 1,
-          },
-        }));
+            setMealData((prevData) => ({
+              ...prevData,
+              [meal]: {
+                ...prevData[meal],
+                imageUrl,
+                foodAnalysis,
+                selectedQuantity: 1,
+              },
+            }));
+          } else {
+            console.error('분석 결과에 tag 또는 kcal 정보가 없습니다.');
+          }
+        } else {
+          console.error('태그가 감지되지 않았습니다.');
+        }
       } catch (error) {
         console.error('업로드 또는 분석 중 오류 발생:', error);
         alert(`오류: ${error.message}`);
