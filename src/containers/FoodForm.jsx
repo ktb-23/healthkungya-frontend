@@ -72,13 +72,18 @@ const FoodForm = () => {
         const result = await uploadFoodImage(file);
         const imageUrl = result.imageUrl;
 
-        const response = await inferenceClient.get(
-          `/predict?image_url=${imageUrl}`
-        );
+        // /predict 엔드포인트에 withCredentials를 추가하여 GET 요청
+        const response = await inferenceClient.get('/predict', {
+          params: { image_url: imageUrl },
+          withCredentials: true, // 인증 정보 포함
+        });
         console.log('Python 서버 응답:', response.data);
 
         if (response.data.tags && response.data.tags.length > 0) {
-          const analysisResponse = await inferenceClient.post('/result');
+          // /result 엔드포인트에 withCredentials를 추가하여 POST 요청
+          const analysisResponse = await inferenceClient.post('/result', null, {
+            withCredentials: true, // 인증 정보 포함
+          });
           console.log('분석 결과:', analysisResponse.data);
 
           if (analysisResponse.data.tag && analysisResponse.data.kcal) {
@@ -96,6 +101,15 @@ const FoodForm = () => {
                 selectedQuantity: 1,
               },
             }));
+
+            // 칼로리 정보 업데이트
+            dispatch({
+              type: 'SET_MEAL_CALORIES',
+              payload: {
+                meal,
+                calories: foodAnalysis.calories,
+              },
+            });
           } else {
             console.error('분석 결과에 tag 또는 kcal 정보가 없습니다.');
           }
@@ -114,6 +128,18 @@ const FoodForm = () => {
       ...prevData,
       [meal]: { ...prevData[meal], selectedQuantity: Number(quantity) },
     }));
+
+    // 칼로리 정보 업데이트
+    const calories = mealData[meal].foodAnalysis
+      ? mealData[meal].foodAnalysis.calories * Number(quantity)
+      : 0;
+    dispatch({
+      type: 'SET_MEAL_CALORIES',
+      payload: {
+        meal,
+        calories,
+      },
+    });
   };
 
   const calculateTotalCalories = (meal) => {
@@ -153,7 +179,6 @@ const FoodForm = () => {
     }
 
     alert('모든 식사 정보가 저장되었습니다.');
-    // 여기서 상태를 초기화하지 않음
   };
 
   const handleSaveAndNavigate = () => {

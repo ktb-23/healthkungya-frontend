@@ -16,14 +16,12 @@ const useFoodUpload = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('진입4');
       // FormData 생성
       const formData = new FormData();
       formData.append('file', file);
 
       // 백엔드로 POST 요청 보내기
       const response = await foodClient.post('/uploadImage', formData);
-      console.log('진입5');
       return response.data;
     } catch (error) {
       setError(error);
