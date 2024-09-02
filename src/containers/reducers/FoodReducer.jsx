@@ -28,13 +28,9 @@ export function FoodReducer(state, action) {
       };
 
     case 'SET_MEAL_CALORIES':
-      const { meal, value } = action.payload;
       return {
         ...state,
-        mealCalories: {
-          ...state.mealCalories,
-          [meal]: value,
-        },
+        [action.payload.meal]: action.payload.calories,
       };
 
     case 'CLEAR_FOOD_LIST':

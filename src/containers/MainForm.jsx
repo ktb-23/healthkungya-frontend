@@ -62,6 +62,7 @@ const MainForm = () => {
   const handleFoodChangeClick = () => {
     navigate('/foodupdate', { state: { date: selectedDate } });
   };
+
   const handleExChangeClick = () => {
     console.log('Navigating to /exercise_log');
     navigate('/pages/exercise_log');

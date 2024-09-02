@@ -229,28 +229,95 @@
 }
 
 .picture-box {
+  position: relative;
+  width: 100%;
+  height: 200px; // 원하는 높이로 조정
+  overflow: hidden;
+}
+
+.uploaded-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 
-  .upload-button {
-    padding: 10px 20px;
-    background-color: #afeb92;
-    color: black;
-    border: none;
-    border-radius: 42px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #aad9ac;
-    }
+  &:hover {
+    opacity: 1;
   }
+}
 
-  .uploaded-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.change-image-button {
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.upload-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.uploaded-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-image-button {
+  position: relative;
+  display: grid;
+  bottom: 110px;
+  right: 0px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 100px;
+  justify-content: center;
+  left: 70px;
+  @media (max-width: 1300px) {
+    left: 110px;
   }
 }
