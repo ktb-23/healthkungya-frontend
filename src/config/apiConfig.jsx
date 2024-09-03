@@ -2,7 +2,7 @@ import axios from 'axios';
 
 //토큰이 불필요한 경우
 const api = axios.create({
-  baseURL: `http://localhost:8000/`,
+  baseURL: `http://3.36.83.192:8000/`,
   headers: {
     'Content-Type': 'application/json',
   },
