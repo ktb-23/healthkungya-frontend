@@ -76,8 +76,10 @@ const useExerciseLog = (selectedDate) => {
       if (response.message === '해당 날짜에 대한 기록이 이미 존재합니다.') {
         const response = await useUpdateExlog(uploadData, logId);
         alert(response.message);
+        window.location.reload();
       } else {
         alert(response.message);
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

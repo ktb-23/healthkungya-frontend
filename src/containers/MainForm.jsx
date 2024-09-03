@@ -19,7 +19,6 @@ const MainForm = () => {
   const { selectedDate, setSelectedDate, dailyData, checkKcal, checkExercise } =
     UseDailyData();
   const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
-
   useEffect(() => {
     if (location.state?.date) {
       setSelectedDate(location.state.date);

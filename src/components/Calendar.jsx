@@ -18,6 +18,7 @@ const Calendar = ({ selectDate }) => {
   const handleDateClick = (dateString) => {
     selectDate(dateString);
     setSelectedDateString(dateString);
+    sessionStorage.setItem('selectedDateString', dateString);
   };
   const getFirstDayOfMonth = () => {
     return new Date(currentYear, currentMonth - 1, 1).getDay();
@@ -42,13 +43,23 @@ const Calendar = ({ selectDate }) => {
   };
 
   useEffect(() => {
-    const today = new Date();
-    const todayString = getDateString(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      today.getDate()
-    );
-    selectDate(todayString);
+    const savedDateString = sessionStorage.getItem('selectedDateString');
+    if (savedDateString) {
+      const savedDate = new Date(savedDateString);
+      selectDate(savedDateString);
+      setSelectedDateString(savedDateString);
+      setCurrentYear(savedDate.getFullYear());
+      setCurrentMonth(savedDate.getMonth() + 1);
+    } else {
+      const today = new Date();
+      const todayString = getDateString(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+      );
+      selectDate(todayString);
+      setSelectedDateString(todayString);
+    }
   }, []);
 
   const GetAllDateExlog = async () => {
