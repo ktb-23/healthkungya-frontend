@@ -82,6 +82,7 @@ const GraphForm = () => {
       setCalories(weekCalories);
     } catch (error) {
       console.error(error);
+      setCalories(Array(7).fill(0));
     }
   };
   const fetchWeightData = async () => {
@@ -94,6 +95,7 @@ const GraphForm = () => {
       setCalories(weekWeight);
     } catch (error) {
       console.error(error);
+      setCalories(Array(7).fill(0));
     }
   };
   useEffect(() => {
@@ -104,6 +106,13 @@ const GraphForm = () => {
   useEffect(() => {
     if (activeIndex === '체중') {
       fetchWeightData();
+    }
+  }, [activeIndex, selectedDate, dates]);
+
+  // 식단 데이터로 수정해야함
+  useEffect(() => {
+    if (activeIndex === '식단') {
+      setCalories(Array(7).fill(0));
     }
   }, [activeIndex, selectedDate, dates]);
 
