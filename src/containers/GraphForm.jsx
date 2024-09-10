@@ -36,7 +36,7 @@ const GraphForm = () => {
 
   const [activeIndex, setActiveIndex] = useState('식단');
   const [dates, setDates] = useState([]);
-
+  const [borderColor, setBorderColor] = useState('#AFEB92');
   const handleIndexClick = (index) => {
     setActiveIndex(index);
   };
@@ -101,11 +101,13 @@ const GraphForm = () => {
   useEffect(() => {
     if (activeIndex === '운동') {
       fetchExerciseData();
+      setBorderColor('#86BAEB');
     }
   }, [activeIndex, selectedDate, dates]);
   useEffect(() => {
     if (activeIndex === '체중') {
       fetchWeightData();
+      setBorderColor('#EB8686');
     }
   }, [activeIndex, selectedDate, dates]);
 
@@ -113,6 +115,7 @@ const GraphForm = () => {
   useEffect(() => {
     if (activeIndex === '식단') {
       setCalories(Array(7).fill(0));
+      setBorderColor('#AFEB92');
     }
   }, [activeIndex, selectedDate, dates]);
 
@@ -123,7 +126,7 @@ const GraphForm = () => {
         label: 'Food kcal',
         data: calories,
         fill: false,
-        borderColor: '#AFEB92',
+        borderColor: borderColor,
       },
     ],
   };
