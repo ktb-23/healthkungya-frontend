@@ -13,7 +13,7 @@ import {
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
 import './styles/GraphForm.scss';
-import IndexButton from '../components/\bIndexButton';
+import IndexButton from '../components/IndexButton';
 import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트해야 함
 import Button from '../components/Button'; // Button 컴포넌트 임포트
 import useFetchWeeklyExerciseGraph from '../api/useFetchWeeklyExerciseGraph';

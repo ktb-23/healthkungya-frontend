@@ -2,17 +2,13 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
-import useFoodUpload from '../api/useFoodUpload';
+
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import axios from 'axios';
 import './styles/FoodForm.scss';
-
-const inferenceClient = axios.create({
-  baseURL: `http://localhost:5001/`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import uploadAndCheckStatus from '../api/useUploadFoodImage';
+import useUploadFoodImage from '../api/useUploadFoodImage';
+import usePollFoodImageStatus from '../api/usePollFoodImage';
 
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
@@ -22,15 +18,21 @@ const FoodForm = () => {
     점심: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
     저녁: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
   });
-  const {
-    uploadFoodImage,
-    error: uploadError,
-    loading: uploadLoading,
-  } = useFoodUpload();
-
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const { status: pollStatus, error: pollError } = usePollFoodImageStatus(28);
+  useEffect(() => {
+    if (pollStatus) {
+      setStatus(pollStatus);
+    }
+    if (pollError) {
+      setError(pollError);
+    }
+  }, [pollStatus, pollError]);
   const navigate = useNavigate();
   const location = useLocation();
   const {
+    selectedDate,
     checkKcal,
     setSelectedDate,
     updateDietInfo,
@@ -61,65 +63,22 @@ const FoodForm = () => {
 
   const handleImageUpload = async (event, meal) => {
     const file = event.target.files[0];
-    if (file) {
-      try {
-        const localImageUrl = URL.createObjectURL(file);
-        setMealData((prevData) => ({
-          ...prevData,
-          [meal]: { ...prevData[meal], imageUrl: localImageUrl },
-        }));
+    if (!file) return;
 
-        const result = await uploadFoodImage(file);
-        const imageUrl = result.imageUrl;
+    console.log('Selected file:', file); // Debugging line
 
-        // /predict 엔드포인트에 withCredentials를 추가하여 GET 요청
-        const response = await inferenceClient.get('/predict', {
-          params: { image_url: imageUrl },
-          withCredentials: true, // 인증 정보 포함
-        });
-        console.log('Python 서버 응답:', response.data);
+    const formData = new FormData();
+    formData.append('foodImage', file);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
-        if (response.data.tags && response.data.tags.length > 0) {
-          // /result 엔드포인트에 withCredentials를 추가하여 POST 요청
-          const analysisResponse = await inferenceClient.post('/result', null, {
-            withCredentials: true, // 인증 정보 포함
-          });
-          console.log('분석 결과:', analysisResponse.data);
-
-          if (analysisResponse.data.tag && analysisResponse.data.kcal) {
-            const foodAnalysis = {
-              Final_label: analysisResponse.data.tag,
-              calories: parseFloat(analysisResponse.data.kcal),
-            };
-
-            setMealData((prevData) => ({
-              ...prevData,
-              [meal]: {
-                ...prevData[meal],
-                imageUrl,
-                foodAnalysis,
-                selectedQuantity: 1,
-              },
-            }));
-
-            // 칼로리 정보 업데이트
-            dispatch({
-              type: 'SET_MEAL_CALORIES',
-              payload: {
-                meal,
-                calories: foodAnalysis.calories,
-              },
-            });
-          } else {
-            console.error('분석 결과에 tag 또는 kcal 정보가 없습니다.');
-          }
-        } else {
-          console.error('태그가 감지되지 않았습니다.');
-        }
-      } catch (error) {
-        console.error('업로드 또는 분석 중 오류 발생:', error);
-        alert(`오류: ${error.message}`);
-      }
+    try {
+      const response = await useUploadFoodImage(formData, selectedDate);
+      console.log('API Response:', response); // Debugging line
+    } catch (error) {
+      console.error('이미지 업로드 실패', error);
+      alert('이미지 업로드 실패');
     }
   };
 
@@ -199,7 +158,9 @@ const FoodForm = () => {
           {['아침', '점심', '저녁'].map((meal) => (
             <button
               key={meal}
-              className={`meal-button ${state.selectedMeal === meal ? 'selected' : ''}`}
+              className={`meal-button ${
+                state.selectedMeal === meal ? 'selected' : ''
+              }`}
               onClick={() =>
                 dispatch({ type: 'SET_SELECTED_MEAL', payload: meal })
               }
