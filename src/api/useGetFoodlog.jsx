@@ -1,20 +1,23 @@
 import api from '../config/apiConfig';
 
-const useGetFood = async (date) => {
+const useGetFoodLog = async (date, mealtype) => {
   const accesstoken = localStorage.getItem('accesstoken');
   try {
-    const response = await api.get(`/api/food_log/${date}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accesstoken}`,
-      },
-    });
-    console.log(response.data); // 응답 데이터를 콘솔에 출력합니다.
-    return response.data; // 데이터를 반환합니다.
+    const response = await api.get(
+      `/api/food?date=${date}&mealtype=${mealtype}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accesstoken}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error fetching food log:', error);
-    throw error; // 에러 발생 시 호출한 쪽에서 처리할 수 있도록 에러를 던집니다.
+    console.error(error);
+    return error;
   }
 };
 
-export default useGetFood;
+export default useGetFoodLog;
