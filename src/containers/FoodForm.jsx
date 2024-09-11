@@ -2,17 +2,15 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
-import useFoodUpload from '../api/useFoodUpload';
+
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
 import axios from 'axios';
 import './styles/FoodForm.scss';
-
-const inferenceClient = axios.create({
-  baseURL: `http://localhost:5001/`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import uploadAndCheckStatus from '../api/useUploadFoodImage';
+import useUploadFoodImage from '../api/useUploadFoodImage';
+import usePollFoodImageStatus from '../api/usePollFoodImage';
+import useUploadFoodLog from '../api/useUploadFoodLog';
+import useGetFoodLog from '../api/useGetFoodLog';
 
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
@@ -22,21 +20,64 @@ const FoodForm = () => {
     점심: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
     저녁: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
   });
+  const [foodlogId, setFoodlogId] = useState(null);
+  const { status: pollStatus, error: pollError } =
+    usePollFoodImageStatus(foodlogId);
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const getFoodLog = async () => {
+    try {
+      const response = await useGetFoodLog(selectedDate, state.selectedMeal);
+      if (response) {
+        setMealData((prevData) => ({
+          ...prevData,
+          [state.selectedMeal]: {
+            ...prevData[state.selectedMeal],
+            imageUrl: response.imageUrl,
+            foodAnalysis: {
+              Final_label: response.food,
+              calories: response.kcal,
+            },
+            selectedQuantity: response.quantity,
+          },
+        }));
+        setFoodlogId(response.foodlog_id);
+      }
+    } catch (error) {
+      console.error('음식 기록 조회 중 오류 발생:', error);
+    }
+  };
   const {
-    uploadFoodImage,
-    error: uploadError,
-    loading: uploadLoading,
-  } = useFoodUpload();
-
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {
+    selectedDate,
     checkKcal,
     setSelectedDate,
     updateDietInfo,
     getDietInfo,
     checkExercise,
   } = UseDailyData();
+
+  useEffect(() => {
+    getFoodLog();
+  }, [selectedDate, state.selectedMeal]);
+  useEffect(() => {
+    if (foodlogId && pollStatus) {
+      if (pollStatus.status === 'complete') {
+        const { food, kcal, food_photo } = pollStatus;
+        setMealData((prevData) => ({
+          ...prevData,
+          [state.selectedMeal]: {
+            ...prevData[state.selectedMeal],
+            foodAnalysis: { Final_label: food, calories: kcal },
+            imageUrl: food_photo,
+          },
+        }));
+      } else if (pollError) {
+        console.error('Polling Error:', pollError);
+      }
+    }
+  }, [foodlogId, pollStatus, pollError, state.selectedMeal]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (location.state?.date) {
@@ -61,65 +102,34 @@ const FoodForm = () => {
 
   const handleImageUpload = async (event, meal) => {
     const file = event.target.files[0];
-    if (file) {
-      try {
-        const localImageUrl = URL.createObjectURL(file);
+    if (!file) return;
+
+    console.log('Selected file:', file); // Debugging line
+
+    const formData = new FormData();
+    formData.append('foodImage', file);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    try {
+      const response = await useUploadFoodImage(
+        formData,
+        selectedDate,
+        state.selectedMeal
+      );
+      console.log('API Response:', response); // Debugging line
+
+      if (response) {
         setMealData((prevData) => ({
           ...prevData,
-          [meal]: { ...prevData[meal], imageUrl: localImageUrl },
+          [meal]: { ...prevData[meal], imageUrl: response.imageUrl },
         }));
-
-        const result = await uploadFoodImage(file);
-        const imageUrl = result.imageUrl;
-
-        // /predict 엔드포인트에 withCredentials를 추가하여 GET 요청
-        const response = await inferenceClient.get('/predict', {
-          params: { image_url: imageUrl },
-          withCredentials: true, // 인증 정보 포함
-        });
-        console.log('Python 서버 응답:', response.data);
-
-        if (response.data.tags && response.data.tags.length > 0) {
-          // /result 엔드포인트에 withCredentials를 추가하여 POST 요청
-          const analysisResponse = await inferenceClient.post('/result', null, {
-            withCredentials: true, // 인증 정보 포함
-          });
-          console.log('분석 결과:', analysisResponse.data);
-
-          if (analysisResponse.data.tag && analysisResponse.data.kcal) {
-            const foodAnalysis = {
-              Final_label: analysisResponse.data.tag,
-              calories: parseFloat(analysisResponse.data.kcal),
-            };
-
-            setMealData((prevData) => ({
-              ...prevData,
-              [meal]: {
-                ...prevData[meal],
-                imageUrl,
-                foodAnalysis,
-                selectedQuantity: 1,
-              },
-            }));
-
-            // 칼로리 정보 업데이트
-            dispatch({
-              type: 'SET_MEAL_CALORIES',
-              payload: {
-                meal,
-                calories: foodAnalysis.calories,
-              },
-            });
-          } else {
-            console.error('분석 결과에 tag 또는 kcal 정보가 없습니다.');
-          }
-        } else {
-          console.error('태그가 감지되지 않았습니다.');
-        }
-      } catch (error) {
-        console.error('업로드 또는 분석 중 오류 발생:', error);
-        alert(`오류: ${error.message}`);
+        setFoodlogId(response.foodlog_id); // Start polling with the foodlog_id
       }
+    } catch (error) {
+      console.error('이미지 업로드 실패', error);
+      alert('이미지 업로드 실패');
     }
   };
 
@@ -151,7 +161,6 @@ const FoodForm = () => {
   };
 
   const handleSaveMeal = async () => {
-    const dateString = currentDate.toISOString().split('T')[0];
     const meals = ['아침', '점심', '저녁'];
 
     for (const meal of meals) {
@@ -159,26 +168,20 @@ const FoodForm = () => {
       if (imageUrl && foodAnalysis) {
         const totalCalories = calculateTotalCalories(meal);
         const mealData = {
-          userId: '사용자ID', // 실제 사용자 ID로 대체해야 함
-          date: dateString,
-          mealType: meal,
-          foodName: foodAnalysis.Final_label,
-          calories: totalCalories,
-          imageUrl: imageUrl,
+          food: foodAnalysis.Final_label,
+          kcal: totalCalories,
           quantity: selectedQuantity,
         };
 
         try {
-          await axios.post('/api/food/save', mealData);
-          updateDietInfo(dateString, meal, totalCalories, imageUrl);
+          const response = await useUploadFoodLog(mealData, foodlogId);
+          alert(response.message);
         } catch (error) {
           console.error(`Error saving ${meal} information:`, error);
           alert(`${meal} 정보 저장 중 오류가 발생했습니다.`);
         }
       }
     }
-
-    alert('모든 식사 정보가 저장되었습니다.');
   };
 
   const handleSaveAndNavigate = () => {
@@ -199,7 +202,9 @@ const FoodForm = () => {
           {['아침', '점심', '저녁'].map((meal) => (
             <button
               key={meal}
-              className={`meal-button ${state.selectedMeal === meal ? 'selected' : ''}`}
+              className={`meal-button ${
+                state.selectedMeal === meal ? 'selected' : ''
+              }`}
               onClick={() =>
                 dispatch({ type: 'SET_SELECTED_MEAL', payload: meal })
               }
