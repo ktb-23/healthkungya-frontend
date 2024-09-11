@@ -27,8 +27,8 @@ jobs:
 
          - name: Upload to S3
            env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.SEAN_AWS_ACCESS_KEY_ID }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.SEAN_AWS_SECRET_ACCESS_KEY }}
+              AWS_ACCESS_KEY_ID: ${{ secrets.SEAN_FROM_TONY_AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.SEAN_FROM_TONY_AWS_ACCESS_KEY_SECRET }}
               AWS_REGION: 'ap-northeast-2'
            run: |
-              aws s3 cp ./dist s3://ktb-23-healthkungya-storage-dev --recursive
+              aws s3 cp ./dist s3://ktb-23-healthkungya-fe --recursive
