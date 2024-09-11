@@ -32,12 +32,13 @@ const FoodForm = () => {
   const getFoodLog = async () => {
     try {
       const response = await useGetFoodLog(selectedDate, state.selectedMeal);
+      console.log(response);
       if (response) {
         setMealData((prevData) => ({
           ...prevData,
           [state.selectedMeal]: {
             ...prevData[state.selectedMeal],
-            imageUrl: response.imageUrl,
+            imageUrl: response.food_photo,
             foodAnalysis: {
               Final_label: response.food,
               calories: response.kcal,
@@ -46,6 +47,19 @@ const FoodForm = () => {
           },
         }));
         setFoodlogId(response.foodlog_id);
+      } else {
+        setMealData((prevData) => ({
+          ...prevData,
+          [state.selectedMeal]: {
+            ...prevData[state.selectedMeal],
+            imageUrl: '',
+            foodAnalysis: {
+              Final_label: '',
+              calories: 0,
+            },
+            selectedQuantity: 1,
+          },
+        }));
       }
     } catch (error) {
       console.error('음식 기록 조회 중 오류 발생:', error);
@@ -83,26 +97,26 @@ const FoodForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.state?.date) {
-      const dateFromMainForm = formatDate(new Date(location.state.date)); // Format the date
+  // useEffect(() => {
+  //   if (location.state?.date) {
+  //     const dateFromMainForm = formatDate(new Date(location.state.date));
 
-      if (currentDate !== dateFromMainForm) {
-        setCurrentDate(dateFromMainForm);
-        setSelectedDate(dateFromMainForm);
-      }
-      const dietInfo = getDietInfo(dateFromMainForm);
+  //     if (currentDate !== dateFromMainForm) {
+  //       setCurrentDate(dateFromMainForm);
+  //       setSelectedDate(dateFromMainForm);
+  //     }
+  //     const dietInfo = getDietInfo(dateFromMainForm);
 
-      dispatch({
-        type: 'SET_ALL_MEALS',
-        payload: {
-          아침: dietInfo['아침'] || 0,
-          점심: dietInfo['점심'] || 0,
-          저녁: dietInfo['저녁'] || 0,
-        },
-      });
-    }
-  }, [location.state, currentDate, setSelectedDate, getDietInfo]);
+  //     dispatch({
+  //       type: 'SET_ALL_MEALS',
+  //       payload: {
+  //         아침: dietInfo['아침'] || 0,
+  //         점심: dietInfo['점심'] || 0,
+  //         저녁: dietInfo['저녁'] || 0,
+  //       },
+  //     });
+  //   }
+  // }, [location.state, currentDate, setSelectedDate, getDietInfo]);
 
   const handleImageUpload = async (event, meal) => {
     const file = event.target.files[0];
