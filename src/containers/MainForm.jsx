@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm.jsx';
 import Index from '../components/Index.jsx';
@@ -13,12 +13,18 @@ import UseDailyData from '../components/UseDailyData.jsx';
 import useWeight from '../hooks/useWeight.jsx';
 import Input from '../components/Input.jsx';
 import useExerciseLog from '../hooks/useExerciseLog.jsx';
+import useGetAllFoodLog from '../api/useGetAllFoodLog.jsx';
 const MainForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { selectedDate, setSelectedDate, dailyData, checkKcal, checkExercise } =
     UseDailyData();
   const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
+  const [foodLogs, setFoodLogs] = useState({
+    아침: null,
+    점심: null,
+    저녁: null,
+  });
   useEffect(() => {
     if (location.state?.date) {
       setSelectedDate(location.state.date);
@@ -38,7 +44,24 @@ const MainForm = () => {
     photos: {},
   };
   const { durations, exItem } = useExerciseLog(selectedDate);
+  const fetchFoodLogData = async () => {
+    const response = await useGetAllFoodLog(selectedDate);
 
+    const newFoodLogs = {
+      아침: null,
+      점심: null,
+      저녁: null,
+    };
+
+    response.forEach((log) => {
+      newFoodLogs[log.mealtype] = log;
+    });
+
+    setFoodLogs(newFoodLogs);
+  };
+  useEffect(() => {
+    fetchFoodLogData();
+  }, [selectedDate]);
   //met를 몸무게로 시간당 칼로리 계산
   const calculateCalories = (met, duration) => {
     // 몸무게가 0보다 클 때만 계산
@@ -70,7 +93,11 @@ const MainForm = () => {
     console.log('Navigating to /weight');
   };
   const getDietKcal = (meal) => {
-    return selectedDayData.diet[meal] || 0;
+    return foodLogs[meal]?.kcal || 0;
+  };
+
+  const getFoodPhoto = (meal) => {
+    return foodLogs[meal]?.food_photo || '';
   };
   const handleWeightChange = (e) => {
     const newWeight = e.target.value;
@@ -106,9 +133,9 @@ const MainForm = () => {
           </Button>
         </div>
         <div className="photo-container">
-          <Photo meal="morning" imageSrc={selectedDayData.photos?.morning} />
-          <Photo meal="lunch" imageSrc={selectedDayData.photos?.lunch} />
-          <Photo meal="dinner" imageSrc={selectedDayData.photos?.dinner} />
+          <Photo meal="morning" imageSrc={getFoodPhoto('아침')} />
+          <Photo meal="lunch" imageSrc={getFoodPhoto('점심')} />
+          <Photo meal="dinner" imageSrc={getFoodPhoto('저녁')} />
         </div>
 
         <div className="mainoutput-container">
