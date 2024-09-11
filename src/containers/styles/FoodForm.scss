@@ -19,6 +19,58 @@
   flex-direction: column;
   font-family: 'GroomSans';
 
+  .alert-container {
+    position: absolute;
+    top: 320px; // picture-box 아래에 위치하도록 조정
+    left: 25px;
+    width: 254px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .alert-image {
+    flex-shrink: 0;
+    margin-right: 15px;
+  }
+
+  .alert-text {
+    flex-grow: 1;
+  }
+
+  .alert-text span {
+    font-size: 9px;
+    line-height: 1.2;
+    color: #555;
+  }
+
+  @media (max-width: 1300px) {
+    .alert-container {
+      position: relative;
+      top: -8px; // picture-box 아래에 위치하도록 조정
+      left: 10px;
+      width: 254px;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-image {
+      flex-shrink: 0;
+      margin-right: 15px;
+    }
+
+    .alert-text {
+      flex-grow: 1;
+    }
+
+    .alert-text span {
+      font-size: 9px;
+      line-height: 1.2;
+      color: #555;
+    }
+  }
+
   .clear-button {
     background-color: white;
     border-radius: 5px;
@@ -106,6 +158,13 @@
     width: 225px;
     height: 162px;
 
+    .list-content {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+    }
     .list-header {
       position: relative;
       display: flex;
@@ -113,6 +172,7 @@
       align-items: center;
       height: 40px; // 헤더의 높이 설정
       width: 100%;
+      font-size: 13px;
 
       .list-title {
         font-size: 12px;
