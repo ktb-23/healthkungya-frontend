@@ -3,7 +3,7 @@ name: Sean Front End CI/CD
 on:
    push:
       branches:
-         - dev
+         - main
    workflow_dispatch:
 
 jobs:
@@ -13,8 +13,6 @@ jobs:
       steps:
          - name: Checkout code
            uses: actions/checkout@v4
-           with:
-              ref: dev
 
          - name: Set up Node.js
            uses: actions/setup-node@v4
