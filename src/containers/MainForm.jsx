@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import FixForm from './FixForm.jsx';
 import Index from '../components/Index.jsx';
 import Foodindex from '../picture/foodindex.svg';
@@ -14,7 +13,6 @@ import UseDailyData from '../components/UseDailyData.jsx';
 import useWeight from '../hooks/useWeight.jsx';
 import Input from '../components/Input.jsx';
 import useExerciseLog from '../hooks/useExerciseLog.jsx';
-
 import useGetAllFoodLog from '../api/useGetAllFoodLog.jsx';
 const MainForm = () => {
   const navigate = useNavigate();
@@ -34,24 +32,10 @@ const MainForm = () => {
   }, [location.state?.date, setSelectedDate]);
 
   useEffect(() => {
-    const fetchFoodLogs = async () => {
-      try {
-        const mealTypes = ['morning', 'lunch', 'dinner'];
-        const logs = {};
-        for (const mealType of mealTypes) {
-          const response = await axios.get('/api/food', {
-            params: { date: selectedDate, mealtype: mealType },
-          });
-          logs[mealType] = response.data;
-        }
-        setFoodLogs(logs);
-      } catch (error) {
-        console.error('Error fetching food logs:', error);
-      }
-    };
-
-    fetchFoodLogs();
-  }, [selectedDate]);
+    if (location.state?.date) {
+      setSelectedDate(location.state.date);
+    }
+  }, [location.state?.date, setSelectedDate]);
 
   const selectedDayData = dailyData[selectedDate] || {
     diet: {},
@@ -80,26 +64,31 @@ const MainForm = () => {
   }, [selectedDate]);
   //met를 몸무게로 시간당 칼로리 계산
   const calculateCalories = (met, duration) => {
+    // 몸무게가 0보다 클 때만 계산
     if (weight > 0) {
       return ((met * weight * 3.5) / 200) * duration;
     }
     return 0;
   };
-
+  // 전체 칼로리 계산
   const totalCalories = exItem.reduce((total, item) => {
     const duration = durations[item.exitem_id] || item.extime;
     const calories = calculateCalories(item.met, duration);
     return total + calories;
   }, 0);
 
+  useEffect(() => {
+    console.log('Rendering breakfast calories:', selectedDayData.diet['아침']);
+  }, [selectedDayData]);
+
   const handleFoodChangeClick = () => {
     navigate('/foodupdate', { state: { date: selectedDate } });
   };
 
   const handleExChangeClick = () => {
+    console.log('Navigating to /exercise_log');
     navigate('/pages/exercise_log');
   };
-
   const handleWeightChangeClick = () => {
     console.log('Navigating to /weight');
   };
@@ -150,14 +139,14 @@ const MainForm = () => {
         </div>
 
         <div className="mainoutput-container">
-          <Output text="식단-아침" kcal={foodLogs.morning.kcal || 0}>
-            {foodLogs.morning.food || '아침'}
+          <Output text="식단-아침" kcal={getDietKcal('아침')}>
+            아침
           </Output>
-          <Output text="식단-점심" kcal={foodLogs.lunch.kcal || 0}>
-            {foodLogs.lunch.food || '점심'}
+          <Output text="식단-점심" kcal={getDietKcal('점심')}>
+            점심
           </Output>
-          <Output text="식단-저녁" kcal={foodLogs.dinner.kcal || 0}>
-            {foodLogs.dinner.food || '저녁'}
+          <Output text="식단-저녁" kcal={getDietKcal('저녁')}>
+            저녁
           </Output>
         </div>
         <div className="mainexouput">
