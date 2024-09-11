@@ -2,11 +2,8 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FixForm from './FixForm';
 import UseDailyData from '../components/UseDailyData';
-
 import { FoodReducer, InitialState } from './reducers/FoodReducer';
-import axios from 'axios';
 import './styles/FoodForm.scss';
-import uploadAndCheckStatus from '../api/useUploadFoodImage';
 import useUploadFoodImage from '../api/useUploadFoodImage';
 import usePollFoodImageStatus from '../api/usePollFoodImage';
 import useUploadFoodLog from '../api/useUploadFoodLog';
