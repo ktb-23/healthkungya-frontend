@@ -23,7 +23,6 @@ const MainForm = () => {
     UseDailyData();
   const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
   const [foodLogs, setFoodLogs] = useState({
-
     아침: null,
     점심: null,
     저녁: null,
@@ -145,7 +144,6 @@ const MainForm = () => {
           </Button>
         </div>
         <div className="photo-container">
-
           <Photo meal="morning" imageSrc={getFoodPhoto('아침')} />
           <Photo meal="lunch" imageSrc={getFoodPhoto('점심')} />
           <Photo meal="dinner" imageSrc={getFoodPhoto('저녁')} />
