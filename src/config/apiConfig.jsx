@@ -2,7 +2,7 @@ import axios from 'axios';
 
 //토큰이 불필요한 경우
 const api = axios.create({
-  baseURL: `http://localhost:8000/`,
+  baseURL: `https://healthkungya-api.ktb23team.link/`,
   headers: {
     'Content-Type': 'application/json',
   },
