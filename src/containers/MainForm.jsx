@@ -15,6 +15,7 @@ import useWeight from '../hooks/useWeight.jsx';
 import Input from '../components/Input.jsx';
 import useExerciseLog from '../hooks/useExerciseLog.jsx';
 
+import useGetAllFoodLog from '../api/useGetAllFoodLog.jsx';
 const MainForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,11 +23,11 @@ const MainForm = () => {
     UseDailyData();
   const { weight, setWeight, handleUploadClick } = useWeight(selectedDate);
   const [foodLogs, setFoodLogs] = useState({
-    morning: {},
-    lunch: {},
-    dinner: {},
-  });
 
+    아침: null,
+    점심: null,
+    저녁: null,
+  });
   useEffect(() => {
     if (location.state?.date) {
       setSelectedDate(location.state.date);
@@ -60,7 +61,25 @@ const MainForm = () => {
     photos: {},
   };
   const { durations, exItem } = useExerciseLog(selectedDate);
+  const fetchFoodLogData = async () => {
+    const response = await useGetAllFoodLog(selectedDate);
 
+    const newFoodLogs = {
+      아침: null,
+      점심: null,
+      저녁: null,
+    };
+
+    response.forEach((log) => {
+      newFoodLogs[log.mealtype] = log;
+    });
+
+    setFoodLogs(newFoodLogs);
+  };
+  useEffect(() => {
+    fetchFoodLogData();
+  }, [selectedDate]);
+  //met를 몸무게로 시간당 칼로리 계산
   const calculateCalories = (met, duration) => {
     if (weight > 0) {
       return ((met * weight * 3.5) / 200) * duration;
@@ -82,6 +101,16 @@ const MainForm = () => {
     navigate('/pages/exercise_log');
   };
 
+  const handleWeightChangeClick = () => {
+    console.log('Navigating to /weight');
+  };
+  const getDietKcal = (meal) => {
+    return foodLogs[meal]?.kcal || 0;
+  };
+
+  const getFoodPhoto = (meal) => {
+    return foodLogs[meal]?.food_photo || '';
+  };
   const handleWeightChange = (e) => {
     const newWeight = e.target.value;
     setWeight(newWeight);
@@ -116,24 +145,10 @@ const MainForm = () => {
           </Button>
         </div>
         <div className="photo-container">
-          <Photo
-            meal="morning"
-            imageSrc={
-              foodLogs.morning.food_photo || selectedDayData.photos?.morning
-            }
-          />
-          <Photo
-            meal="lunch"
-            imageSrc={
-              foodLogs.lunch.food_photo || selectedDayData.photos?.lunch
-            }
-          />
-          <Photo
-            meal="dinner"
-            imageSrc={
-              foodLogs.dinner.food_photo || selectedDayData.photos?.dinner
-            }
-          />
+
+          <Photo meal="morning" imageSrc={getFoodPhoto('아침')} />
+          <Photo meal="lunch" imageSrc={getFoodPhoto('점심')} />
+          <Photo meal="dinner" imageSrc={getFoodPhoto('저녁')} />
         </div>
 
         <div className="mainoutput-container">

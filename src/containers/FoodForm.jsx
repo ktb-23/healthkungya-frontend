@@ -10,9 +10,15 @@ import useUploadFoodLog from '../api/useUploadFoodLog';
 import useGetFoodLog from '../api/useGetFoodLog';
 import aialertimg from '../picture/alert.svg';
 
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed, so add 1
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 const FoodForm = () => {
   const [state, dispatch] = useReducer(FoodReducer, InitialState);
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
   const [mealData, setMealData] = useState({
     아침: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
     점심: { imageUrl: null, foodAnalysis: null, selectedQuantity: 1 },
@@ -79,13 +85,13 @@ const FoodForm = () => {
 
   useEffect(() => {
     if (location.state?.date) {
-      const dateFromMainForm = new Date(location.state.date);
+      const dateFromMainForm = formatDate(new Date(location.state.date)); // Format the date
 
-      if (currentDate.getTime() !== dateFromMainForm.getTime()) {
+      if (currentDate !== dateFromMainForm) {
         setCurrentDate(dateFromMainForm);
         setSelectedDate(dateFromMainForm);
       }
-      const dietInfo = getDietInfo(location.state.date);
+      const dietInfo = getDietInfo(dateFromMainForm);
 
       dispatch({
         type: 'SET_ALL_MEALS',

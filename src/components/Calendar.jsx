@@ -5,6 +5,7 @@ import montharrowright from '../picture/montharrright.png';
 import Sample from '../picture/sample.svg';
 import UseDailyData from '../components/UseDailyData.jsx';
 import useGetAllDateExlog from '../api/useGetAllDateExlog.jsx';
+import useGetAllDateFoodLog from '../api/useGetAllDateFoodLog.jsx';
 
 const Calendar = ({ selectDate }) => {
   const { checkKcal, checkExercise, saveData } = UseDailyData();
@@ -14,6 +15,7 @@ const Calendar = ({ selectDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
   const [selectedDateString, setSelectedDateString] = useState('');
   const [exerciseDates, setExerciseDates] = useState([]); // 운동 기록이 있는 날짜 목록
+  const [foodDates, setFoodDates] = useState([]); // 운동 기록이 있는 날짜 목록
 
   const handleDateClick = (dateString) => {
     selectDate(dateString);
@@ -71,8 +73,18 @@ const Calendar = ({ selectDate }) => {
       console.error(error);
     }
   };
+  const GetAllDateFoodlog = async () => {
+    try {
+      const response = await useGetAllDateFoodLog();
+      const dates = response.map((entry) => entry.dateValue); // 받은 데이터를 날짜로 변환
+      setFoodDates(dates);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
     GetAllDateExlog();
+    GetAllDateFoodlog();
   }, []);
   return (
     <div className="calendar">
@@ -104,7 +116,7 @@ const Calendar = ({ selectDate }) => {
 
         {[...Array(getLastDateOfMonth()).keys()].map((date) => {
           const dateString = getDateString(currentYear, currentMonth, date + 1);
-          const isKcal = checkKcal(dateString);
+          const isKcal = foodDates.includes(dateString);
           const isExercise = exerciseDates.includes(dateString); // 운동 기록 확인
           const isSelected = dateString === selectedDateString;
 
