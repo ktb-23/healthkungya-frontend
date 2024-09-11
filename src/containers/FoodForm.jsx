@@ -8,6 +8,8 @@ import useUploadFoodImage from '../api/useUploadFoodImage';
 import usePollFoodImageStatus from '../api/usePollFoodImage';
 import useUploadFoodLog from '../api/useUploadFoodLog';
 import useGetFoodLog from '../api/useGetFoodLog';
+import aialertimg from '../picture/alert.svg';
+
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed, so add 1
@@ -238,22 +240,37 @@ const FoodForm = () => {
               </label>
             </div>
           ) : (
-            <label
-              htmlFor={`image-upload-${state.selectedMeal}`}
-              className="upload-button"
-            >
-              {state.selectedMeal} 사진 업로드
-              <input
-                id={`image-upload-${state.selectedMeal}`}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e, state.selectedMeal)}
-                style={{ display: 'none' }}
-              />
-            </label>
+            <div className="upload-container">
+              <label
+                htmlFor={`image-upload-${state.selectedMeal}`}
+                className="upload-button"
+              >
+                <span className="upload-text">
+                  {state.selectedMeal} 사진 업로드
+                </span>
+                <input
+                  id={`image-upload-${state.selectedMeal}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, state.selectedMeal)}
+                  style={{ display: 'none' }}
+                />
+              </label>
+            </div>
           )}
         </div>
-
+        <div className="alert-container">
+          <div className="alert-image">
+            <img src={aialertimg} alt="AI Alert" />
+          </div>
+          <div className="alert-text">
+            <span>
+              사진을 업로드하면 AI가 자동으로 식단을 분석하여
+              <br />
+              메뉴의 영양 정보를 제공합니다.
+            </span>
+          </div>
+        </div>
         <div className="list-box">
           <div className="list-header">
             <h3>음식목록</h3>

@@ -19,6 +19,58 @@
   flex-direction: column;
   font-family: 'GroomSans';
 
+  .alert-container {
+    position: absolute;
+    top: 320px; // picture-box 아래에 위치하도록 조정
+    left: 25px;
+    width: 254px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .alert-image {
+    flex-shrink: 0;
+    margin-right: 15px;
+  }
+
+  .alert-text {
+    flex-grow: 1;
+  }
+
+  .alert-text span {
+    font-size: 9px;
+    line-height: 1.2;
+    color: #555;
+  }
+
+  @media (max-width: 1300px) {
+    .alert-container {
+      position: relative;
+      top: -8px; // picture-box 아래에 위치하도록 조정
+      left: 10px;
+      width: 254px;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-image {
+      flex-shrink: 0;
+      margin-right: 15px;
+    }
+
+    .alert-text {
+      flex-grow: 1;
+    }
+
+    .alert-text span {
+      font-size: 9px;
+      line-height: 1.2;
+      color: #555;
+    }
+  }
+
   .clear-button {
     background-color: white;
     border-radius: 5px;
@@ -106,6 +158,13 @@
     width: 225px;
     height: 162px;
 
+    .list-content {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+    }
     .list-header {
       position: relative;
       display: flex;
@@ -113,6 +172,7 @@
       align-items: center;
       height: 40px; // 헤더의 높이 설정
       width: 100%;
+      font-size: 13px;
 
       .list-title {
         font-size: 12px;
@@ -233,6 +293,15 @@
   width: 100%;
   height: 200px; // 원하는 높이로 조정
   overflow: hidden;
+
+  .upload-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
 }
 
 .uploaded-image-container {
@@ -279,17 +348,19 @@
 }
 
 .upload-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: #f0f0f0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+.upload-text {
+  background-color: #afeb92; /* 초록색 배경 */
+  color: black;
+  padding: 10px 20px;
+  border-radius: 60px;
+  font-size: 13px;
+  transition: background-color 0.3s;
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: #afeb92; /* 호버 시 색상 변경 */
   }
 }
 
