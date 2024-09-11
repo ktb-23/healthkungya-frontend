@@ -233,19 +233,23 @@ const FoodForm = () => {
               </label>
             </div>
           ) : (
-            <label
-              htmlFor={`image-upload-${state.selectedMeal}`}
-              className="upload-button"
-            >
-              {state.selectedMeal} 사진 업로드
-              <input
-                id={`image-upload-${state.selectedMeal}`}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e, state.selectedMeal)}
-                style={{ display: 'none' }}
-              />
-            </label>
+            <div className="upload-container">
+              <label
+                htmlFor={`image-upload-${state.selectedMeal}`}
+                className="upload-button"
+              >
+                <span className="upload-text">
+                  {state.selectedMeal} 사진 업로드
+                </span>
+                <input
+                  id={`image-upload-${state.selectedMeal}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, state.selectedMeal)}
+                  style={{ display: 'none' }}
+                />
+              </label>
+            </div>
           )}
         </div>
 
