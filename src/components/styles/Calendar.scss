@@ -1,0 +1,179 @@
+.calendar {
+  margin-top: 5%;
+  width: 100%;
+  height: 464.22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+
+  .sample {
+    display: flex;
+    margin-left: 300px;
+  }
+  .Monthbuttons {
+    display: flex;
+    margin-left: 140px;
+  }
+  .month-controls {
+    display: grid;
+    grid-template-columns: repeat(7, 42px);
+    width: 100%;
+
+    .yearmonth {
+      width: 100px;
+      order: 1;
+    }
+
+    .prevmonth,
+    .nextmonth {
+      background: none;
+      border: none;
+      grid-template-columns: repeat(7, 42px);
+      grid-template-rows: repeat(6, 42px);
+      cursor: pointer;
+    }
+
+    .prevmonth {
+      order: 2;
+    }
+
+    .nextmonth {
+      order: 3;
+    }
+  }
+
+  .days-of-week {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 42px);
+    column-gap: 45px;
+    order: 2;
+    justify-content: center;
+    gap: 0;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 42px;
+      height: 42px;
+      font-size: 14px; /* 요일 텍스트 크기를 조정 */
+    }
+  }
+
+  .dates {
+    display: grid;
+    margin-top: 12px;
+    grid-template-columns: repeat(7, 42px);
+    grid-template-rows: repeat(6, 42px);
+    gap: 45px;
+    order: 3;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+    .date-label {
+      margin-top: 0px;
+      text-align: center;
+
+      &.selected {
+        color: red;
+        font-weight: bold;
+      }
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .date-text {
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .date-button {
+      margin-bottom: 7px;
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      border: 1px solid black;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .date-button.has-kcal {
+      background: linear-gradient(to right, transparent 50%, #afeb92 50%);
+    }
+
+    .date-button.has-exercise {
+      background: linear-gradient(to right, #86baeb 50%, transparent 50%);
+    }
+
+    .date-button.has-kcal.has-exercise {
+      background: linear-gradient(to right, #86baeb 50%, #afeb92 50%);
+    }
+  }
+
+  @media (min-width: 1300px) {
+    .days-of-week,
+    .dates {
+      grid-template-columns: repeat(7, 42px);
+      gap: 25px;
+    }
+
+    .dates .date-button {
+      width: 30px;
+      height: 30px;
+    }
+
+    .dates .date-text {
+      margin-top: 4px;
+    }
+  }
+
+  @media (max-width: 1300px) {
+    .sample {
+      display: flex;
+      margin-left: 220px;
+    }
+    .Monthbuttons {
+      display: flex;
+      margin-left: 130px;
+    }
+
+    .days-of-week,
+    .dates {
+      grid-template-columns: repeat(7, 42px);
+      gap: 10px;
+    }
+
+    .dates .date-button {
+      width: 28px;
+      height: 28px;
+    }
+
+    .dates .date-text {
+      font-size: 10px;
+      margin-top: 2px;
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .calendar {
+    width: 400px;
+    height: 324.22px;
+  }
+}

@@ -1,0 +1,195 @@
+.button {
+  width: 225px;
+  height: 36px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.registerback {
+  position: relative;
+  bottom: 30px;
+  right: 200px;
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 30px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.loginback {
+  position: relative;
+  bottom: 90px;
+  right: 200px;
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.mainback {
+  position: relative;
+  width: 12px;
+  height: 18px;
+  right: 40vw;
+  top: 165px;
+  background-image: url('../../picture/backicon.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1500px) {
+    right: 45vw;
+  }
+
+  @media (max-width: 1300px) {
+    position: relative;
+    top: 0;
+    right: 30px;
+  }
+}
+
+.login {
+  background-color: var(--primary-color);
+}
+
+.signup {
+  background-color: var(--primary-color);
+}
+
+.foodchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 28.8vw;
+  top: 22vh;
+  background-color: var(--primary-color);
+  @media (max-width: 1300px) {
+    left: 30px;
+    top: -150px;
+    width: 70px;
+    height: 22px;
+    font-size: 10px;
+  }
+}
+.exchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 5vw;
+  top: 59.3vh;
+  background-color: #86baeb;
+  @media (max-width: 1300px) {
+    left: -40px;
+    top: 160px;
+    width: 70px;
+    height: 22px;
+    font-size: 10px;
+  }
+}
+.weightchange {
+  position: relative;
+  width: 86px;
+  height: 28px;
+  left: 19vw;
+  top: 59.3vh;
+  background-color: #eb8686;
+  @media (max-width: 1300px) {
+    left: 100px;
+    top: 160px;
+    width: 70px;
+    height: 22px;
+    font-size: 10px;
+  }
+}
+.backBtn {
+  width: 12px;
+  height: 18px;
+  background-image: url('../../picture/arrow.png');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  @media (max-width: 1200px) {
+    bottom: 70px;
+    right: 150px;
+  }
+  @media (max-width: 700px) {
+    bottom: 0px;
+    right: 120px;
+  }
+}
+.exupload {
+  width: 86px;
+  height: 28px;
+  background: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  @media (max-width: 1750px) {
+    width: 78px;
+    height: 24px;
+  }
+  @media (max-width: 1500px) {
+    width: 75px;
+    height: 23px;
+    font-size: 15px;
+  }
+  @media (max-width: 1400px) {
+    width: 67px;
+    height: 20px;
+    font-size: 13px;
+  }
+  @media (max-width: 1200px) {
+  }
+}
+.clear {
+  box-sizing: border-box;
+  margin-right: 10px;
+  width: 50px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+
+  border: 0.5px solid #888888;
+  border-radius: 5px;
+}
+.setting {
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid var(--border-primary-color);
+  border-radius: 0px;
+  font-size: 20px;
+}
+.setting:hover {
+  background: var(--primary-color);
+}
+.profileupload {
+  font-size: 20px;
+  width: auto;
+  border-bottom: 1px solid black;
+  border-radius: 0px;
+}
+.updateProfileBtn {
+  background: var(--primary-color);
+  width: 86px;
+  height: 25.42px;
+  border-radius: 5px;
+}

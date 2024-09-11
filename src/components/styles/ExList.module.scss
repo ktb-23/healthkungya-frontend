@@ -1,0 +1,102 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.header span {
+  font-size: 15px;
+  margin-left: 10px;
+}
+.ListWrapper {
+  box-sizing: border-box;
+  width: 20vw;
+  height: 30vh;
+  overflow-y: scroll;
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  @media (max-width: 1300px) {
+    width: 195px;
+    height: 200px;
+  }
+}
+.KcalWrapper {
+  box-sizing: border-box;
+  width: 20vw;
+  height: 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border: 1px solid var(--border-primary-color);
+  border-radius: 5px;
+  @media (max-width: 1300px) {
+    width: 240px;
+    height: 5vh;
+  }
+  @media (max-width: 1200px) {
+    width: 180px;
+  }
+  @media (max-width: 1200px) {
+    font-size: 11px;
+  }
+}
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.exerciseItem {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  @media (max-width: 1200px) {
+    font-size: 11px;
+    font-weight: bold;
+  }
+}
+.exerciseItem select {
+  outline: none;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 15px;
+  border: 0.5px solid #888888;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 5px;
+}
+.selectwrapper {
+  display: flex;
+  width: 55px;
+}
+.arrow {
+  box-sizing: border-box;
+  position: relative;
+  right: 12px;
+  width: 14px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #86baeb;
+  border: 0.5px solid #888888;
+  border-radius: 0px 5px 5px 0px;
+}
+.arrow div {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 4px 0px 4px;
+  border-color: #616161 transparent transparent transparent;
+}

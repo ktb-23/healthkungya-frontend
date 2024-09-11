@@ -1,0 +1,394 @@
+.fixform-wrapper {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1300px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.Food-right {
+  position: fixed;
+  top: 20vh;
+  right: 0;
+  width: 50%;
+  height: 40vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: 'GroomSans';
+
+  .alert-container {
+    position: absolute;
+    top: 320px; // picture-box 아래에 위치하도록 조정
+    left: 25px;
+    width: 254px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .alert-image {
+    flex-shrink: 0;
+    margin-right: 15px;
+  }
+
+  .alert-text {
+    flex-grow: 1;
+  }
+
+  .alert-text span {
+    font-size: 9px;
+    line-height: 1.2;
+    color: #555;
+  }
+
+  @media (max-width: 1300px) {
+    .alert-container {
+      position: relative;
+      top: -8px; // picture-box 아래에 위치하도록 조정
+      left: 10px;
+      width: 254px;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-image {
+      flex-shrink: 0;
+      margin-right: 15px;
+    }
+
+    .alert-text {
+      flex-grow: 1;
+    }
+
+    .alert-text span {
+      font-size: 9px;
+      line-height: 1.2;
+      color: #555;
+    }
+  }
+
+  .clear-button {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid;
+  }
+
+  .food-select {
+    position: relative;
+    width: 150px; // 원하는 너비로 조정
+    height: 30px; // 원하는 높이로 조정
+    background-color: white;
+    border: 1px solid #949494;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1300px) {
+    position: relative;
+    top: -50px;
+    left: 0;
+    right: 0;
+    width: 50%;
+    height: 40vh;
+  }
+
+  @media (max-height: 700px) {
+    top: 50px;
+  }
+  @media (max-height: 650px) {
+    top: 150px;
+  }
+  @media (max-height: 600px) {
+    top: 200px;
+  }
+
+  .picture-box,
+  .list-box,
+  .total-kal {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    border: 1px solid #949494;
+  }
+
+  .food-nav {
+    top: 20px;
+    left: 0px;
+    right: 20px;
+    width: calc(100% - 240px); // 가로 길이 줄임
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 5px; // border-radius 추가
+
+    .meal-button {
+      flex: 1;
+      margin: 0 5px;
+      height: 40px;
+      border: none;
+      border-radius: 5px; // button의 border-radius도 변경
+      background-color: #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover,
+      &.selected {
+        background-color: #afeb92;
+      }
+    }
+  }
+
+  .picture-box {
+    top: 100px;
+    left: 20px;
+    width: 254px;
+    height: 208px;
+  }
+
+  .list-box {
+    top: 100px;
+    left: 294px;
+    width: 225px;
+    height: 162px;
+
+    .list-content {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+    }
+    .list-header {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px; // 헤더의 높이 설정
+      width: 100%;
+      font-size: 13px;
+
+      .list-title {
+        font-size: 12px;
+      }
+
+      .clear-button {
+        position: absolute;
+        right: 10px; // 오른쪽 여백 조정
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+
+    .list-title {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
+  }
+
+  .total-kal {
+    top: 272px;
+    left: 294px;
+    width: 225px;
+    height: 36px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .save,
+  .edit {
+    position: absolute;
+    top: 20px;
+    padding: 8px 14px;
+    background-color: #afeb92;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #aad9ac;
+    }
+  }
+
+  .save {
+    right: 90px; // 수정 완료 버튼 왼쪽에 위치
+    top: 35px;
+  }
+
+  .edit {
+    right: 20px;
+    top: 35px;
+  }
+  @media (max-width: 1300px) {
+    position: relative;
+
+    width: 100%; // 전체 너비를 늘림
+    height: auto; // 높이를 자동으로 조절
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .picture-box,
+    .list-box,
+    .total-kal {
+      position: relative;
+      top: auto;
+      width: 100%; // 전체 너비로 설정
+      margin-bottom: 20px; // 각 요소 사이 간격
+    }
+
+    .picture-box {
+      height: 208px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .list-box {
+      height: 162px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .total-kal {
+      height: 36px;
+      width: 350px;
+      left: 0px;
+    }
+
+    .food-nav {
+      position: relative;
+      width: 350px;
+      margin-bottom: 20px;
+    }
+
+    .save,
+    .edit {
+      position: static; // 절대 위치 제거
+      display: inline-block; // 인라인 블록으로 변경
+      margin-top: 10px;
+      margin-right: 10px; // 버튼 사이 간격
+    }
+  }
+}
+
+.picture-box {
+  position: relative;
+  width: 100%;
+  height: 200px; // 원하는 높이로 조정
+  overflow: hidden;
+
+  .upload-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+}
+
+.uploaded-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.change-image-button {
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.upload-button {
+  cursor: pointer;
+  display: inline-block;
+}
+.upload-text {
+  background-color: #afeb92; /* 초록색 배경 */
+  color: black;
+  padding: 10px 20px;
+  border-radius: 60px;
+  font-size: 13px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #afeb92; /* 호버 시 색상 변경 */
+  }
+}
+
+.uploaded-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-image-button {
+  position: relative;
+  display: grid;
+  bottom: 110px;
+  right: 0px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 100px;
+  justify-content: center;
+  left: 70px;
+  @media (max-width: 1300px) {
+    left: 110px;
+  }
+}

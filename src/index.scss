@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'GroomSans';
+  src: url('./font/goorm-sans-code.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+:root {
+  /* 색상 */
+  --primary-color: #afeb92;
+  --secondary-color: #86baeb;
+  --tertiary-color: #eb8686;
+  --border-primary-color: #949494;
+  --error-color: #ff0000;
+
+  /* 타이포그래피 */
+  --font-family-base: 'GroomSans', sans-serif;
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 18px;
+  --font-size-body: 16px;
+  --font-size-caption: 12px;
+  --line-height-heading: 1.5;
+  --line-height-body: 1.75;
+  --letter-spacing-heading: 0.5px;
+  --letter-spacing-body: 0.25px;
+
+  /* 스페이싱 */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+  --grid-columns: 12;
+  --grid-gutter-width: 16px;
+  --grid-margin-width: 24px;
+}

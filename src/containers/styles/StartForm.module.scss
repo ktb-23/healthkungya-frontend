@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+// 시작 페이지 레이아웃
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+}
+.logo {
+  width: 227.17px;
+  height: 221px;
+  background-image: url('../../picture/logo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}

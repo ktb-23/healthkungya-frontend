@@ -1,0 +1,128 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1300px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.main-right {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 20px;
+
+  .index-container {
+    display: flex; // Use flexbox for layout
+    flex-direction: column; // Stack indexes vertically
+    gap: 20px; // Add space between index elements
+    width: 100%;
+    height: auto; // Adjust automatically based on content
+  }
+  .graphbuttonwrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .graph-button {
+    position: absolute; /* 절대 위치 사용 */
+    top: 80vh;
+    left: 25vw;
+    width: 160px;
+    height: 46px;
+    background-color: white;
+    border: 1px solid #000000;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: #d3d3d3;
+    }
+
+    @media (max-width: 1300px) {
+      position: relative;
+      width: 140px;
+      height: 36px;
+      top: -80px;
+      left: 100px; /* 부모의 오른쪽 끝에 맞춥니다 */
+    }
+  }
+}
+
+.exWrapper {
+  margin-left: 10%;
+  width: 60%;
+}
+.exWrapper div {
+  display: flex;
+  overflow-y: scroll;
+  height: 34px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 1300px) {
+  .main-right {
+    position: relative;
+    top: -100px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  .index-container {
+    position: relative;
+    display: flex; // Use flexbox for layout
+    flex-direction: column; // Stack indexes vertically
+    align-items: center;
+  }
+  .photo-container {
+    position: relative;
+    bottom: 120px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .mainoutput-container {
+    position: relative;
+    bottom: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .mainexouput {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .change {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  @media (max-height: 800px) {
+    .main-right {
+      position: relative;
+      top: 0px;
+    }
+  }
+  @media (max-height: 700px) {
+    .main-right {
+      position: relative;
+      top: 100px;
+    }
+  }
+  @media (max-height: 600px) {
+    .main-right {
+      position: relative;
+      top: 200px;
+    }
+  }
+}

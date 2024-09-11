@@ -1,0 +1,52 @@
+.profileWrapper {
+  display: flex;
+  justify-content: center;
+}
+.profilebox {
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 500px;
+  height: 100px;
+  border: 2px solid #949494;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.profile-info {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-name {
+  width: 120px;
+  height: 17px;
+}
+
+.profile-status {
+  width: 200px;
+  height: 17px;
+}
+
+.profile-name,
+.profile-status {
+  font-family: 'goorm Sans OTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+  color: #000000;
+  margin: 0;
+}
