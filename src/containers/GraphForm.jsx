@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트�
 import Button from '../components/Button'; // Button 컴포넌트 임포트
 import useFetchWeeklyExerciseGraph from '../api/useFetchWeeklyExerciseGraph';
 import useFetchWeeklyWeightGraph from '../api/useFetchWeeklyWeightGraph';
+import useFetchWeeklyFoodGraph from '../api/useFetchWeeklyFoodGraph';
 
 // Chart.js에서 사용해야 하는 요소 등록
 ChartJS.register(
@@ -56,7 +57,6 @@ const GraphForm = () => {
       return nextDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식으로
     });
   };
-
   // 선택된 날짜의 주차에 대한 칼로리 데이터 업데이트
   useEffect(() => {
     const weekDates = getCurrentWeekDates(selectedDate);
@@ -98,6 +98,22 @@ const GraphForm = () => {
       setCalories(Array(7).fill(0));
     }
   };
+  const fetchFoodData = async () => {
+    try {
+      const response = await useFetchWeeklyFoodGraph('weekly', selectedDate);
+      const dateKcalMap = response.reduce((acc, entry) => {
+        acc[entry.date] = (acc[entry.date] || 0) + entry.kcal;
+        return acc;
+      }, {});
+
+      const weekKcal = dates.map((date) => dateKcalMap[date] || 0);
+
+      setCalories(weekKcal);
+    } catch (error) {
+      console.error(error);
+      setCalories(Array(7).fill(0));
+    }
+  };
   useEffect(() => {
     if (activeIndex === '운동') {
       fetchExerciseData();
@@ -114,7 +130,7 @@ const GraphForm = () => {
   // 식단 데이터로 수정해야함
   useEffect(() => {
     if (activeIndex === '식단') {
-      setCalories(Array(7).fill(0));
+      fetchFoodData();
       setBorderColor('#AFEB92');
     }
   }, [activeIndex, selectedDate, dates]);
