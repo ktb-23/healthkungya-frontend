@@ -1,15 +1,14 @@
 import api from '../config/apiConfig';
 
-const useUploadFoodImage = async (formData, date, mealtype) => {
+const useGetFoodLog = async (date, mealtype) => {
   const accesstoken = localStorage.getItem('accesstoken');
   try {
-    const response = await api.post(
-      `/api/food/image?date=${date}&mealtype=${mealtype}`,
-      formData,
+    const response = await api.get(
+      `/api/food?date=${date}&mealtype=${mealtype}`,
       {
         headers: {
           Authorization: `Bearer ${accesstoken}`,
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       }
     );
@@ -21,4 +20,4 @@ const useUploadFoodImage = async (formData, date, mealtype) => {
   }
 };
 
-export default useUploadFoodImage;
+export default useGetFoodLog;
